@@ -19,7 +19,7 @@ export const PATH = {
 
 export const RoutesBlock = () => {
   return (
-    <div>
+    <>
       <Routes>
         <Route path={'/'} element={<Navigate to={PATH.LOGINPAGE}/>}/>
         <Route path={PATH.LOGINPAGE} element={<Login/>}/>
@@ -30,6 +30,6 @@ export const RoutesBlock = () => {
         <Route path={PATH.TESTPAGE} element={<Test/>}/>
         <Route path={'*'} element={<Error404/>}/>
       </Routes>
-    </div>
+    </>
   )
 }
