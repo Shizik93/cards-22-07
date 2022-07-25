@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import {App} from "./App";
+import {App} from "./app/App";
 import {HashRouter} from "react-router-dom";
 import {Provider} from "react-redux";
-import {store} from "./components/store/store";
+import {store} from "./app/store";
 
 ReactDOM.render(
 	<HashRouter>

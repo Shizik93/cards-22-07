@@ -1,12 +1,12 @@
 import React from 'react'
 import {Navigate, Route, Routes} from "react-router-dom";
-import {Error404} from "../Pages/ErrorPage/Error404";
-import {NewPass} from "../Pages/NewPassPage/NewPass";
-import {Profile} from "../Pages/ProfilePage/Profile";
-import {Recovery} from "../Pages/RecoveryPage/Recovery";
-import {Registration} from "../Pages/RegistPage/Regist";
-import {Test} from "../Pages/TestPage/Test";
-import {Login} from "../Pages/LoginPage/Login";
+import {Error404} from "../error-page/Error404";
+import {NewPass} from "../../../features/auth/new-password-page/NewPass";
+import {Profile} from "../../../features/auth/profile-page/Profile";
+import {Recovery} from "../../../features/auth/recovery-page/Recovery";
+import {Registration} from "../../../features/auth/regist-page/Regist";
+
+import {Login} from "../../../features/auth/login-page/Login";
 
 export const PATH = {
   LOGINPAGE: '/login',
@@ -14,12 +14,12 @@ export const PATH = {
   PROFILEPAGE: '/profile',
   RECOVERYPAGE: '/recovery',
   REGISTRATIONPAGE: '/regist',
-  TESTPAGE: '/test',
+
 }
 
 export const RoutesBlock = () => {
   return (
-    <div>
+    <>
       <Routes>
         <Route path={'/'} element={<Navigate to={PATH.LOGINPAGE}/>}/>
         <Route path={PATH.LOGINPAGE} element={<Login/>}/>
@@ -27,9 +27,8 @@ export const RoutesBlock = () => {
         <Route path={PATH.PROFILEPAGE} element={<Profile/>}/>
         <Route path={PATH.RECOVERYPAGE} element={<Recovery/>}/>
         <Route path={PATH.REGISTRATIONPAGE} element={<Registration/>}/>
-        <Route path={PATH.TESTPAGE} element={<Test/>}/>
         <Route path={'*'} element={<Error404/>}/>
       </Routes>
-    </div>
+    </>
   )
 }
