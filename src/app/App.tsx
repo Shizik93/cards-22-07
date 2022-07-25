@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
-import {RoutesBlock} from "./components/RoutesBlock/RoutesBlock";
+import {RoutesBlock} from "../common/components/RoutesBlock/RoutesBlock";
 import {AppBar, Box, Button, Toolbar} from "@mui/material";
-import logo from "./components/Pages/LoginPage/Lesson 1/Group 753.png";
+import logo from "../assets/img/logo_incubator.png";
 
 export const App = () => {
   return (

@@ -1,10 +1,10 @@
-.login{
+.auth{
     display: flex;
     justify-content: center;
     margin: 60px;
 
 }
-.login_container {
+.auth_container {
     border-radius: 2px;
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1), -1px -1px 2px rgba(0, 0, 0, 0.1);
     background: #FFFFFF;
@@ -14,15 +14,4 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-}
-input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 1000px #FFFFFF inset;
-}
-.form {
-
-    height: 50%;
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
 }

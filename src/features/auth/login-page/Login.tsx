@@ -1,9 +1,10 @@
 import React from 'react'
 import s from './Login.module.css'
 import {Button, Checkbox, FormControlLabel, TextField} from "@mui/material";
-import {PATH} from "../../RoutesBlock/RoutesBlock";
+import {PATH} from "../../../common/components/RoutesBlock/RoutesBlock";
 import {NavLink} from "react-router-dom";
 import {useFormik} from "formik";
+import '../auth.css'
 
 
 
@@ -39,8 +40,8 @@ export const Login = () => {
         },
     })
     return (
-        <div className={s.login}>
-            <div className={s.login_container}>
+        <div className={'auth'}>
+            <div className={'auth_container'}>
 
                 <h1>Sign in</h1>
 
