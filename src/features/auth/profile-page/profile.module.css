@@ -1,0 +1,11 @@
+.profile {
+
+}
+.profile img {
+    border: 4px grey dashed;
+    padding: 40px;
+    border-radius: 100px;
+    width: 100px;
+    height: 100px;
+}
+
