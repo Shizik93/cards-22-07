@@ -1,12 +1,11 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
 import {appReducer} from "./app-reducer";
 import thunk from "redux-thunk";
-import {loginReducer} from "../features/auth/login-page/login-reducer";
+import {registReducer} from "./regist-reducer";
 
 const reducers = combineReducers({
 	app: appReducer,
-	login:loginReducer,
-
+	registration: registReducer,
 })
 
 export const store = createStore(reducers,applyMiddleware(thunk))
