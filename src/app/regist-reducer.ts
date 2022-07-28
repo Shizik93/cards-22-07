@@ -1,12 +1,12 @@
-import {Dispatch} from "redux";
 import {registAPI, RegistParamsType} from "../api/regist-api/regist-api";
+import {AppActionsType, AppThunk} from "./store";
 // import {setAppErrorAC, setAppStatusAC} from "./AppReducer";
 
 export const initRegistState = {
 	isRegistered: false
 }
 
-export const registReducer = (state: RegistInitStateType = initRegistState, action: ActionsType): RegistInitStateType => {
+export const registReducer = (state: RegistInitStateType = initRegistState, action: AppActionsType): RegistInitStateType => {
 	switch (action.type) {
 		case 'SET-IS-REGISTERED':
 			return {...state, isRegistered: action.value}
@@ -18,7 +18,7 @@ export const registReducer = (state: RegistInitStateType = initRegistState, acti
 export const setIsRegisteredAC = (value: boolean) =>
 	({type: 'SET-IS-REGISTERED', value} as const)
 
-export const registrationTC = (data: RegistParamsType) => async (dispatch: Dispatch) => {
+export const registrationTC = (data: RegistParamsType):AppThunk => async (dispatch) => {
 	try {
 		// dispatch(setAppStatusAC('loading'))
 		await registAPI.regist(data)
@@ -34,5 +34,5 @@ export const registrationTC = (data: RegistParamsType) => async (dispatch: Dispa
 
 export type RegistInitStateType = typeof initRegistState
 
-type ActionsType = setIsRegisteredType
+export type RegistrActionsType = setIsRegisteredType
 export type setIsRegisteredType = ReturnType<typeof setIsRegisteredAC>
