@@ -61,30 +61,30 @@ export const Registration = () => {
                 <form onSubmit={formik.handleSubmit} className={style.form}>
                     <FormControl>
                         <FormGroup>
-                    <TextField label='Email' margin='normal'
-                               {...formik.getFieldProps('email')}
-                    />
-                    {formik.errors.email && formik.touched.email
-                        && <div style={{color: 'red'}}> {formik.errors.email} </div>}
+                            <TextField label='Email' margin='normal'
+                                       {...formik.getFieldProps('email')}
+                            />
+                            {formik.errors.email && formik.touched.email
+                                && <div style={{color: 'red'}}> {formik.errors.email} </div>}
 
-                    <TextField type='password' label='Password'
-                               margin='normal'
+                            <TextField type='password' label='Password'
+                                       margin='normal'
 
-                               {...formik.getFieldProps('password')}
-                    />
-                    {formik.errors.password && formik.touched.password
-                        && <div style={{color: 'red'}}> {formik.errors.password} </div>}
+                                       {...formik.getFieldProps('password')}
+                            />
+                            {formik.errors.password && formik.touched.password
+                                && <div style={{color: 'red'}}> {formik.errors.password} </div>}
 
-                    <TextField type='password' label='Repeat password'
-                               margin='normal'
-                               {...formik.getFieldProps('repeatPassword')}
-                    />
-                    {formik.errors.repeatPassword && formik.touched.repeatPassword
-                        && <div style={{color: 'red'}}> {formik.errors.repeatPassword} </div>}
+                            <TextField type='password' label='Repeat password'
+                                       margin='normal'
+                                       {...formik.getFieldProps('repeatPassword')}
+                            />
+                            {formik.errors.repeatPassword && formik.touched.repeatPassword
+                                && <div style={{color: 'red'}}> {formik.errors.repeatPassword} </div>}
 
-                    <Button type={'submit'} variant={'contained'} color={'primary'} >
-                        registration
-                    </Button>
+                            <Button type={'submit'} variant={'contained'} color={'primary'}>
+                                registration
+                            </Button>
                         </FormGroup>
                     </FormControl>
                 </form>
