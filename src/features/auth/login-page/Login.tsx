@@ -2,13 +2,17 @@ import React from 'react'
 import s from './Login.module.css'
 import {Button, Checkbox, FormControlLabel, TextField} from "@mui/material";
 import {PATH} from "../../../common/components/RoutesBlock/RoutesBlock";
-import {NavLink} from "react-router-dom";
+import {Navigate, NavLink} from "react-router-dom";
 import {useFormik} from "formik";
 import '../auth.css'
-
+import {useDispatch, useSelector} from "react-redux";
+import {setLoginTC} from "./login-reducer";
+import {AppStoreType} from "../../../app/store";
 
 
 export const Login = () => {
+    const isAuth = useSelector<AppStoreType>(state => state.login.isAuth)
+    const dispatch = useDispatch()
     type FormikErrorType = {
         email?: string
         password?: string
@@ -35,10 +39,14 @@ export const Login = () => {
             return errors
         },
         onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
+             dispatch(setLoginTC(values.email, values.password, values.rememberMe))
             formik.resetForm()
         },
     })
+
+    if (isAuth) {
+        return <Navigate to={PATH.PROFILEPAGE}/>
+    }
     return (
         <div className={'auth'}>
             <div className={'auth_container'}>
@@ -51,7 +59,7 @@ export const Login = () => {
                     <TextField
                         error={formik.touched.email && formik.errors.email ? true : undefined}
                         variant={'standard'}
-                        id={'email'}
+                        type={'email'}
                         name={'email'}
                         label={'Email'}
                         onChange={formik.handleChange}
@@ -62,7 +70,7 @@ export const Login = () => {
                     <TextField
                         error={formik.touched.password && formik.errors.password ? true : undefined}
                         variant={'standard'}
-                        id={'password'}
+                        type={'password'}
                         name={'password'}
                         value={formik.values.password}
                         label={'Password'}
