@@ -2,17 +2,15 @@ import React from 'react'
 import s from './Login.module.css'
 import {Button, Checkbox, FormControlLabel, TextField} from "@mui/material";
 import {PATH} from "../../../common/components/RoutesBlock/RoutesBlock";
-import {Navigate, NavLink} from "react-router-dom";
+import {Navigate, NavLink, useNavigate} from "react-router-dom";
 import {useFormik} from "formik";
 import '../auth.css'
-import {useDispatch, useSelector} from "react-redux";
 import {setLoginTC} from "./login-reducer";
-import {AppStoreType} from "../../../app/store";
-import {useAppDispatch} from "../../../app/hooks";
-
+import {useAppDispatch, useAppSelector} from "../../../app/hooks";
 
 export const Login = () => {
-    const isAuth = useSelector<AppStoreType>(state => state.login.isAuth)
+
+    const isAuth = useAppSelector(state => state.login.isAuth)
     const dispatch = useAppDispatch()
     type FormikErrorType = {
         email?: string

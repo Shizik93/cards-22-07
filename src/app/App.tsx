@@ -1,16 +1,23 @@
 import React, {useEffect} from 'react';
 import './App.css';
-import {RoutesBlock} from "../common/components/RoutesBlock/RoutesBlock";
+import {PATH, RoutesBlock} from "../common/components/RoutesBlock/RoutesBlock";
 import {AppBar, Box, Button, Toolbar} from "@mui/material";
 import logo from "../assets/img/logo_incubator.png";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "./store";
 import {authMeTC, logOutTC} from "../features/auth/login-page/login-reducer";
+import {useAppDispatch} from "./hooks";
+import {Navigate, useNavigate} from "react-router-dom";
 
 export const  App = () => {
-    const dispatch=useDispatch()
+    const navigate=useNavigate()
+    const dispatch=useAppDispatch()
     const isAuth=useSelector<AppStoreType>(state => state.login.isAuth)
-    useEffect(() => {
+    const routeChange=()=>{
+        navigate(PATH.LOGINPAGE)
+    }
+
+        useEffect(() => {
         // @ts-ignore
         dispatch(authMeTC())
     }, [dispatch])
@@ -21,12 +28,9 @@ export const  App = () => {
                 <Toolbar style={{display:"flex",justifyContent:'space-between'}} >
                     <img alt={'logo'} src={logo}/>
                     {isAuth
-                        ?<Button onClick={()=>{ // @ts-ignore
+                        ?<Button onClick={()=>{
                             dispatch(logOutTC())}} variant={'contained'} color="primary">Sign Out</Button>
-                        :<Button onClick={()=>{
-                        // @ts-ignore
-                            dispatch(logOutTC())}
-                        } variant={'contained'} color="primary">Sign in</Button>}
+                        :<Button onClick={routeChange} variant={'contained'} color="primary">Sign in</Button>}
 
                 </Toolbar>
             </AppBar>

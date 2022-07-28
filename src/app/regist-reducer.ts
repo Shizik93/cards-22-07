@@ -1,4 +1,4 @@
-import {registAPI, RegistParamsType} from "../api/regist-api/regist-api";
+import {registAPI, RegistParamsType} from "../features/auth/regist-page/regist-api";
 import {AppActionsType, AppThunk} from "./store";
 // import {setAppErrorAC, setAppStatusAC} from "./AppReducer";
 
