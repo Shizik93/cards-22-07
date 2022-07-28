@@ -1,17 +1,33 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {RoutesBlock} from "../common/components/RoutesBlock/RoutesBlock";
 import {AppBar, Box, Button, Toolbar} from "@mui/material";
-// import logo from "../assets/img/logo_incubator.png";
+import logo from "../assets/img/logo_incubator.png";
+import {useDispatch, useSelector} from "react-redux";
+import {AppStoreType} from "./store";
+import {authMeTC, logOutTC} from "../features/auth/login-page/login-reducer";
 
-export const App = () => {
+export const  App = () => {
+    const dispatch=useDispatch()
+    const isAuth=useSelector<AppStoreType>(state => state.login.isAuth)
+    useEffect(() => {
+        // @ts-ignore
+        dispatch(authMeTC())
+    }, [dispatch])
   return (
     <div className="App">
         <Box sx={{flexGrow: 1}}>
             <AppBar style={{background:'#FCFCFC'}} color={'default'} position="static">
                 <Toolbar style={{display:"flex",justifyContent:'space-between'}} >
-                    <img alt={'logo'}/>
-                    <Button variant={'contained'} color="primary">Sign in</Button>
+                    <img alt={'logo'} src={logo}/>
+                    {isAuth
+                        ?<Button onClick={()=>{ // @ts-ignore
+                            dispatch(logOutTC())}} variant={'contained'} color="primary">Sign Out</Button>
+                        :<Button onClick={()=>{
+                        // @ts-ignore
+                            dispatch(logOutTC())}
+                        } variant={'contained'} color="primary">Sign in</Button>}
+
                 </Toolbar>
             </AppBar>
         </Box>
