@@ -1,5 +1,5 @@
 import {apiLogin} from "./api-login";
-import {Dispatch} from "redux";
+import {AppActionsType, AppThunk} from "../../../app/store";
 
 type initialStateType =
     {
@@ -32,8 +32,8 @@ const initialState = {
 
 }
 
-type ActionsType = logoutUserType | setLoginType | setErrorType
-export const loginReducer = (state: initialStateType = initialState, action: ActionsType) => {
+export type LoginActionsType = logoutUserType | setLoginType | setErrorType
+export const loginReducer = (state: initialStateType = initialState, action: AppActionsType) => {
     switch (action.type) {
         case "SET-LOGIN":
         case 'LOGOUT-USER': {
@@ -65,23 +65,23 @@ const setLoginAC = (data: initialStateType) => {
 type setLoginType = ReturnType<typeof setLoginAC>
 
 
-export const setLoginTC = (email: string, password: string, rememberMe: boolean) => async (dispath: Dispatch) => {
+export const setLoginTC = (email: string, password: string, rememberMe: boolean) :AppThunk=> async (dispatch) => {
     try {
         const data = await apiLogin.setLogin(email, password, rememberMe)
-        dispath(setLoginAC({...data.data, isAuth: true}))
+        dispatch(setLoginAC({...data.data, isAuth: true}))
     } catch {
         throw Error
     }
 }
-export const authMeTC = () => async (dispath: Dispatch) => {
+export const authMeTC = ():AppThunk => async (dispatch) => {
     try {
         const data = await apiLogin.me()
-        dispath(setLoginAC({...data.data.data, isAuth: true}))
+        dispatch(setLoginAC({...data.data,isAuth: true}))
     } catch {
         throw Error
     }
 }
-export const logOutTC = () => async (dispatch: Dispatch) => {
+export const logOutTC = ():AppThunk => async (dispatch) => {
     try {
         await apiLogin.logOut()
         dispatch(logoutUserAC())

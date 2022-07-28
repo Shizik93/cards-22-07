@@ -8,11 +8,12 @@ import '../auth.css'
 import {useDispatch, useSelector} from "react-redux";
 import {setLoginTC} from "./login-reducer";
 import {AppStoreType} from "../../../app/store";
+import {useAppDispatch} from "../../../app/hooks";
 
 
 export const Login = () => {
     const isAuth = useSelector<AppStoreType>(state => state.login.isAuth)
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     type FormikErrorType = {
         email?: string
         password?: string
@@ -39,15 +40,18 @@ export const Login = () => {
             return errors
         },
         onSubmit: values => {
-             dispatch(setLoginTC(values.email, values.password, values.rememberMe))
+            dispatch(setLoginTC(values.email, values.password, values.rememberMe))
             formik.resetForm()
         },
     })
 
     if (isAuth) {
+
         return <Navigate to={PATH.PROFILEPAGE}/>
     }
+
     return (
+
         <div className={'auth'}>
             <div className={'auth_container'}>
 
@@ -91,11 +95,11 @@ export const Login = () => {
 
                     </div>
 
-                    <Button type='submit' variant={'contained'}>Sign Up</Button>
+                    <Button type='submit' variant={'contained'}>Sign In</Button>
 
                 </form>
                 <span>Dont have an account?</span>
-                <NavLink to={PATH.REGISTRATIONPAGE}>Sign In</NavLink>
+                <NavLink to={PATH.REGISTRATIONPAGE}>Sign Up</NavLink>
 
 
             </div>

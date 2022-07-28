@@ -1,19 +1,20 @@
 import {Button, FormControl, FormGroup, TextField} from '@mui/material';
 import {useFormik} from 'formik';
 import React from 'react'
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {Navigate, NavLink} from "react-router-dom";
 import {AppStoreType} from "../../../app/store";
 import {registrationTC} from "../../../app/regist-reducer";
 import '../auth.css'
 import style from './Regist.module.css'
 import {PATH} from "../../../common/components/RoutesBlock/RoutesBlock";
+import {useAppDispatch} from "../../../app/hooks";
 
 
 export const Registration = () => {
 
 	const isRegistered = useSelector<AppStoreType>(state => state.registration.isRegistered)
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 	const formik = useFormik({
 		initialValues: {
 			email: '',
@@ -46,6 +47,7 @@ export const Registration = () => {
 		onSubmit: values => {
 			// alert(JSON.stringify(values));
 			formik.resetForm()
+			// @ts-ignore
 			dispatch(registrationTC(values))
 		},
 	})

@@ -11,6 +11,7 @@ export const  App = () => {
     const dispatch=useDispatch()
     const isAuth=useSelector<AppStoreType>(state => state.login.isAuth)
     useEffect(() => {
+        // @ts-ignore
         dispatch(authMeTC())
     }, [dispatch])
   return (
@@ -20,8 +21,12 @@ export const  App = () => {
                 <Toolbar style={{display:"flex",justifyContent:'space-between'}} >
                     <img alt={'logo'} src={logo}/>
                     {isAuth
-                        ?<Button onClick={()=>{dispatch(logOutTC())}} variant={'contained'} color="primary">Sign Out</Button>
-                        :<Button variant={'contained'} color="primary">Sign in</Button>}
+                        ?<Button onClick={()=>{ // @ts-ignore
+                            dispatch(logOutTC())}} variant={'contained'} color="primary">Sign Out</Button>
+                        :<Button onClick={()=>{
+                        // @ts-ignore
+                            dispatch(logOutTC())}
+                        } variant={'contained'} color="primary">Sign in</Button>}
 
                 </Toolbar>
             </AppBar>

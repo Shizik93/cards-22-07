@@ -8,16 +8,17 @@ import {AuthMeThunk, LogoutThunk, ProfileStateType, UpdateUserThunk} from "./pro
 import {useAppDispatch, useAppSelector} from "../../../app/hooks";
 import {Button, Grid} from "@mui/material";
 import SuperEditableSpan from "../../../common/components/superComponents/c4-SuperEditableSpan/SuperEditableSpan";
+import {PATH} from "../../../common/components/RoutesBlock/RoutesBlock";
 
 
 export const ProfilePage = React.memo( () => {
     const dispatch = useAppDispatch()
-    // const isAuth = useAppSelector(state => state.auth.isAuth)
+    const isAuth = useAppSelector(state => state.login.isAuth)
     const profileData= useAppSelector(state => state.profile)
     const [value, setValue] = useState<string>('')
     const [nikName, setNikName]=useState<string>(profileData.nikName===null?'':profileData.nikName)
     // const profileData= useSelector<AppStoreType,ProfileStateType>(state => state.profile)
-    // const isAuth= useSelector<AppStoreType,ProfileStateType>(state => state.app.isAuth)
+   // const isAuth= useSelector<AppStoreType>(state => state.login.isAuth)
     const handleLogout = () => {
       dispatch(LogoutThunk())
     }
@@ -30,13 +31,13 @@ export const ProfilePage = React.memo( () => {
         }
 
     }
-    useEffect(()=>{
+/*    useEffect(()=>{
             dispatch(AuthMeThunk())
-    },[])
+    },[])*/
 
-    // if (!isAuth){
-    //     return <Navigate to='/login' />
-    // }
+     if (!isAuth){
+    return <Navigate to={PATH.LOGINPAGE} />
+    }
     return <Grid container justifyContent={'center'}>
         <Grid item  className={styles.form}>
             <div>

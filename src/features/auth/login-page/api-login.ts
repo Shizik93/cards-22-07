@@ -41,10 +41,10 @@ export const apiLogin = {
         })
     },
     me() {
-        return instance.post<AxiosResponse<ResponseLoginType>>('auth/me', {})
+        return instance.post<null,AxiosResponse<ResponseLoginType>>('auth/me', {})
     },
     logOut() {
-        return instance.delete<AxiosResponse<LogOutType>>('auth/me', {})
+        return instance.delete<null,AxiosResponse<LogOutType>>('auth/me', {})
     },
 
 }
