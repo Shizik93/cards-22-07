@@ -2,13 +2,13 @@ import {applyMiddleware, combineReducers, createStore} from "redux";
 import {appReducer, AppReducerActionsType} from "./app-reducer";
 import thunk, {ThunkAction} from "redux-thunk";
 import {ProfileActionsType, ProfileReducer} from "../features/auth/profile-page/profile-reducer";
-import {appReducer} from "./app-reducer";
-import thunk from "redux-thunk";
 import {registReducer} from "./regist-reducer";
+import {loginReducer} from "../features/auth/login-page/login-reducer";
 
 const reducers = combineReducers({
 	app: appReducer,
-	profile: ProfileReducer
+	login:loginReducer,
+	profile: ProfileReducer,
 	registration: registReducer,
 })
 
