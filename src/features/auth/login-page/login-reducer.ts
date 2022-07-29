@@ -78,7 +78,6 @@ export const authMeTC = ():AppThunk => async (dispatch) => {
         const data = await apiLogin.me()
         dispatch(setLoginAC({...data.data,isAuth: true}))
     } catch {
-        debugger
         throw Error
     }
 }

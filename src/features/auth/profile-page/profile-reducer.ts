@@ -33,7 +33,6 @@ const initialState = {
 export const ProfileReducer = (state: initialStateType = initialState, action: AppActionsType): initialStateType => {
     switch (action.type) {
         case "SET-DATA-PROFILE-USER":
-            debugger
             return {
                 ...state,
                 email: action.data.email,
@@ -71,7 +70,7 @@ export const AuthMeThunk = (): AppThunk => async (dispatch) => {
     }
 }
 export const UpdateUserThunk = (domainModel: UpdateDomainUserType): AppThunk => async (dispatch, getState: () => AppStoreType) => {
-        debugger
+
     const profile = getState().login
         const apiModel: UpdateUserDataType = {
             name: domainModel.name,
