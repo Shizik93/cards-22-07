@@ -1,4 +1,3 @@
-
 import {AppActionsType, AppThunk} from "../../../../app/store";
 import {setAppErrorAC, setAppStatusAC} from "../../../../app/app-reducer";
 import {registAPI, RegistParamsType} from "../api-regist/regist-api";
