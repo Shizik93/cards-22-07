@@ -3,9 +3,8 @@ import { legacy_createStore as createStore} from 'redux'
 import {appReducer, AppReducerActionsType} from "./app-reducer";
 import thunk, {ThunkAction} from "redux-thunk";
 import {ProfileActionsType, ProfileReducer} from "../features/auth/profile-page/profile-reducer";
-import {RegistrActionsType, registReducer, setIsRegisteredType} from "./regist-reducer";
 import {LoginActionsType, loginReducer} from "../features/auth/login-page/login-reducer";
-
+import {RegistrActionsType, registReducer} from "../features/auth/regist-page/registReducers/regist-reducer";
 const reducers = combineReducers({
 	app: appReducer,
 	login:loginReducer,
