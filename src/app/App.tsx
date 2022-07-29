@@ -6,16 +6,19 @@ import logo from "../assets/img/logo_incubator.png";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "./store";
 import {authMeTC, logOutTC} from "../features/auth/login-page/login-reducer";
+import {ErrorSnackbar} from "../common/components/ErrorSnackBar/ErrorSnackBar";
 
 export const  App = () => {
     const dispatch=useDispatch()
     const isAuth=useSelector<AppStoreType>(state => state.login.isAuth)
-    useEffect(() => {
+       useEffect(() => {
         // @ts-ignore
         dispatch(authMeTC())
     }, [dispatch])
-  return (
+
+     return (
     <div className="App">
+        <ErrorSnackbar/>
         <Box sx={{flexGrow: 1}}>
             <AppBar style={{background:'#FCFCFC'}} color={'default'} position="static">
                 <Toolbar style={{display:"flex",justifyContent:'space-between'}} >
