@@ -61,7 +61,7 @@ export const Registration = () => {
                 <form onSubmit={formik.handleSubmit} className={style.form}>
                     <FormControl>
                         <FormGroup>
-                            <TextField label='Email' margin='normal'
+                            <TextField label='Email' margin='normal' variant={'standard'}
                                        {...formik.getFieldProps('email')}
                             />
                             {formik.errors.email && formik.touched.email
