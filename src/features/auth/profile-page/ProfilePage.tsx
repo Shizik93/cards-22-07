@@ -9,7 +9,7 @@ import SuperEditableSpan from "../../../common/components/superComponents/c4-Sup
 import {PATH} from "../../../common/components/RoutesBlock/RoutesBlock";
 
 
-export const ProfilePage = () => {
+export const ProfilePage =React.memo( () => {
     const dispatch = useAppDispatch()
     const isAuth = useAppSelector(state => state.login.isAuth)
     const profileData = useAppSelector(state => state.login)
@@ -56,4 +56,4 @@ export const ProfilePage = () => {
 
 
 
-}
+})
