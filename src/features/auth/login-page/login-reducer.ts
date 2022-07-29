@@ -1,5 +1,6 @@
 import {apiLogin} from "./api-login";
 import {AppActionsType, AppThunk} from "../../../app/store";
+import {setAppStatusAC} from "../../../app/app-reducer";
 
 type initialStateType =
     {
@@ -66,26 +67,36 @@ type setLoginType = ReturnType<typeof setLoginAC>
 
 
 export const setLoginTC = (email: string, password: string, rememberMe: boolean) :AppThunk=> async (dispatch) => {
+    dispatch(setAppStatusAC('loading'))
     try {
         const data = await apiLogin.setLogin(email, password, rememberMe)
         dispatch(setLoginAC({...data.data, isAuth: true}))
+        dispatch(setAppStatusAC('succeded'))
     } catch {
+        dispatch(setAppStatusAC('failed'))
         throw Error
     }
 }
 export const authMeTC = ():AppThunk => async (dispatch) => {
+    dispatch(setAppStatusAC('loading'))
     try {
         const data = await apiLogin.me()
         dispatch(setLoginAC({...data.data,isAuth: true}))
+        dispatch(setAppStatusAC('succeded'))
     } catch {
+        dispatch(setAppStatusAC('failed'))
         throw Error
+
     }
 }
 export const logOutTC = ():AppThunk => async (dispatch) => {
+    dispatch(setAppStatusAC('loading'))
     try {
         await apiLogin.logOut()
         dispatch(logoutUserAC())
+        dispatch(setAppStatusAC('succeded'))
     } catch {
+        dispatch(setAppStatusAC('failed'))
         throw Error
     }
 }
