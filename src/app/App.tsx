@@ -18,10 +18,9 @@ export const App = () => {
     const routeChange = () => {
         navigate(PATH.LOGINPAGE)
     }
-    useEffect(() => {
-        dispatch(authMeTC())
-    }, [dispatch])
-
+    // useEffect(() => {
+    //     dispatch(authMeTC())
+    // }, [dispatch])
 
     return (
 
@@ -43,6 +42,6 @@ export const App = () => {
             </Box>
             <RoutesBlock/>
         </div>
-    );
-}
+    )
+ }
 

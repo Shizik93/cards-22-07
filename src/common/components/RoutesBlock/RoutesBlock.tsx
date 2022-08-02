@@ -6,6 +6,7 @@ import {Profile} from "../../../features/auth/profile-page/Profile";
 import {Recovery} from "../../../features/auth/recovery-page/Recovery";
 import {Registration} from "../../../features/auth/regist-page/Regist";
 import {Login} from "../../../features/auth/login-page/Login";
+import {PacksList} from "../../../features/card-training/packslist-page/PacksList";
 
 
 export const PATH = {
@@ -14,6 +15,7 @@ export const PATH = {
     PROFILEPAGE: '/profile',
     RECOVERYPAGE: '/recovery',
     REGISTRATIONPAGE: '/regist',
+    PACKSLISTPAGE: '/packslist',
 
 }
 
@@ -27,6 +29,7 @@ export const RoutesBlock = () => {
                 <Route path={PATH.PROFILEPAGE} element={<Profile/>}/>
                 <Route path={PATH.RECOVERYPAGE} element={<Recovery/>}/>
                 <Route path={PATH.REGISTRATIONPAGE} element={<Registration/>}/>
+                <Route path={PATH.PACKSLISTPAGE} element={<PacksList/>}/>
                 <Route path={'*'} element={<Error404/>}/>
             </Routes>
         </>
