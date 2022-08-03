@@ -10,19 +10,19 @@ const instance = axios.create({
     baseURL: 'https://neko-back.herokuapp.com/2.0/',
     ...settings
 })
-export type LoginDataType = {
-    email: string
-    password: string
-    rememberMe: boolean
-}
 
 export const profileApi = {
     update(data:UpdateUserDataType) {
-        const promise = instance.put('auth/me', data)
-        return promise
+        return instance.put('auth/me', data)
     },
     me() {
         return instance.post<null,AxiosResponse<ResponseAuthType>>('auth/me', {})
+    },
+
+}
+export const pageAPI = {
+    getCardsOnPage(page: number=1,pageCount: number=4) {
+        return instance.get<null,AxiosResponse<ResponsePageType>>(`cards/pack/?page=${page}&pageCount=${pageCount}`)
     },
 
 }
@@ -43,13 +43,26 @@ type ResponseAuthType = {
 
     error?: string;
 }
-export type ResponseType<D> = {
-    resultCode: number
-    messages: Array<string>
-    data: D
+
+export type ResponsePageType = {
+    cardPacks: [
+        {
+            _id: string
+            user_id: string
+            name: string
+            cardsCount: number
+            created: string
+            updated: string
+        }
+    ],
+    cardPacksTotalCount: number
+    // количество колод
+    maxCardsCount: number
+    minCardsCount: number
+    page: number // выбранная страница
+    pageCount: number
+// количество элементов на странице}
 }
-
-
 
 
 

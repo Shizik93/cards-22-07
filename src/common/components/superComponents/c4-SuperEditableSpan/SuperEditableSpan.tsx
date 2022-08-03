@@ -47,7 +47,7 @@ const SuperEditableSpan: React.FC<SuperEditableSpanType> = (
 	}
 
 	const spanClassName = `${s.span} ${className}`
-	const pencil = <img style={{width: "10px", height: "10px"}} src={'https://freesvg.org/img/pencil-pictogram.png'}/>
+	const pencil = <img alt={'img'} style={{width: "10px", height: "10px"}} src={'https://freesvg.org/img/pencil-pictogram.png'}/>
 
 	return (
 		<>
@@ -68,7 +68,7 @@ const SuperEditableSpan: React.FC<SuperEditableSpanType> = (
 						{...restSpanProps}
 					>
                         {/*если нет захардкодженного текста для спана, то значение инпута*/}
-						{pencil} {children || restProps.value}
+						 {children || restProps.value} {pencil}
                     </span>
 				)
 			}

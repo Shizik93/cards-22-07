@@ -1,19 +1,20 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import {Navigate} from "react-router-dom";
 import styles from './profile.module.css'
 import hacker from './hacker.png'
-import {AuthMeThunk, UpdateUserThunk} from "./profile-reducer";
+import {UpdateUserThunk} from "./profile-reducer";
 import {useAppDispatch, useAppSelector} from "../../../app/hooks";
-import {Button, Grid} from "@mui/material";
+import {Button} from "@mui/material";
 import SuperEditableSpan from "../../../common/components/superComponents/c4-SuperEditableSpan/SuperEditableSpan";
 import {PATH} from "../../../common/components/RoutesBlock/RoutesBlock";
 
 
-export const ProfilePage =React.memo( () => {
+export const ProfilePage = React.memo(() => {
     const dispatch = useAppDispatch()
     const isAuth = useAppSelector(state => state.login.isAuth)
     const profileData = useAppSelector(state => state.login)
     const [nikName, setNikName] = useState<string>(profileData.name === null ? 'your name' : profileData.name)
+    const [editImage ,setEditImage] = useState(false)
     const onEventHandler = () => {
         changeNikName(nikName)
     }
@@ -22,38 +23,45 @@ export const ProfilePage =React.memo( () => {
             dispatch(UpdateUserThunk({name: newName}))
         }
     }
-    // useEffect(() => {
-    //     dispatch(AuthMeThunk())
-    // }, [])
 
     if (!isAuth) {
         return <Navigate to={PATH.LOGINPAGE}/>
     }
     return <>
-        <div></div>
-        <Grid container justifyContent={'center'}>
-            <Grid item className={styles.form}>
-                <div>
-                    <SuperEditableSpan
-                        value={nikName === null ? undefined : nikName}
-                        onChangeText={setNikName}
-                        onBlur={onEventHandler}
-                        onEnter={onEventHandler}
-                    />
-                </div>
-                <div className={styles.profile}>
-                    {/*<img src={profileData.avatar?profileData.avatar:hacker} alt={'user image'}/>*/}
-                    <img src={profileData.avatar ? profileData.avatar : hacker} alt={'user image'}/>
-                </div>
-                <Button variant={'contained'} color={'primary'} size={'small'}>Change image</Button>
-                <br/>
-                email: <div>{profileData.email}</div>
+        <div className={styles.container}>
+            <h3 className={styles.title}><b>Personal Information</b></h3>
+            <div className={styles.avatar}
+                 onMouseEnter={()=>setEditImage(true)}
+                 onMouseLeave={()=>setEditImage(false)}>
+                {/*<img src={profileData.avatar?profileData.avatar:hacker} alt={'user image'}/>*/}
+                <img
+                    src={profileData.avatar ? profileData.avatar : hacker}
+                    alt={'user image'}
 
-            </Grid>
-        </Grid>
+                />
+                {editImage
+                    ?<div className={styles.avatarButton}>
+                    <Button variant={'outlined'} color={'inherit'} size={'small'}>new image</Button>
+                </div>
+                :""}
+            </div>
+
+            <div className={styles.name}>
+                <b>Name:</b><SuperEditableSpan
+                    value={nikName === null ? undefined : nikName}
+                    onChangeText={setNikName}
+                    onBlur={onEventHandler}
+                    onEnter={onEventHandler}
+                />
+            </div>
+            <div className={styles.profileEmail}>
+                <b>Email:</b> <span>{profileData.email}</span>
+            </div>
+
+
+
+        </div>
     </>
-
-
 
 
 })
