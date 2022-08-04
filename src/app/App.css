@@ -13,6 +13,7 @@
     text-align: center;
 }
 .avatar {
+    margin-left: 15px;
     border-radius: 18px;
     width: 36px;
     height: 36px;
