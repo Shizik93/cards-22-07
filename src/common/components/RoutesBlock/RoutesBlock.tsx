@@ -6,6 +6,7 @@ import {Profile} from "../../../features/auth/profile-page/Profile";
 import {Recovery} from "../../../features/auth/recovery-page/Recovery";
 import {Registration} from "../../../features/auth/regist-page/Regist";
 import {Login} from "../../../features/auth/login-page/Login";
+import {CheckEmail} from "../../../features/auth/checkEmail/CheckEmail";
 
 
 export const PATH = {
@@ -14,6 +15,7 @@ export const PATH = {
     PROFILEPAGE: '/profile',
     RECOVERYPAGE: '/recovery',
     REGISTRATIONPAGE: '/regist',
+    CHECK_EMAIL: '/check-email',
 
 }
 
@@ -27,6 +29,7 @@ export const RoutesBlock = () => {
                 <Route path={PATH.PROFILEPAGE} element={<Profile/>}/>
                 <Route path={PATH.RECOVERYPAGE} element={<Recovery/>}/>
                 <Route path={PATH.REGISTRATIONPAGE} element={<Registration/>}/>
+                <Route path={PATH.CHECK_EMAIL} element={<CheckEmail/>}/>
                 <Route path={'*'} element={<Error404/>}/>
             </Routes>
         </>
