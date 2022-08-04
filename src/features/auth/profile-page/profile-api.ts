@@ -1,5 +1,6 @@
 import axios, {AxiosResponse} from 'axios';
 import {UpdateUserDataType} from "./profile-reducer";
+import {RequestBodyType} from "../../page/page-reducer";
 
 const settings = {
     withCredentials: true,
@@ -21,8 +22,8 @@ export const profileApi = {
 
 }
 export const pageAPI = {
-    getCardsOnPage(page: number=1,pageCount: number=4) {
-        return instance.get<null,AxiosResponse<ResponsePageType>>(`cards/pack/?page=${page}&pageCount=${pageCount}`)
+    getCards(data:RequestBodyType) {
+        return instance.get<null,AxiosResponse<ResponsePageType>>(`cards/pack/?packName=${data.packName}&page=${data.page}&pageCount=${data.pageCount}`)
     },
 
 }
@@ -47,7 +48,7 @@ type ResponseAuthType = {
 export type ResponsePageType = {
     cardPacks: [
         {
-            _id: string
+            _id: string // id cardsPack
             user_id: string
             name: string
             cardsCount: number
