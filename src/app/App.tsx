@@ -7,7 +7,7 @@ import {useSelector} from "react-redux";
 import {AppStoreType} from "./store";
 import {authMeTC, logOutTC} from "../features/auth/login-page/login-reducer";
 import {useAppDispatch, useAppSelector} from "./hooks";
-import {useNavigate} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {Preloader} from "../common/components/Preloader/Preloader";
 
 export const App = () => {
@@ -53,6 +53,12 @@ export const App = () => {
                     </Toolbar>
                 </AppBar>
             </Box>
+            <NavLink to={PATH.RECOVERYPAGE}>Recovery </NavLink>
+            <NavLink to={PATH.LOGINPAGE}>Login </NavLink>
+            <NavLink to={PATH.PROFILEPAGE}>Profile </NavLink>
+            <NavLink to={PATH.NEWPASSPAGE}>NewPass </NavLink>
+            <NavLink to={PATH.REGISTRATIONPAGE}>Regist </NavLink>
+            <NavLink to={PATH.CHECK_EMAIL}>Email </NavLink>
             <RoutesBlock/>
 
 

@@ -1,23 +1,20 @@
 import React from 'react'
-import '../auth.css'
+import '../../auth.css'
 import s from './Recovery.module.css'
-import {useAppDispatch, useAppSelector} from "../../../app/hooks";
-import {PATH} from "../../../common/components/RoutesBlock/RoutesBlock";
+import {useAppDispatch, useAppSelector} from "../../../../app/hooks";
+import {PATH} from "../../../../common/components/RoutesBlock/RoutesBlock";
 import {Navigate, NavLink} from "react-router-dom";
 import {Button, Input} from "@mui/material";
 import {useFormik} from "formik";
-import {FormikErrorType} from "../login-page/Login";
+import {FormikErrorType} from "../../login-page/Login";
 import {TextField} from "@material-ui/core";
+import {setRecoveryEmailTC} from "../forgot-reducer";
 
 export const Recovery = () => {
 
     const dispatch = useAppDispatch()
+    const emailRecovery = useAppSelector(state => state.forgot.email)
 
-/*    if (emailRecovery) {
-        return (
-            <Navigate to={PATH.CHECK_EMAIL}/>
-        )
-    }*/
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -32,10 +29,16 @@ export const Recovery = () => {
             return errors
         },
         onSubmit: values => {
-            console.log(values.email)
+            dispatch(setRecoveryEmailTC(values.email))
             formik.resetForm()
         },
     })
+    if (emailRecovery) {
+        return (
+            <Navigate to={PATH.CHECK_EMAIL}/>
+        )
+    }
+
     return (
         <div className={'auth'}>
             <div style={{height: '456px'}} className={'auth_container'}>
@@ -56,6 +59,7 @@ export const Recovery = () => {
                         <span>Enter your email address and we will send you further instructions</span>
                     </div>
                     <Button
+
                         variant={'contained'}
                         type={'submit'}>Send Instructions
                     </Button>

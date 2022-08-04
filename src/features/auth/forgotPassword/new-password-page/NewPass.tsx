@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
-import '../auth.css'
-import {useAppDispatch, useAppSelector} from "../../../app/hooks";
+import '../../auth.css'
+import {useAppDispatch, useAppSelector} from "../../../../app/hooks";
 import {useParams} from "react-router-dom";
 import s from './NewPassword.module.css'
 import {Button, Input, TextField} from "@mui/material";
@@ -19,27 +19,25 @@ export const NewPass = () => {
 
     return (
         <div className={'auth'}>
-            <div className={'auth_container'}>
+            <div style={{height: '372px'}} className={'auth_container'}>
 
 
-                <div>
-                    <div className={s.newPassword}>
-                        <h1>Create new password</h1>
-                        <div>
-                            <Input defaultValue={newPassword}  type={'password'}
-                                    placeholder={'Password'}/>
-                        </div>
-                        <div className={s.text}>
-                            <span>Create new password and we will send you further instructions to email</span></div>
-                        <Button variant={'contained'}
+                <h1>Create new password</h1>
+                <form className={s.form}>
+                    <TextField variant={'standard'} type={'password'} name={'password'} placeholder={'Password'}/>
+                    <div className={s.text}>
+                        <span>Create new password and we will send you further instructions to email</span></div>
+                    <Button variant={'contained'}
                             className={s.superButton}
                             onClick={() => {
                                 //if (tokenId)
                                 // dispatch(newPasswordTC(newPassword, tokenId))
                             }}>Create new password
-                        </Button>
-                    </div>
-                </div>
+                    </Button>
+                </form>
+
+
+
 
 
             </div>
