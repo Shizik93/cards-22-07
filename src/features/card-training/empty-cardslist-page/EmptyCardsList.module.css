@@ -1,0 +1,31 @@
+.emptycardsListContainer {
+    display: flex;
+    flex-direction: column;
+    min-height: 600px;
+    width: 100%;
+}
+.emptycardsListHeaderLeft {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: start;
+    padding-bottom: 35px;
+}
+.emptycardsListHeaderCenter {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 35px;
+}
+i {
+    border: solid black;
+    border-width: 0 1px 1px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+.text {
+    padding-bottom: 30px;
+}

@@ -1,0 +1,27 @@
+.cardsListContainer {
+    display: flex;
+    flex-direction: column;
+    min-height: 600px;
+    width: 100%;
+}
+.cardsListHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+}
+.toolsContainer {
+    display: flex;
+    justify-content: space-between;
+}
+.tableContainer {
+    padding-top: 30px;
+}
+i {
+    border: solid black;
+    border-width: 0 1px 1px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(135deg);
+   }
+
