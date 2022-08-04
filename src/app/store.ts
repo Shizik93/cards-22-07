@@ -13,6 +13,7 @@ import {
     CardsListActionsType,
     cardsListReducer
 } from "../features/card-training/cardslist-page/cardslist-reducer/cardsListReducer";
+import {PageActionsType, PageReducer} from "../features/packCardManager/page/page-reducer";
 
 const rootReducer = combineReducers({
     app: appReducer,

@@ -1,6 +1,6 @@
 import axios, {AxiosResponse} from 'axios';
 import {UpdateUserDataType} from "./profile-reducer";
-import {RequestBodyType} from "../../page/page-reducer";
+import {RequestBodyType} from "../../packCardManager/page/page-reducer";
 
 const settings = {
     withCredentials: true,
@@ -9,6 +9,8 @@ const settings = {
 
 const instance = axios.create({
     baseURL: 'https://neko-back.herokuapp.com/2.0/',
+    // baseURL: 'https://localhost:7542/2.0/',
+
     ...settings
 })
 

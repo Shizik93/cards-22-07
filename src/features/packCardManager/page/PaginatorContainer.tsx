@@ -1,8 +1,9 @@
 import {useEffect} from "react";
-import {useAppDispatch, useAppSelector} from "../../app/hooks";
+import {useAppDispatch, useAppSelector} from "../../../app/hooks";
 import {getCardsTC} from "./page-reducer";
-import {Paginator} from "../../common/components/Paginator/Paginator";
-import Searchinator2, {Searchinator} from "../Search/Searchinator";
+import {Paginator} from "../../../common/components/Paginator/Paginator";
+import Searchinator2 from "../search/Searchinator";
+import Sortinator from "../sort/Sortinator";
 
 
 export const PaginatorContainer = () => {
@@ -10,8 +11,8 @@ export const PaginatorContainer = () => {
     let totalcardPacksCount = useAppSelector(state => state.page.cardPacksTotalCount)
     let currentPageNumber = useAppSelector(state => state.page.page)
     let pageCount = useAppSelector(state=> state.page.pageCount)
-    // let minCardsCount = useAppSelector(state=> state.page.minCardsCount)
-    // let maxCardsCount = useAppSelector(state=> state.page.maxCardsCount)
+    let minCardsCount = useAppSelector(state=> state.page.minCardsCount)
+    let maxCardsCount = useAppSelector(state=> state.page.maxCardsCount)
 
     useEffect(()=>{
         dispatch(getCardsTC({}))
@@ -31,6 +32,10 @@ export const PaginatorContainer = () => {
             />
             {/*<Searchinator/>*/}
             <Searchinator2/>
+            <Sortinator
+                minCardsCount={minCardsCount}
+                maxCardsCount={maxCardsCount}
+            />
         </>
 
     )

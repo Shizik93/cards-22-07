@@ -1,0 +1,44 @@
+.pageBlock {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 30px;
+
+}
+.firstItem {
+    width: 50px;
+    border: 1px solid;
+    display: flex;
+    justify-content: space-around;
+}
+.arrow {
+    width: 50px;
+    border: 1px solid;
+    display: flex;
+    justify-content: space-around;
+}
+.lastItem {
+    width: 50px;
+    border: 1px solid;
+    display: flex;
+    justify-content: space-around;
+}
+.chosedPage {
+    width: 40px;
+    display: flex;
+    justify-content: space-around;
+    background-color: whitesmoke;
+    border-radius: 2px;
+    padding: 3px;
+    border: 1px black solid;
+    font-weight: bolder;
+}
+
+.unChosedPage {
+    width: 40px;
+    display: flex;
+    justify-content: space-around;
+    padding: 1px;
+    border: 1px black solid;
+    font-weight: lighter;
+}
