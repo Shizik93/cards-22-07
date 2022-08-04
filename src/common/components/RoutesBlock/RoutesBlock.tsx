@@ -7,6 +7,8 @@ import {Recovery} from "../../../features/auth/recovery-page/Recovery";
 import {Registration} from "../../../features/auth/regist-page/Regist";
 import {Login} from "../../../features/auth/login-page/Login";
 import {PacksList} from "../../../features/card-training/packslist-page/PacksList";
+import {CardsList} from "../../../features/card-training/cardslist-page/CardsList";
+import {EmptyCardsList} from "../../../features/card-training/empty-cardslist-page/EmptyCardsList";
 
 
 export const PATH = {
@@ -16,6 +18,8 @@ export const PATH = {
     RECOVERYPAGE: '/recovery',
     REGISTRATIONPAGE: '/regist',
     PACKSLISTPAGE: '/packslist',
+    CARDSLISTPAGE: '/cardslist/:id',
+    EMPTYCARDSLISTPAGE: '/emptycardsslist',
 
 }
 
@@ -30,6 +34,8 @@ export const RoutesBlock = () => {
                 <Route path={PATH.RECOVERYPAGE} element={<Recovery/>}/>
                 <Route path={PATH.REGISTRATIONPAGE} element={<Registration/>}/>
                 <Route path={PATH.PACKSLISTPAGE} element={<PacksList/>}/>
+                <Route path={PATH.CARDSLISTPAGE} element={<CardsList/>}/>
+                <Route path={PATH.EMPTYCARDSLISTPAGE} element={<EmptyCardsList/>}/>
                 <Route path={'*'} element={<Error404/>}/>
             </Routes>
         </>
