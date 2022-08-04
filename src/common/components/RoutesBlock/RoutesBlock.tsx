@@ -9,8 +9,9 @@ import {Login} from "../../../features/auth/login-page/Login";
 import {PacksList} from "../../../features/card-training/packslist-page/PacksList";
 import {CardsList} from "../../../features/card-training/cardslist-page/CardsList";
 import {EmptyCardsList} from "../../../features/card-training/empty-cardslist-page/EmptyCardsList";
-import {PaginatorContainer} from "../../../features/page/PaginatorContainer";
 import {PaginatorContainer} from "../../../features/packCardManager/page/PaginatorContainer";
+
+
 
 
 export const PATH = {

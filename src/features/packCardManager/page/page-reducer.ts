@@ -40,8 +40,7 @@ const SET_PAGE = 'cards/SET-DATA-PAGE'
 export const PageReducer = (state: PagesStateType = pagesInitialState, action: AppActionsType): PagesStateType => {
     switch (action.type) {
         case SET_PAGE:
-            // let copy = {...state}
-            // copy = action.data
+
         return {...state,
             cardPacks:action.data.cardPacks,
             page:action.data.page,

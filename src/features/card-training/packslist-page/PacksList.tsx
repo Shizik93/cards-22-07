@@ -15,6 +15,7 @@ import {Button} from "@mui/material";
 
 import style from './Packslist.module.css'
 import '../../auth/auth.css'
+import {Searchinator} from "../../packCardManager/search/Searchinator";
 
 
 export const PacksList = () => {
@@ -42,7 +43,8 @@ export const PacksList = () => {
                         pack</Button>
                 </div>
                 <div className={style.toolsContainer}>
-                    <div><Search/></div>
+                    {/*<div><Search/></div>*/}
+                    <Searchinator/>
                     <div><ShowPacks/></div>
                     <div><CardsSlider/></div>
                 </div>
