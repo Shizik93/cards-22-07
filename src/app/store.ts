@@ -5,7 +5,7 @@ import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {ProfileActionsType, ProfileReducer} from "../features/auth/profile-page/profile-reducer";
 import {RegistrActionsType, registReducer} from "../features/auth/regist-page/registReducers/regist-reducer";
 import {LoginActionsType, loginReducer} from "../features/auth/login-page/login-reducer";
-import {PageActionsType, PageReducer} from "../features/page/page-reducer";
+import {PageActionsType, PageReducer} from "../features/packCardManager/page/page-reducer";
 
 const rootReducer = combineReducers({
 	app: appReducer,

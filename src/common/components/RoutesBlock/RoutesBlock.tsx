@@ -6,7 +6,7 @@ import {Profile} from "../../../features/auth/profile-page/Profile";
 import {Recovery} from "../../../features/auth/recovery-page/Recovery";
 import {Registration} from "../../../features/auth/regist-page/Regist";
 import {Login} from "../../../features/auth/login-page/Login";
-import {PaginatorContainer} from "../../../features/page/PaginatorContainer";
+import {PaginatorContainer} from "../../../features/packCardManager/page/PaginatorContainer";
 
 
 export const PATH = {
