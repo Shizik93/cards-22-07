@@ -32,16 +32,23 @@ const initialState = {
     error: null,
 
 }
-
-export type LoginActionsType = logoutUserType | setLoginType | setErrorType
+export type UserDataType = {
+    name: string;
+    email?: string;
+    avatar?: string;
+};
+export type LoginActionsType = logoutUserType | setLoginType | setErrorType | setUpdateUserDataType
 export const loginReducer = (state: initialStateType = initialState, action: AppActionsType) => {
     switch (action.type) {
         case "SET-LOGIN":
         case 'LOGOUT-USER': {
             return {...state, ...action.data}
         }
-        case "SET-ERROR":{
-            return {...state,error:action.error}
+        case "SET-ERROR": {
+            return {...state, error: action.error}
+        }
+        case 'SET-UPDATE-USER-DATA': {
+            return {...state, ...action.payload}
         }
         default: {
             return state
@@ -66,7 +73,7 @@ const setLoginAC = (data: initialStateType) => {
 type setLoginType = ReturnType<typeof setLoginAC>
 
 
-export const setLoginTC = (email: string, password: string, rememberMe: boolean) :AppThunk=> async (dispatch) => {
+export const setLoginTC = (email: string, password: string, rememberMe: boolean): AppThunk => async (dispatch) => {
     dispatch(setAppStatusAC('loading'))
     try {
         const data = await apiLogin.setLogin(email, password, rememberMe)
@@ -77,11 +84,11 @@ export const setLoginTC = (email: string, password: string, rememberMe: boolean)
         throw Error
     }
 }
-export const authMeTC = ():AppThunk => async (dispatch) => {
+export const authMeTC = (): AppThunk => async (dispatch) => {
     dispatch(setAppStatusAC('loading'))
     try {
         const data = await apiLogin.me()
-        dispatch(setLoginAC({...data.data,isAuth: true}))
+        dispatch(setLoginAC({...data.data, isAuth: true}))
         dispatch(setAppStatusAC('succeded'))
     } catch {
         dispatch(setAppStatusAC('failed'))
@@ -89,7 +96,7 @@ export const authMeTC = ():AppThunk => async (dispatch) => {
 
     }
 }
-export const logOutTC = ():AppThunk => async (dispatch) => {
+export const logOutTC = (): AppThunk => async (dispatch) => {
     dispatch(setAppStatusAC('loading'))
     try {
         await apiLogin.logOut()
@@ -108,3 +115,28 @@ export const setError = (error: string) => {
 }
 type setErrorType = ReturnType<typeof setError>
 
+const setUpdateUserData = (payload: UserDataType) => {
+    return {
+        type: 'SET-UPDATE-USER-DATA',
+        payload
+    } as const
+}
+type setUpdateUserDataType = ReturnType<typeof setUpdateUserData>
+
+export const UpdateUserTC = (avatar: string | ArrayBuffer | null, name: string): AppThunk => async (dispatch) => {
+    dispatch(setAppStatusAC('loading'))
+    try {
+        const data = await apiLogin.updateUser({name, avatar})
+        dispatch(setUpdateUserData({
+                name: data.data.updatedUser.name,
+                avatar: data.data.updatedUser.avatar,
+                email: data.data.updatedUser.email,
+            }
+        ))
+        dispatch(setAppStatusAC('succeded'))
+
+    } catch {
+        dispatch(setAppStatusAC('failed'))
+        throw Error
+    }
+}

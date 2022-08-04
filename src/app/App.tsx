@@ -11,6 +11,8 @@ import {useNavigate} from "react-router-dom";
 import {Preloader} from "../common/components/Preloader/Preloader";
 
 export const App = () => {
+    const nickName = useAppSelector(state => state.login.name)
+    const avatar = useAppSelector(state => state.login.avatar)
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const isAuth = useSelector<AppStoreType>(state => state.login.isAuth)
@@ -26,22 +28,34 @@ export const App = () => {
     return (
 
         <div className="App">
-            {status==='loading'&&<Preloader/>}
+            {status === 'loading' && <Preloader/>}
             <Box sx={{flexGrow: 1}}>
                 <AppBar style={{background: '#FCFCFC'}} color={'default'} position="static">
-                    <Toolbar style={{display: "flex", justifyContent: 'space-between'}}>
-                        <img alt={'logo'} src={logo}/>
-                        {isAuth
-                            ? <Button  onClick={() => {
-                                dispatch(logOutTC())
-                            }} variant={'contained'} color="primary">Sign Out</Button>
-                            : <Button  onClick={routeChange} variant={'contained'}
-                                      color="primary">Sign in</Button>}
+                    <Toolbar style={{justifyContent: 'center'}}>
+                        <div style={{display: 'flex', width: '80%', justifyContent: 'space-between'}}>
+                            <img alt={'logo'} src={logo}/>
+                            <div style={{
+
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                            }}>
+                                {isAuth
+                                    ? <div className={'name'}>{nickName}</div>
+
+
+                                    : <Button onClick={routeChange} variant={'contained'}
+                                              color="primary">Sign in</Button>}
+                                {avatar && <img className={'avatar'} src={avatar}/>}</div>
+
+                        </div>
 
                     </Toolbar>
                 </AppBar>
             </Box>
             <RoutesBlock/>
+
+
         </div>
     );
 }
