@@ -1,66 +1,74 @@
-import React, {useState} from 'react'
+import React, {ChangeEvent, useEffect, useState} from 'react'
 import {Navigate} from "react-router-dom";
 import styles from './profile.module.css'
 import hacker from './hacker.png'
-import {UpdateUserThunk} from "./profile-reducer";
 import {useAppDispatch, useAppSelector} from "../../../app/hooks";
-import {Button} from "@mui/material";
+import {Button, Grid, Input} from "@mui/material";
 import SuperEditableSpan from "../../../common/components/superComponents/c4-SuperEditableSpan/SuperEditableSpan";
 import {PATH} from "../../../common/components/RoutesBlock/RoutesBlock";
+import {logOutTC, UpdateUserTC} from "../login-page/login-reducer";
 
 
 export const ProfilePage = React.memo(() => {
     const dispatch = useAppDispatch()
     const isAuth = useAppSelector(state => state.login.isAuth)
-    const profileData = useAppSelector(state => state.login)
-    const [nikName, setNikName] = useState<string>(profileData.name === null ? 'your name' : profileData.name)
-    const [editImage ,setEditImage] = useState(false)
+    const avatar = useAppSelector(state => state.login.avatar)
+    const name = useAppSelector(state => state.login.name)
+    const email = useAppSelector(state => state.login.email)
+    const [nikName, setNikName] = useState<string>(name === null ? 'your name' : name)
+    const UpdateAvatar = (e: ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files
+        if (file !== null) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                if (e.target !== null&&name) {
+                    dispatch(UpdateUserTC(e.target.result,name))
+                }
+            }
+            reader.readAsDataURL(file[0])
+        }
+
+    }
     const onEventHandler = () => {
+
         changeNikName(nikName)
     }
     const changeNikName = (newName: string) => {
         if (newName) {
-            dispatch(UpdateUserThunk({name: newName}))
+            dispatch(UpdateUserTC(avatar ? avatar : '', newName))
         }
     }
+    // useEffect(() => {
+    //     dispatch(AuthMeThunk())
+    // }, [])
 
     if (!isAuth) {
         return <Navigate to={PATH.LOGINPAGE}/>
     }
     return <>
-        <div className={styles.container}>
-            <h3 className={styles.title}><b>Personal Information</b></h3>
-            <div className={styles.avatar}
-                 onMouseEnter={()=>setEditImage(true)}
-                 onMouseLeave={()=>setEditImage(false)}>
-                {/*<img src={profileData.avatar?profileData.avatar:hacker} alt={'user image'}/>*/}
-                <img
-                    src={profileData.avatar ? profileData.avatar : hacker}
-                    alt={'user image'}
-
-                />
-                {editImage
-                    ?<div className={styles.avatarButton}>
-                    <Button variant={'outlined'} color={'inherit'} size={'small'}>new image</Button>
+        <div></div>
+        <Grid container justifyContent={'center'}>
+            <Grid item className={styles.form}>
+                <div>
+                    <SuperEditableSpan
+                        value={nikName === null ? undefined : nikName}
+                        onChangeText={setNikName}
+                        onBlur={onEventHandler}
+                        onEnter={onEventHandler}
+                    />
                 </div>
-                :""}
-            </div>
-
-            <div className={styles.name}>
-                <b>Name:</b><SuperEditableSpan
-                    value={nikName === null ? undefined : nikName}
-                    onChangeText={setNikName}
-                    onBlur={onEventHandler}
-                    onEnter={onEventHandler}
-                />
-            </div>
-            <div className={styles.profileEmail}>
-                <b>Email:</b> <span>{profileData.email}</span>
-            </div>
-
-
-
-        </div>
+                <div className={styles.profile}>
+                    {/*<img src={profileData.avatar?profileData.avatar:hacker} alt={'user image'}/>*/}
+                    <img src={avatar ? avatar : hacker} alt={'user image'}/>
+                </div>
+               <Input type={'file'} onChange={UpdateAvatar}/>
+                <br/>
+                email: <div>{email}</div>
+                <Button onClick={() => {
+                    dispatch(logOutTC())
+                }}>LogOut</Button>
+            </Grid>
+        </Grid>
     </>
 
 

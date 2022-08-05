@@ -70,6 +70,7 @@ export const AuthMeThunk = (): AppThunk => async (dispatch) => {
     }
 }
 export const UpdateUserThunk = (domainModel: UpdateDomainUserType): AppThunk => async (dispatch, getState: () => AppStoreType) => {
+    debugger
 
     const profile = getState().login
         const apiModel: UpdateUserDataType = {

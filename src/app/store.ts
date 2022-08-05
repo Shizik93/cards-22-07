@@ -6,6 +6,11 @@ import {ProfileActionsType, ProfileReducer} from "../features/auth/profile-page/
 import {RegistrActionsType, registReducer} from "../features/auth/regist-page/registReducers/regist-reducer";
 import {LoginActionsType, loginReducer} from "../features/auth/login-page/login-reducer";
 import {
+	forgotReducer,
+	forgotReducerActionsType,
+	setRecoveryEmailType
+} from "../features/auth/forgotPassword/forgot-reducer";
+import {
     PacksListActionsType,
     packsListReducer
 } from "../features/card-training/packslist-page/packslist-reducer/packsListReducer";
@@ -16,11 +21,12 @@ import {
 import {PageActionsType, PageReducer} from "../features/packCardManager/page/page-reducer";
 
 const rootReducer = combineReducers({
-    app: appReducer,
-    login: loginReducer,
-    profile: ProfileReducer,
-    registration: registReducer,
-    packsList: packsListReducer,
+	app: appReducer,
+	login:loginReducer,
+	profile: ProfileReducer,
+	registration: registReducer,
+	forgot:forgotReducer,
+	packsList: packsListReducer,
     cardsList: cardsListReducer,
 	page: PageReducer
 })
@@ -30,6 +36,7 @@ export type AppRootStateType = ReturnType<typeof rootReducer>
 export type AppStoreType = ReturnType<typeof store.getState>
 export type AppActionsType = ProfileActionsType | AppReducerActionsType | LoginActionsType | RegistrActionsType
     | PacksListActionsType | CardsListActionsType |PageActionsType
+export type AppActionsType = ProfileActionsType | AppReducerActionsType|LoginActionsType|RegistrActionsType|setRecoveryEmailType|forgotReducerActionsType
 
 export type AppDispatch = ThunkDispatch<AppRootStateType,unknown,AppActionsType>
 export type AppThunk<ReturnType = void> = ThunkAction<

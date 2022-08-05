@@ -1,19 +1,23 @@
 import axios, {AxiosResponse} from "axios";
-
+type DataType={
+    name:string
+    avatar: string | ArrayBuffer | null
+}
+type UpdateUserResponse={
+    updatedUser:ResponseLoginType
+    error?:string
+}
 type ResponseLoginType = {
     _id: string;
     email: string;
     name: string;
     avatar?: string;
     publicCardPacksCount: number;
-// количество колод
-
     created: Date;
     updated: Date;
     isAdmin: boolean;
-    verified: boolean; // подтвердил ли почту
+    verified: boolean;
     rememberMe: boolean;
-
     error?: string;
 }
 type LoginParamsType = {
@@ -46,6 +50,9 @@ export const apiLogin = {
     logOut() {
         return instance.delete<null,AxiosResponse<LogOutType>>('auth/me', {})
     },
+    updateUser(data:DataType){
+        return instance.put<null,AxiosResponse<UpdateUserResponse>>('auth/me',data)
+    }
 
 }
 

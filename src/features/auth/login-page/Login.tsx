@@ -8,15 +8,16 @@ import '../auth.css'
 import {setLoginTC} from "./login-reducer";
 import {useAppDispatch, useAppSelector} from "../../../app/hooks";
 
+export type FormikErrorType = {
+    email?: string
+    password?: string
+    rememberMe?: boolean
+}
 export const Login = () => {
 
     const isAuth = useAppSelector(state => state.login.isAuth)
     const dispatch = useAppDispatch()
-    type FormikErrorType = {
-        email?: string
-        password?: string
-        rememberMe?: boolean
-    }
+
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -89,7 +90,7 @@ export const Login = () => {
 
                     <div style={{display: 'flex', justifyContent: 'end'}}>
 
-                        <NavLink style={{textDecoration: 'none'}} to={PATH.NEWPASSPAGE}>Forgot password?</NavLink>
+                        <NavLink style={{textDecoration: 'none'}} to={PATH.RECOVERYPAGE}>Forgot password?</NavLink>
 
                     </div>
 
