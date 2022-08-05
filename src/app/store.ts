@@ -34,9 +34,8 @@ const rootReducer = combineReducers({
 export const store = createStore(rootReducer,applyMiddleware(thunk))
 export type AppRootStateType = ReturnType<typeof rootReducer>
 export type AppStoreType = ReturnType<typeof store.getState>
-export type AppActionsType = ProfileActionsType | AppReducerActionsType | LoginActionsType | RegistrActionsType
-    | PacksListActionsType | CardsListActionsType |PageActionsType
-export type AppActionsType = ProfileActionsType | AppReducerActionsType|LoginActionsType|RegistrActionsType|setRecoveryEmailType|forgotReducerActionsType
+export type AppActionsType = ProfileActionsType | AppReducerActionsType | LoginActionsType | RegistrActionsType | PacksListActionsType | CardsListActionsType |PageActionsType|setRecoveryEmailType|forgotReducerActionsType
+
 
 export type AppDispatch = ThunkDispatch<AppRootStateType,unknown,AppActionsType>
 export type AppThunk<ReturnType = void> = ThunkAction<
