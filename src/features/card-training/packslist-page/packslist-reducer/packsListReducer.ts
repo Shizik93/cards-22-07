@@ -5,7 +5,7 @@ import {
     packsListAPI,
     ResponseAddNewCardsPackType,
     ResponseEditCardsPackType,
-    ResponseCardsPackListType
+    ResponseCardsPackListType, RequestBodyType
 } from "../api-packslist/api-packsList";
 
 // const obj = {
@@ -17,21 +17,12 @@ import {
 
 export const initPacksListState = {
     cardPacks: [
-        // {
-        //     _id: '',
-        //     // user_id: '',
-        //     name: '',
-        //     user_name: '',
-        //     cardsCount: null,
-        //     // created: '',
-        //     updated: '',
-        // },
     ] as CardPackItemsType[],
     cardPacksTotalCount: 0,
     maxCardsCount: 0,
     minCardsCount: 0,
     page: 0,
-    pageCount: 0
+    pageCount: 5
 }
 
 export const packsListReducer = (state: InitPacksListStateType = initPacksListState, action: AppActionsType): InitPacksListStateType => {
@@ -73,10 +64,20 @@ export const EditCardsPackActionsAC = (payload: ResponseEditCardsPackType) =>
         type: 'EDIT-CARDSPACK', payload
     } as const)
 
-export const FetchCardsPackListTC = (): AppThunk => async (dispatch) => {
+export const FetchCardsPackListTC = (body:RequestBodyType): AppThunk => async (dispatch,getState) => {
+    let state = getState().packsList
+    let requestData:RequestBodyType = {
+        packName: body.packName,
+        min: body.min,
+        max: body.max,
+        sortPacks: body.sortPacks,
+        page: state.page,
+        pageCount: state.pageCount,
+        user_id: body.user_id
+    }
     try {
         dispatch(setAppStatusAC('loading'))
-        const res = await packsListAPI.fetchPacksList()
+        const res = await packsListAPI.fetchPacksList(body)
         dispatch(FetchPacksListActionsAC(res.data))
         dispatch(setAppStatusAC('succeded'))
     } catch (error: any) {

@@ -2,12 +2,12 @@ import React, {ChangeEvent, useEffect, useState} from 'react'
 import styles from './Search.module.css'
 import {useFormik} from "formik";
 import {useAppDispatch} from "../../../app/hooks";
-import {getCardsTC} from "../page/page-reducer";
 import {Button, FormControl, FormGroup, Grid, TextField} from "@material-ui/core";
 import SearchIcon from '@mui/icons-material/Search';
 
 import {useDebounce} from 'usehooks-ts'
 import {Divider, IconButton, InputBase, Paper} from "@mui/material";
+import {FetchCardsPackListTC} from "../../card-training/packslist-page/packslist-reducer/packsListReducer";
 
 type SearchPropsType = {
     // totalcardPacksCount: number
@@ -18,49 +18,49 @@ type SearchPropsType = {
     // maxCardsCount: number
 }
 
-export const Searchinator: React.FC<SearchPropsType> = () => {
-    const dispatch = useAppDispatch()
-    const formik = useFormik({
-        // validate: (values)=>{
-        // if(!values.email){
-        //     return {
-        //         search: 'Search is required'
-        //     }
-        // },
-        initialValues: {
-            packName: '',
-
-        },
-        onSubmit: values => {
-            dispatch(getCardsTC(values));
-        },
-    });
-    return (
-        <div className={styles.searchBlock}>
-            <Grid container justifyContent={'center'}>
-                <Grid item justifyContent={'center'}>
-                    <form onSubmit={formik.handleSubmit}>
-                        <FormControl>
-                            <FormGroup>
-                                <TextField
-                                    label="packName"
-                                    margin="normal"
-                                    {...formik.getFieldProps('packName')}
-                                />
-                                {formik.errors.packName ? <div>{formik.errors.packName}</div> : null}
-
-                                <Button type={'submit'} variant={'contained'} color={'primary'}>
-                                    Search
-                                </Button>
-                            </FormGroup>
-                        </FormControl>
-                    </form>
-                </Grid>
-            </Grid>
-
-        </div>
-    )
-}
+// export const Searchinator: React.FC<SearchPropsType> = () => {
+//     const dispatch = useAppDispatch()
+//     const formik = useFormik({
+//         // validate: (values)=>{
+//         // if(!values.email){
+//         //     return {
+//         //         search: 'Search is required'
+//         //     }
+//         // },
+//         initialValues: {
+//             packName: '',
+//
+//         },
+//         onSubmit: values => {
+//             // dispatch(getCardsTC(values));
+//         },
+//     });
+//     return (
+//         <div className={styles.searchBlock}>
+//             <Grid container justifyContent={'center'}>
+//                 <Grid item justifyContent={'center'}>
+//                     <form onSubmit={formik.handleSubmit}>
+//                         <FormControl>
+//                             <FormGroup>
+//                                 <TextField
+//                                     label="packName"
+//                                     margin="normal"
+//                                     {...formik.getFieldProps('packName')}
+//                                 />
+//                                 {formik.errors.packName ? <div>{formik.errors.packName}</div> : null}
+//
+//                                 <Button type={'submit'} variant={'contained'} color={'primary'}>
+//                                     Search
+//                                 </Button>
+//                             </FormGroup>
+//                         </FormControl>
+//                     </form>
+//                 </Grid>
+//             </Grid>
+//
+//         </div>
+//     )
+// }
 
 export default function Searchinator2() {
     const dispatch = useAppDispatch()
@@ -73,7 +73,7 @@ export default function Searchinator2() {
 
     // Fetch API (optional)
     useEffect(() => {
-        dispatch(getCardsTC({packName: value }))
+        dispatch(FetchCardsPackListTC({packName: value }))
         // Do fetch here...
         // Triggers when "debouncedValue" changes
     }, [debouncedValue])

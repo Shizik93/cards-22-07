@@ -1,6 +1,6 @@
 import axios, {AxiosResponse} from 'axios';
 import {UpdateUserDataType} from "./profile-reducer";
-import {RequestBodyType} from "../../packCardManager/page/page-reducer";
+import {RequestBodyType} from "../../card-training/packslist-page/api-packslist/api-packsList";
 
 const settings = {
     withCredentials: true,

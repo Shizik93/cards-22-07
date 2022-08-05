@@ -6,8 +6,19 @@ const instance = axios.create({
 })
 
 export const packsListAPI = {
-    fetchPacksList(): Promise<AxiosResponse<ResponseCardsPackListType>> {
-        return instance.get<ResponseCardsPackListType>(`cards/pack`)
+    fetchPacksList(data:RequestBodyType): Promise<AxiosResponse<ResponseCardsPackListType>> {
+        debugger
+        return instance.get<ResponseCardsPackListType>(`cards/pack`,{
+            params: {
+                packName: data.packName,
+                min: data.min,
+                max: data.max,
+                sortPacks: data.sortPacks,
+                page: data.page,
+                pageCount: data.pageCount,
+                user_id: data.user_id
+            }
+        })
     },
     deleteCardsPack(id: string): Promise<AxiosResponse<ResponseDeleteCardsPackType>> {
         return instance.delete<ResponseDeleteCardsPackType>(`cards/pack/?id=${id}`)
@@ -21,7 +32,15 @@ export const packsListAPI = {
             {cardsPack: { _id: id, name: 'DeniKonst'}})
     }
 }
-
+export type RequestBodyType = {
+    packName?: string
+    min?: number
+    max?: number
+    sortPacks?: any
+    page?: number
+    pageCount?: number
+    user_id?: string
+}
 export type CardPackItemsType = {
     _id: string
     // user_id?: string

@@ -1,11 +1,11 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import './App.css';
 import {PATH, RoutesBlock} from "../common/components/RoutesBlock/RoutesBlock";
 import {AppBar, Box, Button, Toolbar} from "@mui/material";
 import logo from "../assets/img/logo_incubator.png";
 import {useSelector} from "react-redux";
 import {AppStoreType} from "./store";
-import {authMeTC, logOutTC} from "../features/auth/login-page/login-reducer";
+import {logOutTC} from "../features/auth/login-page/login-reducer";
 import {useAppDispatch, useAppSelector} from "./hooks";
 import {useNavigate} from "react-router-dom";
 import {Preloader} from "../common/components/Preloader/Preloader";
@@ -18,9 +18,9 @@ export const App = () => {
     const routeChange = () => {
         navigate(PATH.LOGINPAGE)
     }
-    useEffect(() => {
-        dispatch(authMeTC())
-    }, [dispatch])
+    // useEffect(() => {
+    //     dispatch(authMeTC())
+    // }, [dispatch])
 
     return (
         <div className="App">

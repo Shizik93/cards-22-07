@@ -1,82 +1,64 @@
-import {AppActionsType, AppThunk} from "../../../app/store";
-import {setAppStatusAC} from "../../../app/app-reducer";
-import {pageAPI} from "../../auth/profile-page/profile-api";
-type CardPacksType = {
-    _id: string
-    user_id: string
-    name: string
-    cardsCount: number
-    created: string
-    updated: string
-}
-export type PagesStateType = {
-    cardPacks: CardPacksType[]
-    cardPacksTotalCount: number
-    maxCardsCount: number
-    minCardsCount: number
+import {AppActionsType} from "../../../app/store";
+
+export type RequestParamsStateType = {
+    packName: string
+    min: number
+    max: number
+    sortPacks: any
     page: number
     pageCount: number
+    user_id: string
 }
 
-const pagesInitialState:PagesStateType =
-{
-    cardPacks:[{
-        _id: '',
-        user_id: '',
-        name: '',
-        cardsCount: 0,
-        created: '',
-        updated: ''
-    }],
-    page: 1,
-    pageCount:4,
-    cardPacksTotalCount: 0,
-    minCardsCount:0,
-    maxCardsCount:0,
+const RequestParamsState: RequestParamsStateType =
+    {
+        packName: '',
+        min: 0,
+        max: 0,
+        sortPacks: 0,
+        page: 0,
+        pageCount: 1,
+        user_id: ''
 
-}
+    }
 
-const SET_PAGE = 'cards/SET-DATA-PAGE'
-export const PageReducer = (state: PagesStateType = pagesInitialState, action: AppActionsType): PagesStateType => {
+
+const SET_REQUEST_PARAMS = 'cards/SET-REQUEST'
+export const PageReducer = (state: RequestParamsStateType = RequestParamsState, action: AppActionsType): RequestParamsStateType => {
     switch (action.type) {
-        case SET_PAGE:
+        case SET_REQUEST_PARAMS:
 
-        return {...state,
-            cardPacks:action.data.cardPacks,
-            page:action.data.page,
-            pageCount:action.data.pageCount,
-            cardPacksTotalCount: action.data.cardPacksTotalCount,
-            minCardsCount: action.data.minCardsCount,
-            maxCardsCount: action.data.maxCardsCount,
-        }
+            return {
+                ...state,
+                packName: action.data.packName,
+                min: action.data.minCardsCount,
+                max: action.data.maxCardsCount,
+                sortPacks:action.data.sortPacks,
+                page: action.data.page,
+                pageCount: action.data.pageCount,
+
+            }
 
 
         default:
             return state
     }
 }
-export const setPageDataAC = ({...data}) => ({type: SET_PAGE, data} as const)
-export type RequestBodyType = {
-    packName?: string
-    min?: number
-    max?: number
-    sortPacks?: any
-    page?: number
-    pageCount?: number
-    user_id?: string
-}
+export const setPageDataAC = ({...data}) => ({type: SET_REQUEST_PARAMS, data} as const)
 
-export const getCardsTC = (body: RequestBodyType): AppThunk => async (dispatch,getState) => {
-    try {
-        dispatch(setAppStatusAC('loading'))
-        const data = await pageAPI.getCards(body)
-        dispatch(setPageDataAC({...data.data}))
-        dispatch(setAppStatusAC('succeded'))
-    } catch {
-        throw Error
-        dispatch(setAppStatusAC('failed'))
-    }
-}
+
+// export const getCardsTC = (body: RequestBodyType): AppThunk => async (dispatch, getState) => {
+//     try {
+//         dispatch(setAppStatusAC('loading'))
+//         const data = await packsListAPI.fetchPacksList(body)
+//         // dispatch(setPageDataAC({...data.data}))
+//         dispatch(FetchPacksListActionsAC({...data.data}))
+//         dispatch(setAppStatusAC('succeded'))
+//     } catch {
+//         throw Error
+//         dispatch(setAppStatusAC('failed'))
+//     }
+// }
 // export const UpdateUserThunk = (domainModel: UpdateDomainUserType): AppThunk => async (dispatch, getState: () => AppStoreType) => {
 //
 //     const profile = getState().login

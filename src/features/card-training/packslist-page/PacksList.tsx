@@ -1,5 +1,4 @@
 import React, {useEffect} from "react";
-import {Search} from "./packslist-components/search/Search";
 import {ShowPacks} from "./packslist-components/show-packs/ShowPacks";
 import {CardsSlider} from "./packslist-components/cards-slider/CardsSlider";
 import {useAppDispatch} from "../../../app/hooks";
@@ -15,14 +14,15 @@ import {Button} from "@mui/material";
 
 import style from './Packslist.module.css'
 import '../../auth/auth.css'
-import {Searchinator} from "../../packCardManager/search/Searchinator";
+import Searchinator2 from "../../packCardManager/search/Searchinator";
+import {PaginatorContainer} from "../../packCardManager/page/PaginatorContainer";
 
 
 export const PacksList = () => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(FetchCardsPackListTC())
+        dispatch(FetchCardsPackListTC({}))
     }, [dispatch])
 
     const HandleClickDelete = (id: string) => {
@@ -44,12 +44,15 @@ export const PacksList = () => {
                 </div>
                 <div className={style.toolsContainer}>
                     {/*<div><Search/></div>*/}
-                    <Searchinator/>
+                    <Searchinator2/>
                     <div><ShowPacks/></div>
                     <div><CardsSlider/></div>
                 </div>
                 <div className={style.tableContainer}>
                     <PacksListTable callbackDelete={HandleClickDelete} callbackEdit={HandleClickEdit}/>
+                </div>
+                <div>
+                    <PaginatorContainer/>
                 </div>
             </div>
         </div>
