@@ -22,27 +22,46 @@ export const App = () => {
         dispatch(authMeTC())
     }, [dispatch])
 
-
     return (
-
         <div className="App">
-            {status==='loading'&&<Preloader/>}
+            {status === 'loading' && <Preloader/>}
             <Box sx={{flexGrow: 1}}>
                 <AppBar style={{background: '#FCFCFC'}} color={'default'} position="static">
                     <Toolbar style={{display: "flex", justifyContent: 'space-between'}}>
                         <img alt={'logo'} src={logo}/>
                         {isAuth
-                            ? <Button  onClick={() => {
+                            ? <Button onClick={() => {
                                 dispatch(logOutTC())
                             }} variant={'contained'} color="primary">Sign Out</Button>
-                            : <Button  onClick={routeChange} variant={'contained'}
+                            : <Button onClick={routeChange} variant={'contained'}
                                       color="primary">Sign in</Button>}
-
                     </Toolbar>
                 </AppBar>
             </Box>
             <RoutesBlock/>
+            <div>
+                <Button onClick={() => {    // Блок кнопок для переключения между страницами
+                    navigate(PATH.LOGINPAGE)
+                }} variant={'contained'}
+                        color="primary">Login page</Button>
+                <Button onClick={() => {
+                    navigate(PATH.PACKSLISTPAGE)
+                }} variant={'contained'}
+                        color="primary">Packs list</Button>
+                <Button onClick={() => {
+                    navigate(PATH.CARDSLISTPAGE)
+                }} variant={'contained'}
+                        color="primary">Cards list</Button>
+                <Button onClick={() => {
+                    navigate(PATH.PROFILEPAGE)
+                }} variant={'contained'}
+                        color="primary">Profile page</Button>
+                <Button onClick={() => {
+                    navigate(PATH.EMPTYCARDSLISTPAGE)
+                }} variant={'contained'}
+                        color="primary">Empty Cards List</Button>
+            </div>
         </div>
-    );
+    )
 }
 

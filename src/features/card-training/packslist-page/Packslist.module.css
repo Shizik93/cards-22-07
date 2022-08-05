@@ -1,0 +1,36 @@
+.packsListContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-height: 816px;
+    width: 100%;
+}
+
+.packsListHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+}
+
+.tableContainer {
+    padding-top: 30px;
+}
+
+.toolsContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.packsList {
+    display: flex;
+    justify-content: center;
+   }
+
+.pageContainer {
+    display: flex;
+    align-items: center;
+    padding-top: 30px;
+}
+
+
