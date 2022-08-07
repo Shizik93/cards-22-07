@@ -7,7 +7,6 @@ const instance = axios.create({
 
 export const packsListAPI = {
     fetchPacksList(data:RequestBodyType): Promise<AxiosResponse<ResponseCardsPackListType>> {
-        debugger
         return instance.get<ResponseCardsPackListType>(`cards/pack`,{
             params: {
                 packName: data.packName,

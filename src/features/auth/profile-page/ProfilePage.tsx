@@ -3,14 +3,13 @@ import {Navigate, useNavigate} from "react-router-dom";
 import s from './profile.module.css'
 import hacker from './hacker.png'
 import {useAppDispatch, useAppSelector} from "../../../app/hooks";
-import {Button, IconButton, Input, TextField} from "@mui/material";
+import {Button, IconButton, TextField} from "@mui/material";
 import editNameLogo from '../../../assets/img/edit_name_logo.png'
 import {PATH} from "../../../common/components/RoutesBlock/RoutesBlock";
-import {logOutTC, setLoginTC, UpdateUserTC} from "../login-page/login-reducer";
+import {logOutTC, UpdateUserTC} from "../login-page/login-reducer";
 import setAvatarLogo from '../../../assets/img/set_avatar_log.png'
 import {useFormik} from "formik";
-import {FormikErrorType} from "../login-page/Login";
-import style from "../../card-training/cardslist-page/CardsList.module.css";
+
 
 
 export const ProfilePage = React.memo(() => {
