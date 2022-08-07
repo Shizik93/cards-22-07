@@ -1,6 +1,6 @@
 import {apiLogin} from "./api-login";
 import {AppActionsType, AppThunk} from "../../../app/store";
-import {setAppStatusAC} from "../../../app/app-reducer";
+import {setAppErrorAC, setAppStatusAC} from "../../../app/app-reducer";
 
 type initialStateType =
     {
@@ -79,9 +79,10 @@ export const setLoginTC = (email: string, password: string, rememberMe: boolean)
         const data = await apiLogin.setLogin(email, password, rememberMe)
         dispatch(setLoginAC({...data.data, isAuth: true}))
         dispatch(setAppStatusAC('succeded'))
-    } catch {
+    } catch(err:any) {
         dispatch(setAppStatusAC('failed'))
-        throw Error
+        dispatch(setAppErrorAC(err.response.data.error))
+
     }
 }
 export const authMeTC = (): AppThunk => async (dispatch) => {
@@ -90,9 +91,9 @@ export const authMeTC = (): AppThunk => async (dispatch) => {
         const data = await apiLogin.me()
         dispatch(setLoginAC({...data.data, isAuth: true}))
         dispatch(setAppStatusAC('succeded'))
-    } catch {
+    } catch(err:any) {
         dispatch(setAppStatusAC('failed'))
-        throw Error
+        dispatch(setAppErrorAC(err.response.data.error))
 
     }
 }
@@ -102,9 +103,9 @@ export const logOutTC = (): AppThunk => async (dispatch) => {
         await apiLogin.logOut()
         dispatch(logoutUserAC())
         dispatch(setAppStatusAC('succeded'))
-    } catch {
+    } catch(err:any) {
         dispatch(setAppStatusAC('failed'))
-        throw Error
+        dispatch(setAppErrorAC(err.response.data.error))
     }
 }
 export const setError = (error: string) => {

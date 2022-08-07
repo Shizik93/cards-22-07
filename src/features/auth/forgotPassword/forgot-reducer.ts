@@ -1,6 +1,6 @@
 import {AppThunk} from "../../../app/store";
 import {ApiForgot} from "./api-forgot";
-import {setAppStatusAC} from "../../../app/app-reducer";
+import {setAppErrorAC, setAppStatusAC} from "../../../app/app-reducer";
 
 type initialStateType = {
     email: string
@@ -42,9 +42,9 @@ export const setRecoveryEmailTC=(email:string):AppThunk=>async (dispatch)=>{
         dispatch(setRecoveryEmailAC(email))
         dispatch(setAppStatusAC('succeded'))
     }
-    catch {
+    catch(err:any) {
         dispatch(setAppStatusAC('failed'))
-        throw Error
+        dispatch(setAppErrorAC(err.response.data.error))
     }
 
 }
@@ -64,8 +64,8 @@ export const setNewPasswordTC=(tockenId:string,password:string):AppThunk=>async 
         dispatch(setNewPasswordAC(true))
         dispatch(setAppStatusAC('succeded'))
     }
-    catch {
+    catch(err:any) {
         dispatch(setAppStatusAC('failed'))
-        throw Error
+        dispatch(setAppErrorAC(err.response.data.error))
     }
 }

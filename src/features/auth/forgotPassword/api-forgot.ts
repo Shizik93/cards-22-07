@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from "axios";
-import {PATH} from "../../../common/components/RoutesBlock/RoutesBlock";
+
 
 type ResponceType = {
     info: string
