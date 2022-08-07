@@ -35,7 +35,6 @@ export const App = () => {
                         <div style={{display: 'flex', width: '80%', justifyContent: 'space-between'}}>
                             <img alt={'logo'} src={logo}/>
                             <div style={{
-
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'space-between',
