@@ -24,10 +24,11 @@ const RequestParamsState: RequestParamsStateType =
 
 
 const SET_REQUEST_PARAMS = 'cards/SET-REQUEST'
+const SET_MIN_MAX_CARDS = 'cards/SET_MIN_MAX_CARDS'
+
 export const PageReducer = (state: RequestParamsStateType = RequestParamsState, action: AppActionsType): RequestParamsStateType => {
     switch (action.type) {
         case SET_REQUEST_PARAMS:
-
             return {
                 ...state,
                 packName: action.data.packName,
@@ -38,6 +39,11 @@ export const PageReducer = (state: RequestParamsStateType = RequestParamsState, 
                 pageCount: action.data.pageCount,
 
             }
+        case SET_MIN_MAX_CARDS:
+            return {
+                ...state,
+
+            }
 
 
         default:
@@ -45,6 +51,7 @@ export const PageReducer = (state: RequestParamsStateType = RequestParamsState, 
     }
 }
 export const setPageDataAC = ({...data}) => ({type: SET_REQUEST_PARAMS, data} as const)
+export const setMinMaxDataAC = (data:{min:number, max: number}) => ({type: SET_MIN_MAX_CARDS, payload:{data}} as const)
 
 
 // export const getCardsTC = (body: RequestBodyType): AppThunk => async (dispatch, getState) => {
@@ -81,4 +88,5 @@ export const setPageDataAC = ({...data}) => ({type: SET_REQUEST_PARAMS, data} as
 
 export type PageActionsType =
     | ReturnType<typeof setPageDataAC>
+    | ReturnType<typeof setMinMaxDataAC>
 

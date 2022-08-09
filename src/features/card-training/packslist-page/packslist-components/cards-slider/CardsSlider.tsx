@@ -1,17 +1,23 @@
 import * as React from 'react';
+import {SyntheticEvent, useState} from 'react';
 import Box from '@mui/material/Box';
-import {useState} from "react";
 import {Slider} from "@mui/material";
+import {setMinMaxDataAC} from "../../packslist-reducer/packsListReducer";
+import {useAppDispatch, useAppSelector} from "../../../../../app/hooks";
 
-function valuetext(value: number) {
-    return `${value}°C`;
-}
 
 export const CardsSlider = () => {
-    const [value, setValue] = useState<number[]>([0, 10]);
+    const dispatch = useAppDispatch()
+    let minCardsCount = useAppSelector(state => state.packsList.minCardsCount)
+    let maxCardsCount = useAppSelector(state => state.packsList.maxCardsCount)
+    const [value, setValue] = useState<number[]>([minCardsCount, maxCardsCount]);
 
     const handleChange = (event: Event, newValue: number | number[]) => {
         setValue(newValue as number[]);
+    };
+
+    const handleChangeCommitted = (event: SyntheticEvent | Event) => {
+        dispatch(setMinMaxDataAC({min: value[0], max: value[1]}))
     };
 
     return (
@@ -22,10 +28,10 @@ export const CardsSlider = () => {
                     getAriaLabel={() => 'Temperature range'}
                     value={value}
                     onChange={handleChange}
+                    onChangeCommitted={handleChangeCommitted}
                     valueLabelDisplay='auto'
-                    min={0}
-                    max={10}
-                    getAriaValueText={valuetext}
+                    min={minCardsCount}
+                    max={maxCardsCount}
                 />
             </Box>
         </>

@@ -11,9 +11,8 @@ type PaginatorPropsType = {
     currentPageNumber: number
     onClickPageChosen: (pageNumber: number) => void
     portionSize?: number
-    minCardsCount: number
-    maxCardsCount: number
-    setCardsOnPage: (pageNumber: number) => void
+    minCardsShow: number
+    maxCardsShow: number
     }
 
 export const Paginator: React.FC<PaginatorPropsType> = (
@@ -22,15 +21,13 @@ export const Paginator: React.FC<PaginatorPropsType> = (
         currentPageNumber,
         onClickPageChosen,
         portionSize = 4,
-        minCardsCount=3,
-        maxCardsCount=9,
-        setCardsOnPage
+        minCardsShow=3,
+        maxCardsShow=9,
     }
 ) => {
-    // let [cardsOnPage, setCardsOnPage] = useState<number>(portionSize)
     let totalPages = Math.ceil(totalcardPacksCount / portionSize)
     let maxValueSelect =[]
-    for(let i=minCardsCount; i<=maxCardsCount;i++){
+    for(let i=minCardsShow; i<=maxCardsShow;i++){
         maxValueSelect.push(i)
     }
     let pages: Array<PageType> = []
@@ -70,15 +67,7 @@ export const Paginator: React.FC<PaginatorPropsType> = (
             }} className={styles.lastItem}>{totalPages}</button>}
             {/*<Select value={cardsOnPage} onChange={(e)=>setCardsOnPage(+e.currentTarget.value)}/>*/}
 
-            <select value={portionSize} onChange={(e) => setCardsOnPage(+e.currentTarget.value)}>*
-                {maxValueSelect.map((v,i) => {
-                    return (
-                        <option value={v} key={i}>{v}</option>
-                    )
-                })}
 
-
-            </select>
 
         </div>
     )
