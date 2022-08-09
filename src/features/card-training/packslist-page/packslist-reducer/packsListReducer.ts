@@ -3,9 +3,9 @@ import {setAppErrorAC, setAppStatusAC} from "../../../../app/app-reducer";
 import {
     CardPackItemsType,
     packsListAPI,
-    ResponseAddNewCardsPackType,
     ResponseEditCardsPackType,
-    ResponseCardsPackListType, RequestBodyType, ResponseAddNewCardsPackType
+    ResponseCardsPackListType,
+    RequestBodyType, ResponseAddNewCardsPackType,
 } from "../api-packslist/api-packsList";
 
 // const obj = {
@@ -28,7 +28,10 @@ export const initPacksListState = {
     min: 0,
     max: 110,
     sortPacks: 0,
-    user_id: ''
+    user_id: '',
+    token:'',
+    tokenDeathTime:0,
+    RequestBody: {} as RequestBodyType
 }
 const SET_MIN_MAX_CARDS = 'cards/SET_MIN_MAX_CARDS'
 const SET_PACKNAME = 'cards/SET_SET_PACKNAME'
@@ -69,26 +72,26 @@ export const packsListReducer = (state: InitPacksListStateType = initPacksListSt
         case SET_CURRENT_PAGE:
             return {...state,page:action.payload.data.page}
         case SET_USER_ID:
-            debugger
+
             return {...state,user_id: action.payload.data.user_id}
 
         default:
             return state
     }
 }
-export const FetchPacksListActionsAC = (payload: ResponseCardsPackListType) =>
+export const fetchPacksListActionsAC = (payload: ResponseCardsPackListType) =>
     ({
         type: 'FETCH-PACKSLIST', payload
     } as const)
-export const DeletePacksListActionsAC = (payload: string) =>
+export const deletePacksListActionsAC = (payload: string) =>
     ({
         type: 'DELETE-CARDSPACK', payload
     } as const)
-export const AddNewCardsPacksActionsAC = (payload: ResponseAddNewCardsPackType) =>
+export const addNewCardsPacksActionsAC = (payload: ResponseAddNewCardsPackType) =>
     ({
         type: 'ADD-NEW-CARDSPACK', payload
     } as const)
-export const EditCardsPackActionsAC = (payload: ResponseEditCardsPackType) =>
+export const editCardsPackActionsAC = (payload: ResponseEditCardsPackType) =>
     ({
         type: 'EDIT-CARDSPACK', payload
     } as const)
@@ -113,7 +116,7 @@ export const FetchCardsPackListTC = (/*body:RequestBodyType*/): AppThunk => asyn
     try {
         dispatch(setAppStatusAC('loading'))
         const res = await packsListAPI.fetchPacksList(requestData)
-        dispatch(FetchPacksListActionsAC(res.data))
+        dispatch(fetchPacksListActionsAC(res.data))
         dispatch(setAppStatusAC('succeded'))
     } catch (error: any) {
         dispatch(setAppErrorAC(error.message ? `${error.message}' more about concole error'` : 'Some error occurred'))
@@ -173,10 +176,6 @@ export type PacksListActionsType = FetchPacksListActionsType | DeleteCardsPackAc
     | ReturnType<typeof setPageCountAC>
     | ReturnType<typeof setCurrentPageAC>
     | ReturnType<typeof setUserIdAC>
-export type FetchPacksListActionsType = ReturnType<typeof FetchPacksListActionsAC>
-export type DeleteCardsPackActionsType = ReturnType<typeof DeletePacksListActionsAC>
-export type AddNewCardsPackActionsType = ReturnType<typeof AddNewCardsPacksActionsAC>
-export type EditCardsPackActionsType = ReturnType<typeof EditCardsPackActionsAC>
 export type FetchPacksListActionsType = ReturnType<typeof fetchPacksListActionsAC>
 export type DeleteCardsPackActionsType = ReturnType<typeof deletePacksListActionsAC>
 export type AddNewCardsPackActionsType = ReturnType<typeof addNewCardsPacksActionsAC>

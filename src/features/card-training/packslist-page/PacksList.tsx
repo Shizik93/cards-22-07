@@ -1,12 +1,11 @@
 import React, {useEffect} from "react";
 import {ShowPacks} from "./packslist-components/show-packs/ShowPacks";
 import {CardsSlider} from "./packslist-components/cards-slider/CardsSlider";
-import {useAppDispatch} from "../../../app/hooks";
+import {useAppDispatch, useAppSelector} from "../../../app/hooks";
 import {
     addNewPackTC,
-    deleteCardsPackTC,
-    // editCardsPackTC,
-    fetchCardsPackListTC
+    deleteCardsPackTC, FetchCardsPackListTC,
+
 } from "./packslist-reducer/packsListReducer";
 import {PacksListTable} from "./packslist-components/packslist-table/PacksListTable";
 
@@ -16,6 +15,7 @@ import style from './Packslist.module.css'
 import '../../auth/auth.css'
 import Searchinator2 from "../../packCardManager/search/Searchinator";
 import {PaginatorContainer} from "../../packCardManager/page/PaginatorContainer";
+import {AddCardsPackModal} from "../modals/AddCardsPackModal";
 
 
 export const PacksList = () => {
@@ -25,13 +25,13 @@ export const PacksList = () => {
     const handleClose = () => setOpen(false);
 
 
-    let page = useAppSelector(state => state.packsList.page)
+   /* let page = useAppSelector(state => state.packsList.page)
     let pageCount = useAppSelector(state=> state.packsList.pageCount)
     let min = useAppSelector(state => state.packsList.RequestBody.min)
     let max = useAppSelector(state => state.packsList.RequestBody.max)
     let packName = useAppSelector(state => state.packsList.RequestBody.packName)
     let user_id = useAppSelector(state => state.packsList.RequestBody.user_id)
-    // const isAuth = useAppSelector(state => state.login.isAuth)
+    // const isAuth = useAppSelector(state => state.login.isAuth)*/
 
     let page = useAppSelector(state => state.packsList.page)
     let pageCount = useAppSelector(state=> state.packsList.pageCount)
@@ -41,7 +41,6 @@ export const PacksList = () => {
     let user_id = useAppSelector(state => state.packsList.user_id)
 
     useEffect(() => {
-        debugger
         dispatch(FetchCardsPackListTC())
     }, [dispatch, page, pageCount, min, max, packName, user_id])
 

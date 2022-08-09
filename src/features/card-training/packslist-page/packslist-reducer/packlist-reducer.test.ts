@@ -1,6 +1,8 @@
+import React from "React"
+/*
 import {CardPackItemsType, ResponseCardsPackListType} from "../api-packslist/api-packsList";
 import {
-    FetchPacksListActionsAC,
+    fetchPacksListActionsAC,
     InitPacksListStateType,
     packsListReducer, setCurrentPageAC,
     setMinMaxDataAC,
@@ -75,7 +77,7 @@ test('current page should be set', ()=>{
     expect(endState.page).toBe(5)
 })
 test('packlist should be updated', ()=>{
-    let action = FetchPacksListActionsAC(payload)
+    let action = fetchPacksListActionsAC(payload)
     let endState = packsListReducer(initPacksListState, action)
 
     expect(endState).not.toBe(initPacksListState)
@@ -89,3 +91,4 @@ test('user_id should be updated', ()=>{
     expect(endState).not.toBe(initPacksListState)
     expect(endState.user_id).toBe('userID')
 })
+*/
