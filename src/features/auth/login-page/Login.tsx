@@ -2,7 +2,7 @@ import React from 'react'
 import s from './Login.module.css'
 import {Button, Checkbox, FormControlLabel, TextField} from "@mui/material";
 import {PATH} from "../../../common/components/RoutesBlock/RoutesBlock";
-import {Navigate, NavLink, useNavigate} from "react-router-dom";
+import {Navigate, NavLink} from "react-router-dom";
 import {useFormik} from "formik";
 import '../auth.css'
 import {setLoginTC} from "./login-reducer";
@@ -46,7 +46,7 @@ export const Login = () => {
 
     if (isAuth) {
 
-        return <Navigate to={PATH.PROFILEPAGE}/>
+        return <Navigate to={PATH.PACKSLISTPAGE}/>
     }
 
     return (
@@ -97,7 +97,7 @@ export const Login = () => {
                     <Button type='submit' variant={'contained'}>Sign In</Button>
 
                 </form>
-                <span>Dont have an account?</span>
+                <span className={s.text}>Already have an account?</span>
                 <NavLink to={PATH.REGISTRATIONPAGE}>Sign Up</NavLink>
 
 

@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from "axios";
-import {PATH} from "../../../common/components/RoutesBlock/RoutesBlock";
+
 
 type ResponceType = {
     info: string
@@ -19,7 +19,7 @@ export const ApiForgot = {
             from: "test-front-admin <AlexKayuda>", // можно указать разработчика фронта)
             message: `<div style="background-color: lime; padding: 15px">	
 	password recovery link: 
-	<a href='http://localhost:3000/#/new_pass/$token$'>
+	<a href='https://shizik93.github.io/cards-22-07/#/new_pass/$token$'>
 	link</a></div>`
         })
     },

@@ -1,43 +1,91 @@
-.container {
-    border: 5px black hidden;
-    border-radius: 10px;
-    height: 95%;
-    width: 95%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 auto;
-    justify-content: space-around;
-    background-color: whitesmoke;
+.back_button{
+    top:-60px;
+    left: -350px;
+    position: absolute;
+    height: 24px;
+    width: 200px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+
 }
 
-.title {
-}
-
-.avatar {
+.avatar_container {
+    width: 150px;
+    height: 150px;
 
 }
 
 .avatarButton {
-    position: absolute;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    left: 118px;
+    top: -32px;
+    z-index: 1;
+    position: relative;
 }
 
-.avatar img {
-    padding: 40px;
-    border-radius: 100px;
-    width: 100px;
-    height: 100px;
-    border: 2px solid;
+.avatar {
+    margin-top: -50px;
+    display:block;
+    border-radius: 75px;
+    width: 150px;
+    height: 150px;
 }
 
-.name {
+.text_container{
+    margin-top: -100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 80px;
+    justify-content: space-around;
 }
-
-.editName {
-    background-color: deepskyblue;
+.edite_name_container{
+    display: flex;
+    align-items: center;
 }
-
-.profileEmail {
-
+.edite_name_container img{
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
 }
+.name{
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+    /* identical to box height, or 120% */
 
+    display: flex;
+    align-items: center;
+
+    color: #000000;
+}
+.email{
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    /* identical to box height, or 171% */
+
+    display: flex;
+    align-items: center;
+
+    color: #000000;
+
+    opacity: 0.5;
+}
+.button_logout{
+  background-color: #FFFFFF;
+    color: black;
+    width: 127px;
+    height: 36px;
+    box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.3);
+    filter: drop-shadow(0px 2px 10px rgba(109, 109, 109, 0.25));
+}
