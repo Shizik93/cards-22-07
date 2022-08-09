@@ -28,7 +28,6 @@ export const PacksList = () => {
     let user_id = useAppSelector(state => state.packsList.user_id)
 
     useEffect(() => {
-        debugger
         dispatch(FetchCardsPackListTC())
     }, [dispatch, page, pageCount, min, max, packName, user_id])
 

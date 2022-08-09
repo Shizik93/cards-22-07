@@ -62,7 +62,6 @@ export const packsListReducer = (state: InitPacksListStateType = initPacksListSt
         case SET_CURRENT_PAGE:
             return {...state,page:action.payload.data.page}
         case SET_USER_ID:
-            debugger
             return {...state,user_id: action.payload.data.user_id}
 
         default:
