@@ -3,9 +3,8 @@ import {setAppErrorAC, setAppStatusAC} from "../../../../app/app-reducer";
 import {
     CardPackItemsType,
     packsListAPI,
-    ResponseAddNewCardsPackType,
     ResponseEditCardsPackType,
-    ResponseCardsPackListType, RequestBodyType
+    ResponseCardsPackListType, RequestBodyType, ResponseAddNewCardsPackType
 } from "../api-packslist/api-packsList";
 
 // const obj = {
@@ -16,13 +15,17 @@ import {
 // }
 
 export const initPacksListState = {
-    cardPacks: [
-    ] as CardPackItemsType[],
+    cardPacks: [] as CardPackItemsType[],
+    newCardsPack: {} as CardPackItemsType,
+    updatedCardsPack: {} as CardPackItemsType,
     cardPacksTotalCount: 0,
     maxCardsCount: 0,
     minCardsCount: 0,
     page: 0,
-    pageCount: 5
+    pageCount: 5,
+    token: '',
+    tokenDeathTime: 0,
+    RequestBody: {} as RequestBodyType
 }
 
 export const packsListReducer = (state: InitPacksListStateType = initPacksListState, action: AppActionsType): InitPacksListStateType => {
@@ -39,46 +42,42 @@ export const packsListReducer = (state: InitPacksListStateType = initPacksListSt
             }
         case 'DELETE-CARDSPACK':
             return {...state, cardPacks: state.cardPacks.filter(tl => tl._id !== action.payload)}
-        // case 'ADD-NEW-CARDSPACK':
-        //     return {...state}
-        // case 'EDIT-CARDSPACK':
-        //     return {...state}
+        case 'ADD-NEW-CARDSPACK':
+            return {
+                ...state, cardPacks: [{...action.payload.newCardsPack}, ...state.cardPacks],
+                token: action.payload.token, tokenDeathTime: action.payload.tokenDeathTime
+            }
+        case 'EDIT-CARDSPACK':
+            return {
+                ...state, cardPacks: [{...action.payload.updatedCardsPack}, ...state.cardPacks],
+                token: action.payload.token, tokenDeathTime: action.payload.tokenDeathTime
+            }
         default:
             return state
     }
 }
-export const FetchPacksListActionsAC = (payload: ResponseCardsPackListType) =>
+export const fetchPacksListActionsAC = (payload: ResponseCardsPackListType) =>
     ({
         type: 'FETCH-PACKSLIST', payload
     } as const)
-export const DeletePacksListActionsAC = (payload: string) =>
+export const deletePacksListActionsAC = (payload: string) =>
     ({
         type: 'DELETE-CARDSPACK', payload
     } as const)
-export const AddNewCardsPacksActionsAC = (payload: ResponseAddNewCardsPackType) =>
+export const addNewCardsPacksActionsAC = (payload: ResponseAddNewCardsPackType) =>
     ({
         type: 'ADD-NEW-CARDSPACK', payload
     } as const)
-export const EditCardsPackActionsAC = (payload: ResponseEditCardsPackType) =>
+export const editCardsPackActionsAC = (payload: ResponseEditCardsPackType) =>
     ({
         type: 'EDIT-CARDSPACK', payload
     } as const)
 
-export const FetchCardsPackListTC = (body:RequestBodyType): AppThunk => async (dispatch,getState) => {
-    let state = getState().packsList
-    let requestData:RequestBodyType = {
-        packName: body.packName,
-        min: body.min,
-        max: body.max,
-        sortPacks: body.sortPacks,
-        page: state.page,
-        pageCount: state.pageCount,
-        user_id: body.user_id
-    }
+export const fetchCardsPackListTC = (body: RequestBodyType): AppThunk => async (dispatch) => {
     try {
         dispatch(setAppStatusAC('loading'))
         const res = await packsListAPI.fetchPacksList(body)
-        dispatch(FetchPacksListActionsAC(res.data))
+        dispatch(fetchPacksListActionsAC(res.data))
         dispatch(setAppStatusAC('succeded'))
     } catch (error: any) {
         dispatch(setAppErrorAC(error.message ? `${error.message}' more about concole error'` : 'Some error occurred'))
@@ -88,11 +87,11 @@ export const FetchCardsPackListTC = (body:RequestBodyType): AppThunk => async (d
     }
 }
 
-export const DeleteCardsPackTC = (id: string): AppThunk => async (dispatch) => {
+export const deleteCardsPackTC = (id: string): AppThunk => async (dispatch) => {
     try {
         dispatch(setAppStatusAC('loading'))
         await packsListAPI.deleteCardsPack(id)
-        dispatch(DeletePacksListActionsAC(id))
+        dispatch(deletePacksListActionsAC(id))
         dispatch(setAppStatusAC('succeded'))
     } catch (error: any) {
         dispatch(setAppErrorAC(error.message ? `${error.message}' more about concole error'` : 'Some error occurred'))
@@ -102,11 +101,11 @@ export const DeleteCardsPackTC = (id: string): AppThunk => async (dispatch) => {
     }
 }
 
-export const AddNewPackTC = (): AppThunk => async (dispatch) => {
+export const addNewPackTC = (): AppThunk => async (dispatch) => {
     try {
         dispatch(setAppStatusAC('loading'))
         const res = await packsListAPI.addNewCardsPack()
-        dispatch(AddNewCardsPacksActionsAC(res.data))
+        dispatch(addNewCardsPacksActionsAC(res.data))
         dispatch(setAppStatusAC('succeded'))
     } catch (error: any) {
         dispatch(setAppErrorAC(error.message ? `${error.message}' more about concole error'` : 'Some error occurred'))
@@ -116,11 +115,11 @@ export const AddNewPackTC = (): AppThunk => async (dispatch) => {
     }
 }
 
-export const EditCardsPackTC = (id: string): AppThunk => async (dispatch) => {
+export const editCardsPackTC = (id: string): AppThunk => async (dispatch) => {
     try {
         dispatch(setAppStatusAC('loading'))
         const res = await packsListAPI.editCardsPack(id)
-        dispatch(EditCardsPackActionsAC(res.data))
+        dispatch(editCardsPackActionsAC(res.data))
         dispatch(setAppStatusAC('succeded'))
     } catch (error: any) {
         dispatch(setAppErrorAC(error.message ? `${error.message}' more about concole error'` : 'Some error occurred'))
@@ -133,7 +132,7 @@ export const EditCardsPackTC = (id: string): AppThunk => async (dispatch) => {
 export type InitPacksListStateType = typeof initPacksListState
 export type PacksListActionsType = FetchPacksListActionsType | DeleteCardsPackActionsType | AddNewCardsPackActionsType
     | EditCardsPackActionsType
-export type FetchPacksListActionsType = ReturnType<typeof FetchPacksListActionsAC>
-export type DeleteCardsPackActionsType = ReturnType<typeof DeletePacksListActionsAC>
-export type AddNewCardsPackActionsType = ReturnType<typeof AddNewCardsPacksActionsAC>
-export type EditCardsPackActionsType = ReturnType<typeof EditCardsPackActionsAC>
+export type FetchPacksListActionsType = ReturnType<typeof fetchPacksListActionsAC>
+export type DeleteCardsPackActionsType = ReturnType<typeof deletePacksListActionsAC>
+export type AddNewCardsPackActionsType = ReturnType<typeof addNewCardsPacksActionsAC>
+export type EditCardsPackActionsType = ReturnType<typeof editCardsPackActionsAC>

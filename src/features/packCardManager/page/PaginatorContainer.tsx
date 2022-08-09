@@ -1,6 +1,6 @@
 import {useAppDispatch, useAppSelector} from "../../../app/hooks";
 import {Paginator} from "../../../common/components/Paginator/Paginator";
-import {FetchCardsPackListTC} from "../../card-training/packslist-page/packslist-reducer/packsListReducer";
+import {fetchCardsPackListTC} from "../../card-training/packslist-page/packslist-reducer/packsListReducer";
 
 
 export const PaginatorContainer = () => {
@@ -13,12 +13,12 @@ export const PaginatorContainer = () => {
 
     const getCardsOnPage = (page: number) => {
         // dispatch(getCardsTC({page}))
-        dispatch(FetchCardsPackListTC({page}))
+        dispatch(fetchCardsPackListTC({page}))
 
             }
     const setCardsOnPage = (pageCount: number) => {
         // dispatch(getCardsTC({page}))
-        dispatch(FetchCardsPackListTC({pageCount}))
+        dispatch(fetchCardsPackListTC({pageCount}))
 
             }
     return (

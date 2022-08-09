@@ -1,7 +1,5 @@
 import React from 'react';
 import {CardsPackListButtons} from "../buttons/CardsPackListButtons";
-import {useSelector} from "react-redux";
-import {AppStoreType} from "../../../../../app/store";
 import {CardPackItemsType} from "../../api-packslist/api-packsList";
 
 import TableContainer from "@mui/material/TableContainer";
@@ -12,13 +10,14 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import {Link} from 'react-router-dom'
+import {useAppSelector} from "../../../../../app/hooks";
 
 type PacksListTableType = {
     callbackDelete: (id: string) => void
     callbackEdit: (id: string) => void
 }
 export const PacksListTable = (props: PacksListTableType) => {
-    let selector = useSelector<AppStoreType, Array<CardPackItemsType>>(state => state.packsList.cardPacks)
+      let selector = useAppSelector<Array<CardPackItemsType>>(state => state.packsList.cardPacks)
 
     return (
         <TableContainer component={Paper}>

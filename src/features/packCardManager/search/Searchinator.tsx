@@ -7,7 +7,7 @@ import SearchIcon from '@mui/icons-material/Search';
 
 import {useDebounce} from 'usehooks-ts'
 import {Divider, IconButton, InputBase, Paper} from "@mui/material";
-import {FetchCardsPackListTC} from "../../card-training/packslist-page/packslist-reducer/packsListReducer";
+import {fetchCardsPackListTC} from "../../card-training/packslist-page/packslist-reducer/packsListReducer";
 
 type SearchPropsType = {
     // totalcardPacksCount: number
@@ -73,7 +73,7 @@ export default function Searchinator2() {
 
     // Fetch API (optional)
     useEffect(() => {
-        dispatch(FetchCardsPackListTC({packName: value }))
+        dispatch(fetchCardsPackListTC({packName: value }))
         // Do fetch here...
         // Triggers when "debouncedValue" changes
     }, [debouncedValue])

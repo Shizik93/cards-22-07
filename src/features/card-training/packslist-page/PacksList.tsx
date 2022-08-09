@@ -3,10 +3,10 @@ import {ShowPacks} from "./packslist-components/show-packs/ShowPacks";
 import {CardsSlider} from "./packslist-components/cards-slider/CardsSlider";
 import {useAppDispatch} from "../../../app/hooks";
 import {
-    AddNewPackTC,
-    DeleteCardsPackTC,
-    EditCardsPackTC,
-    FetchCardsPackListTC
+    addNewPackTC,
+    deleteCardsPackTC,
+    editCardsPackTC,
+    fetchCardsPackListTC
 } from "./packslist-reducer/packsListReducer";
 import {PacksListTable} from "./packslist-components/packslist-table/PacksListTable";
 
@@ -22,34 +22,33 @@ export const PacksList = () => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(FetchCardsPackListTC({}))
+        dispatch(fetchCardsPackListTC({}))
     }, [dispatch])
 
-    const HandleClickDelete = (id: string) => {
-        dispatch(DeleteCardsPackTC(id))
+    const handleClickDelete = (id: string) => {
+        dispatch(deleteCardsPackTC(id))
     }
-    const HandleClickEdit = (id: string) => {
-        dispatch(EditCardsPackTC(id))
+    const handleClickEdit = (id: string) => {
+        dispatch(editCardsPackTC(id))
     }
-    const HandlerAddNewCardsPack = () => {
-        dispatch(AddNewPackTC())
+    const handlerAddNewCardsPack = () => {
+        dispatch(addNewPackTC())
     }
     return (
         <div className={'auth'}>
             <div className={style.packsListContainer}>
                 <div className={style.packsListHeader}>
                     <h2>Packs list</h2>
-                    <Button onClick={HandlerAddNewCardsPack} variant="contained" style={{height: '35px'}}>Add new
+                    <Button onClick={handlerAddNewCardsPack} variant="contained" style={{height: '35px'}}>Add new
                         pack</Button>
                 </div>
                 <div className={style.toolsContainer}>
-                    {/*<div><Search/></div>*/}
                     <Searchinator2/>
                     <div><ShowPacks/></div>
                     <div><CardsSlider/></div>
                 </div>
                 <div className={style.tableContainer}>
-                    <PacksListTable callbackDelete={HandleClickDelete} callbackEdit={HandleClickEdit}/>
+                    <PacksListTable callbackDelete={handleClickDelete} callbackEdit={handleClickEdit}/>
                 </div>
                 <div>
                     <PaginatorContainer/>
