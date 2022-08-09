@@ -1,14 +1,13 @@
 import axios, {AxiosResponse} from 'axios'
 
 const instance = axios.create({
-    baseURL:'https://neko-back.herokuapp.com/2.0/', /*process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0/',*/
+    baseURL: 'https://neko-back.herokuapp.com/2.0/', /*process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0/',*/
     withCredentials: true,
 })
 
 export const packsListAPI = {
-    fetchPacksList(data:RequestBodyType): Promise<AxiosResponse<ResponseCardsPackListType>> {
-        debugger
-        return instance.get<ResponseCardsPackListType>(`cards/pack`,{
+    fetchPacksList(data: RequestBodyType): Promise<AxiosResponse<ResponseCardsPackListType>> {
+        return instance.get<ResponseCardsPackListType>(`cards/pack`, {
             params: {
                 packName: data.packName,
                 min: data.min,
@@ -29,7 +28,7 @@ export const packsListAPI = {
     },
     editCardsPack(id: string) {
         return instance.put<ResponseEditCardsPackType, AxiosResponse<ResponseEditCardsPackType>, RequestEditCardsPackType>(`cards/pack/`,
-            {cardsPack: { _id: id, name: 'DeniKonst'}})
+            {cardsPack: {_id: id, name: 'DeniKonst'}})
     }
 }
 export type RequestBodyType = {
@@ -76,6 +75,8 @@ export type RequestAddNewCardsPackType = {
     cardsPack: { name: string }
 }
 export type RequestEditCardsPackType = {
-    cardsPack: { _id: string,
-    name: string}
+    cardsPack: {
+        _id: string,
+        name: string
+    }
 }
