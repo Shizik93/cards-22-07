@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useState} from 'react'
-import {Navigate, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import s from './profile.module.css'
 import hacker from './hacker.png'
 import {useAppDispatch, useAppSelector} from "../../../app/hooks";
@@ -15,7 +15,6 @@ import {useFormik} from "formik";
 export const ProfilePage = React.memo(() => {
     const dispatch = useAppDispatch()
     const [editMode, setEditMode] = useState(false)
-    const isAuth = useAppSelector(state => state.login.isAuth)
     const avatar = useAppSelector(state => state.login.avatar)
     const name = useAppSelector(state => state.login.name)
     const email = useAppSelector(state => state.login.email)
@@ -61,10 +60,6 @@ export const ProfilePage = React.memo(() => {
             formik.resetForm()
         },
     })
-
-    if (!isAuth) {
-        return <Navigate to={PATH.LOGINPAGE}/>
-    }
     return (
 
         <div className={'auth'}>
