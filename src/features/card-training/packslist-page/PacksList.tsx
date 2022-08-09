@@ -22,6 +22,7 @@ export const PacksList = () => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
+        debugger
         dispatch(FetchCardsPackListTC({}))
     }, [dispatch])
 

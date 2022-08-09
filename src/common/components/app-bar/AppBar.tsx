@@ -19,7 +19,10 @@ import {AppStoreType} from "../../../app/store";
 import {Button} from "@mui/material";
 
 
-const settings = [{name: 'Profile', page: PATH.PROFILEPAGE}, {name: 'Logout', page: PATH.LOGINPAGE}];
+const settings = [
+    {name: 'Profile', page: PATH.PROFILEPAGE},
+    {name: 'Logout', page: PATH.LOGINPAGE}
+];
 
 export const ResponsiveAppBar = () => {
 
@@ -96,6 +99,7 @@ export const ResponsiveAppBar = () => {
                                     const onClickHandler = () => {
                                         if (setting.page === PATH.LOGINPAGE) {
                                             dispatch(logOutTC())
+                                            navigate(setting.page)
                                         } else {
                                             navigate(setting.page)
                                         }
