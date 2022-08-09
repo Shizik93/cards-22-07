@@ -73,7 +73,7 @@ export default function Searchinator2() {
 
     // Fetch API (optional)
     useEffect(() => {
-        dispatch(fetchCardsPackListTC({packName: value }))
+        // dispatch(fetchCardsPackListTC({packName: value }))
         // Do fetch here...
         // Triggers when "debouncedValue" changes
     }, [debouncedValue])

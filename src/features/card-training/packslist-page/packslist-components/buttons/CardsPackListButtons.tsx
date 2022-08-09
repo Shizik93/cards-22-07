@@ -3,8 +3,10 @@ import {useNavigate} from "react-router-dom";
 
 type ButtonsProps = {
     id: string
+    title: string
     callbackDelete: (id: string) => void
     callbackEdit: (id: string) => void
+    editNewCardsPack: (title: string) => void
 }
 
 export const CardsPackListButtons = (props: ButtonsProps) => {
@@ -14,6 +16,7 @@ export const CardsPackListButtons = (props: ButtonsProps) => {
     }
     const HandlerEdit = () => {
         props.callbackEdit(props.id)
+        props.editNewCardsPack(props.title)
     }
     const handleLearn = () => {
         navigate(`/cardslist/${props.id}`)

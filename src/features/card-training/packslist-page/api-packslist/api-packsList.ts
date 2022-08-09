@@ -14,9 +14,9 @@ export const packsListAPI = {
     deleteCardsPack(id: string): Promise<AxiosResponse<ResponseDeleteCardsPackType>> {
         return instance.delete<ResponseDeleteCardsPackType>(`cards/pack/?id=${id}`)
     },
-    addNewCardsPack() {
+    addNewCardsPack(title: string) {
         //<тип нашего ответа от сервера, полный тип ответа от сервера который обернут в объект аксиоса, тип даты который мы отправляем на сервер>
-        return instance.post<ResponseAddNewCardsPackType, AxiosResponse<ResponseAddNewCardsPackType>, RequestAddNewCardsPackType>(`cards/pack`, {cardsPack: {name: 'DenisPL'}})
+        return instance.post<ResponseAddNewCardsPackType, AxiosResponse<ResponseAddNewCardsPackType>, RequestAddNewCardsPackType>(`cards/pack`, {cardsPack: {name: title}})
     },
     editCardsPack(id: string) {
         return instance.put<ResponseEditCardsPackType, AxiosResponse<ResponseEditCardsPackType>, RequestEditCardsPackType>(`cards/pack/`,

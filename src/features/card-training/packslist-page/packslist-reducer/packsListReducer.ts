@@ -101,10 +101,10 @@ export const deleteCardsPackTC = (id: string): AppThunk => async (dispatch) => {
     }
 }
 
-export const addNewPackTC = (): AppThunk => async (dispatch) => {
+export const addNewPackTC = (title: string): AppThunk => async (dispatch) => {
     try {
         dispatch(setAppStatusAC('loading'))
-        const res = await packsListAPI.addNewCardsPack()
+        const res = await packsListAPI.addNewCardsPack(title)
         dispatch(addNewCardsPacksActionsAC(res.data))
         dispatch(setAppStatusAC('succeded'))
     } catch (error: any) {
