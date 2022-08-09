@@ -13,9 +13,10 @@ import {Button} from "@mui/material";
 
 import style from './Packslist.module.css'
 import '../../auth/auth.css'
-import Searchinator2 from "../../packCardManager/search/Searchinator";
+
 import {PaginatorContainer} from "../../packCardManager/page/PaginatorContainer";
 import {AddCardsPackModal} from "../modals/AddCardsPackModal";
+import {Searchinator2} from "../../packCardManager/search/Searchinator";
 
 
 export const PacksList = () => {
@@ -32,7 +33,7 @@ export const PacksList = () => {
     let packName = useAppSelector(state => state.packsList.RequestBody.packName)
     let user_id = useAppSelector(state => state.packsList.RequestBody.user_id)
     // const isAuth = useAppSelector(state => state.login.isAuth)*/
-
+let isAuth=useAppSelector(state => state.login.isAuth)
     let page = useAppSelector(state => state.packsList.page)
     let pageCount = useAppSelector(state=> state.packsList.pageCount)
     let min = useAppSelector(state => state.packsList.min)
@@ -41,7 +42,7 @@ export const PacksList = () => {
     let user_id = useAppSelector(state => state.packsList.user_id)
 
     useEffect(() => {
-        dispatch(FetchCardsPackListTC())
+        isAuth&&dispatch(FetchCardsPackListTC())
     }, [dispatch, page, pageCount, min, max, packName, user_id])
 
     const handleClickDelete = (id: string) => {
