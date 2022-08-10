@@ -14,8 +14,8 @@ import {useAppSelector} from "../../../../../app/hooks";
 
 type PacksListTableType = {
     callbackDelete: (id: string) => void
-    callbackEdit: (id: string) => void
-    editNewCardsPack: (title: string) => void
+    titleCardsPack: (id: string, title: string) => void
+    addNewCardsPack: (title: string) => void
 }
 export const PacksListTable = (props: PacksListTableType) => {
       let selector = useAppSelector<Array<CardPackItemsType>>(state => state.packsList.cardPacks)
@@ -44,7 +44,8 @@ export const PacksListTable = (props: PacksListTableType) => {
                             <TableCell align="center">{row.updated}</TableCell>
                             <TableCell align="center">{row.user_name}</TableCell>
                             <TableCell align="center">{<CardsPackListButtons
-                                callbackDelete={props.callbackDelete} callbackEdit={props.callbackEdit} editNewCardsPack={props.editNewCardsPack} title={row.name}
+                                callbackDelete={props.callbackDelete} titleCardsPack={props.titleCardsPack}
+                                addNewCardsPack={props.addNewCardsPack} title={row.name}
                                 id={row._id}/>}</TableCell>
                         </TableRow>
                     ))}

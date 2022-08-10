@@ -154,10 +154,10 @@ export const addNewPackTC = (title: string): AppThunk => async (dispatch) => {
     }
 }
 
-export const editCardsPackTC = (id: string): AppThunk => async (dispatch) => {
+export const editCardsPackTC = (id: string, newTitle: string): AppThunk => async (dispatch) => {
     try {
         dispatch(setAppStatusAC('loading'))
-        const res = await packsListAPI.editCardsPack(id)
+        const res = await packsListAPI.editCardsPack(id, newTitle)
         dispatch(editCardsPackActionsAC(res.data))
         dispatch(setAppStatusAC('succeded'))
     } catch (error: any) {
