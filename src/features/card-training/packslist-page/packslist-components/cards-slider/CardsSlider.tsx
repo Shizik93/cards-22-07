@@ -10,7 +10,9 @@ export const CardsSlider = () => {
     const dispatch = useAppDispatch()
     let minCardsCount = useAppSelector(state => state.packsList.minCardsCount)
     let maxCardsCount = useAppSelector(state => state.packsList.maxCardsCount)
-    const [value, setValue] = useState<number[]>([minCardsCount, maxCardsCount]);
+    let min = useAppSelector(state => state.packsList.min)
+    let max = useAppSelector(state => state.packsList.max)
+    const [value, setValue] = useState<number[]>([min, max]);
 
     const handleChange = (event: Event, newValue: number | number[]) => {
         setValue(newValue as number[]);

@@ -48,7 +48,6 @@ export const packsListReducer = (state: InitPacksListStateType = initPacksListSt
                 cardPacksTotalCount: action.payload.cardPacksTotalCount,
                 maxCardsCount: action.payload.maxCardsCount,
                 minCardsCount: action.payload.minCardsCount,
-
                 pageCount: action.payload.pageCount
             }
         case 'DELETE-CARDSPACK':
