@@ -10,8 +10,8 @@ import {Button} from "@mui/material";
 
 import style from './CardsList.module.css'
 import '../../auth/auth.css'
-import {AddCardsPackModal} from "../modals/AddCardsPackModal";
-import {AddCardsModal} from "../modals/AddCardsModal";
+import {AddCardModal} from "../modals/AddCardsModal";
+import {EditCardModal} from "../modals/EditCardModal";
 
 export const CardsList = () => {
     const dispatch = useAppDispatch()
@@ -20,12 +20,12 @@ export const CardsList = () => {
 
     const [openAddCard, setOpenAddCard] = React.useState(false);
     const [openEditCard, setOpenEditCard] = React.useState(false);
-    const [previousTitleCard, setpreviousTitleCard] = React.useState('');
+    const [previousQuestion, setpreviousQuestion] = React.useState('');
+    const [previousAnswer, setpreviousAnswer] = React.useState('');
     const [idCard, setIdCard] = React.useState('');
 
-    const handleOpen = () => setOpenAddCard(true);
+
     const handleClose = () => setOpenAddCard(false);
-    const handleOpenEdit = () => setOpenEditCard(true);
     const handleCloseEdit = () => setOpenEditCard(false);
 
     useEffect(() => {
@@ -35,13 +35,18 @@ export const CardsList = () => {
     const handleClickDelete = (id: string) => {
         dispatch(DeleteCardTC(id))
     }
-    const handleClickEdit = (id: string) => {
-        dispatch(EditCardTC(id))
-    }
-    const handlerToPacksList = () => {
-        navigate(PATH.PACKSLISTPAGE)
+
+    const handleClickEdit = (id: string, previousQuestion: string, previousAnswer: string) => {
+        setOpenEditCard(true)
+        setIdCard(id)
+        setpreviousQuestion(previousQuestion)
+        setpreviousAnswer(previousAnswer)
     }
 
+    const handlerEditCard = (newQuestion: string, newAnswer: string) => {
+        dispatch(EditCardTC(idCard, newQuestion, newAnswer))
+        setOpenEditCard(false)
+    }
 
     const handleAddNewCardModal = () => {
         setOpenAddCard(true)
@@ -49,11 +54,19 @@ export const CardsList = () => {
 
     const handlerAddNewCard = (question: string, answer: string) => {
         id && dispatch(AddNewCardTC(id, question, answer))
+        setOpenAddCard(false)
     }
+
+    const handlerToPacksList = () => {
+        navigate(PATH.PACKSLISTPAGE)
+    }
+
     return (
         <div className={'auth'}>
-            <AddCardsModal open={openAddCard} addNewCard={handlerAddNewCard} handleOpen={handleOpen}
-                           handleClose={handleClose}/>
+            <AddCardModal open={openAddCard} addNewCard={handlerAddNewCard}
+                          handleClose={handleClose}/>
+            <EditCardModal open={openEditCard} editCard={handlerEditCard} previousQuestion={previousQuestion}
+                           previousAnswer={previousAnswer} handleCloseEdit={handleCloseEdit}/>
             <div className={style.cardsListContainer}>
                 <div><Button onClick={handlerToPacksList}> <i className={style.left}></i> Back to Packs List
                 </Button></div>
@@ -61,13 +74,13 @@ export const CardsList = () => {
                 <div className={style.cardsListHeader}>
                     <h2>My Cards</h2>
                     <Button onClick={handleAddNewCardModal} variant="contained"
-                            style={{height:'35px'}}>Add new card</Button>
+                            style={{height: '35px'}}>Add new card</Button>
                 </div>
                 <div className={style.toolsContainer}>
                     <div><Search/></div>
                 </div>
                 <div className={style.tableContainer}>
-                    <CardsListTable callbackDelete={handleClickDelete} callbackEdit={handleClickEdit}/>
+                    <CardsListTable callbackDelete={handleClickDelete} getPreviousCard={handleClickEdit}/>
                 </div>
             </div>
         </div>

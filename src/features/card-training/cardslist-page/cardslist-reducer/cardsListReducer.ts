@@ -112,10 +112,10 @@ export const AddNewCardTC = (id: string, question: string, answer: string): AppT
     }
 }
 
-export const EditCardTC = (id: string): AppThunk => async (dispatch) => {
+export const EditCardTC = (id: string, newQuestion: string, newAnswer: string): AppThunk => async (dispatch) => {
     try {
         dispatch(setAppStatusAC('loading'))
-        const res = await cardsListAPI.editCard(id)
+        const res = await cardsListAPI.editCard(id, newQuestion, newAnswer)
         dispatch(EditCardAC(res.data))
         dispatch(setAppStatusAC('succeded'))
     } catch (error: any) {

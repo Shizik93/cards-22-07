@@ -2,17 +2,16 @@ import React, {ChangeEvent} from "react";
 import {BasicModal} from "./BasicModal";
 import Typography from "@mui/material/Typography";
 import ClearIcon from '@mui/icons-material/Clear';
-import {Button, Checkbox, FormControlLabel, FormGroup, TextField} from "@mui/material";
+import {Button, TextField} from "@mui/material";
 import style from './AddCardsPack.module.css'
 
 type PropsType = {
     open: boolean
-    handleOpen: () => void
     handleClose: () => void
     addNewCard: (question: string, answer: string) => void
 }
 
-export const AddCardsModal = (props: PropsType) => {
+export const AddCardModal = (props: PropsType) => {
     const [question, setQuestion] = React.useState('');
     const [answer, setAnswer] = React.useState('');
     const handleCloseModal = () => {

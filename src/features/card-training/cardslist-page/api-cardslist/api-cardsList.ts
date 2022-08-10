@@ -24,12 +24,12 @@ export const cardsListAPI = {
             }
         })
     },
-    editCard(id: string) {
+    editCard(id: string, newQuestion: string, newAnswer: string) {
         return instance.put<ResponseEditCardType, AxiosResponse<ResponseEditCardType>, RequestEditCardType>(`cards/card/?id=${id}`,
             {
                 card: {
-                    _id: id, question: 'new question',
-                    comments: 'new comments'
+                    _id: id, question: newQuestion,
+                    answer: newAnswer
                 }
             })
     }
@@ -71,7 +71,8 @@ export type RequestEditCardType = {
     card: {
         _id: string
         question: string
-        comments: string
+        answer: string
+        comments?: string
     }
 }
 

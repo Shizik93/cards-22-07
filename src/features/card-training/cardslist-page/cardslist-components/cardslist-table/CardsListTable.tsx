@@ -14,7 +14,7 @@ import {useAppSelector} from "../../../../../app/hooks";
 
 type CardsListTableType = {
     callbackDelete: (id: string) => void
-    callbackEdit: (id: string) => void
+    getPreviousCard: (id: string, previousQuestion: string, previousAnswer: string) => void
 }
 export const CardsListTable = (props: CardsListTableType) => {
     let selector =  useAppSelector<Array<CardItemsType>>(state => state.cardsList.cards)
@@ -41,8 +41,8 @@ export const CardsListTable = (props: CardsListTableType) => {
                             <TableCell align="center">{row.updated}</TableCell>
                             <TableCell align="center">{row.grade}</TableCell>
                             <TableCell align="center">{<CardsListButtons
-                                callbackDelete={props.callbackDelete} callbackEdit={props.callbackEdit}
-                                id={row._id}/>}</TableCell>
+                                callbackDelete={props.callbackDelete} getPreviousCard={props.getPreviousCard}
+                                id={row._id} previousQuestion={row.question} previousAnswer={row.answer}/>}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
