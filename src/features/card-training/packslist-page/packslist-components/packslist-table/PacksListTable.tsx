@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {CardsPackListButtons} from "../buttons/CardsPackListButtons";
 import {CardPackItemsType} from "../../api-packslist/api-packsList";
-
+import {TableSortLabel} from '@mui/material';
 import TableContainer from "@mui/material/TableContainer";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -10,7 +10,8 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import {Link} from 'react-router-dom'
-import {useAppSelector} from "../../../../../app/hooks";
+import {useAppDispatch, useAppSelector} from "../../../../../app/hooks";
+import {setSortColumnAC} from "../../packslist-reducer/packsListReducer";
 
 type PacksListTableType = {
     callbackDelete: (id: string) => void
@@ -18,16 +19,43 @@ type PacksListTableType = {
     editNewCardsPack: (title: string) => void
 }
 export const PacksListTable = (props: PacksListTableType) => {
-      let selector = useAppSelector<Array<CardPackItemsType>>(state => state.packsList.cardPacks)
+    const dispatch = useAppDispatch()
+    let selector = useAppSelector<Array<CardPackItemsType>>(state => state.packsList.cardPacks)
+    const sortPacks = useAppSelector(state => state.packsList.sortPacks)
+    let sortValue = +sortPacks[0]
+    const[sortUpOrDown, setSortUpOrDown] = useState<number>(sortValue)
+    const[title, setTitle] = useState('')
+
+
+
+    useEffect(()=>{
+        dispatch(setSortColumnAC({sortPacks: {value:sortUpOrDown, name:title}}))
+    },[sortUpOrDown])
+    const sortColumnHandler = ( name: string) => {
+        setSortUpOrDown(sortUpOrDown===0?1:0)
+        setTitle(name)
+
+    }
+
 
     return (
         <TableContainer component={Paper}>
             <Table aria-label="simple table">
                 <TableHead>
                     <TableRow>
+
                         <TableCell align="center">Name</TableCell>
-                        <TableCell align="center">Cards count</TableCell>
-                        <TableCell align="center">Update</TableCell>
+                        <TableCell align="center">
+                            <TableSortLabel
+                                direction={sortPacks==='1cardsCount'?'asc':'desc'}
+                                onClick={()=>{sortColumnHandler('cardsCount')}}>Cards count</TableSortLabel>
+                        </TableCell>
+
+                        <TableCell align="center">
+                            <TableSortLabel
+                                direction={sortPacks==='1updated'?'asc':'desc'}
+                                onClick={()=>{sortColumnHandler('updated')}}>Update</TableSortLabel>
+                        </TableCell>
                         <TableCell align="center">Author name</TableCell>
                         <TableCell align="center">Actions</TableCell>
                     </TableRow>
@@ -44,7 +72,8 @@ export const PacksListTable = (props: PacksListTableType) => {
                             <TableCell align="center">{row.updated}</TableCell>
                             <TableCell align="center">{row.user_name}</TableCell>
                             <TableCell align="center">{<CardsPackListButtons
-                                callbackDelete={props.callbackDelete} callbackEdit={props.callbackEdit} editNewCardsPack={props.editNewCardsPack} title={row.name}
+                                callbackDelete={props.callbackDelete} callbackEdit={props.callbackEdit}
+                                editNewCardsPack={props.editNewCardsPack} title={row.name}
                                 id={row._id}/>}</TableCell>
                         </TableRow>
                     ))}

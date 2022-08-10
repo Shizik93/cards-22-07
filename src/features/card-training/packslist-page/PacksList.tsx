@@ -2,11 +2,7 @@ import React, {useEffect} from "react";
 import {ShowPacks} from "./packslist-components/show-packs/ShowPacks";
 import {CardsSlider} from "./packslist-components/cards-slider/CardsSlider";
 import {useAppDispatch, useAppSelector} from "../../../app/hooks";
-import {
-    addNewPackTC,
-    deleteCardsPackTC, FetchCardsPackListTC,
-
-} from "./packslist-reducer/packsListReducer";
+import {addNewPackTC, deleteCardsPackTC, FetchCardsPackListTC,} from "./packslist-reducer/packsListReducer";
 import {PacksListTable} from "./packslist-components/packslist-table/PacksListTable";
 
 import {Button} from "@mui/material";
@@ -40,10 +36,10 @@ let isAuth=useAppSelector(state => state.login.isAuth)
     let max = useAppSelector(state => state.packsList.max)
     let packName = useAppSelector(state => state.packsList.packName)
     let user_id = useAppSelector(state => state.packsList.user_id)
-
+    let sortPacks = useAppSelector(state => state.packsList.sortPacks)
     useEffect(() => {
         isAuth&&dispatch(FetchCardsPackListTC())
-    }, [dispatch, page, pageCount, min, max, packName, user_id])
+    }, [dispatch, page, pageCount, min, max, packName, user_id, sortPacks])
 
     const handleClickDelete = (id: string) => {
         dispatch(deleteCardsPackTC(id))

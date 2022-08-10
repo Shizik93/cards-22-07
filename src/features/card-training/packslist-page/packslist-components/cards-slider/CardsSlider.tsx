@@ -33,7 +33,7 @@ export const CardsSlider = () => {
                     onChangeCommitted={handleChangeCommitted}
                     valueLabelDisplay='auto'
                     min={minCardsCount}
-                    max={maxCardsCount}
+                    max={maxCardsCount===0?110:maxCardsCount}
                 />
             </Box>
         </>
