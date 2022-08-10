@@ -1,4 +1,4 @@
-import {AppActionsType, AppStoreType, AppThunk} from "../../../app/store";
+import {AppActionsType, AppStateType, AppThunk} from "../../../app/store";
 import {profileApi} from "./profile-api";
 import {setAppStatusAC} from "../../../app/app-reducer";
 
@@ -58,7 +58,7 @@ export const delProfileDataUserAC = () => ({
 } as const)
 
 export const AuthMeThunk = (): AppThunk => async (dispatch) => {
-   debugger
+
     try {
         dispatch(setAppStatusAC('loading'))
         const data = await profileApi.me()
@@ -69,10 +69,8 @@ export const AuthMeThunk = (): AppThunk => async (dispatch) => {
         dispatch(setAppStatusAC('failed'))
     }
 }
-export const UpdateUserThunk = (domainModel: UpdateDomainUserType): AppThunk => async (dispatch, getState: () => AppStoreType) => {
-    debugger
-
-    const profile = getState().login
+export const UpdateUserThunk = (domainModel: UpdateDomainUserType): AppThunk => async (dispatch, getState: () => AppStateType) => {
+        const profile = getState().login
         const apiModel: UpdateUserDataType = {
             name: domainModel.name,
             avatar: profile.avatar ===null?'':profile.avatar

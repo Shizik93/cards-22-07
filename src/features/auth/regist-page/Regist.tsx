@@ -3,7 +3,7 @@ import {useFormik} from 'formik';
 import React from 'react'
 import {useSelector} from 'react-redux';
 import {Navigate, NavLink} from "react-router-dom";
-import {AppStoreType} from "../../../app/store";
+import {AppStateType} from "../../../app/store";
 import {registrationTC} from "./registReducers/regist-reducer";
 import '../auth.css'
 import style from './Regist.module.css'
@@ -13,7 +13,7 @@ import {useAppDispatch} from "../../../app/hooks";
 
 export const Registration = () => {
 
-    const isRegistered = useSelector<AppStoreType>(state => state.registration.isRegistered)
+    const isRegistered = useSelector<AppStateType>(state => state.registration.isRegistered)
     const dispatch = useAppDispatch()
     const formik = useFormik({
         initialValues: {

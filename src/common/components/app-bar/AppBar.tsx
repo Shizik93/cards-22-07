@@ -15,15 +15,18 @@ import {PATH} from "../RoutesBlock/RoutesBlock";
 import {useNavigate} from "react-router-dom";
 import {logOutTC} from "../../../features/auth/login-page/login-reducer";
 import {useSelector} from "react-redux";
-import {AppStoreType} from "../../../app/store";
+import {AppStateType} from "../../../app/store";
 import {Button} from "@mui/material";
 
 
-const settings = [{name: 'Profile', page: PATH.PROFILEPAGE}, {name: 'Logout', page: PATH.LOGINPAGE}];
+const settings = [
+    {name: 'Profile', page: PATH.PROFILEPAGE},
+    {name: 'Logout', page: PATH.LOGINPAGE}
+];
 
 export const ResponsiveAppBar = () => {
 
-    const isAuth = useSelector<AppStoreType>(state => state.login.isAuth)
+    const isAuth = useSelector<AppStateType>(state => state.login.isAuth)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const avatar = useAppSelector(state => state.login.avatar)
@@ -96,6 +99,7 @@ export const ResponsiveAppBar = () => {
                                     const onClickHandler = () => {
                                         if (setting.page === PATH.LOGINPAGE) {
                                             dispatch(logOutTC())
+                                            navigate(setting.page)
                                         } else {
                                             navigate(setting.page)
                                         }

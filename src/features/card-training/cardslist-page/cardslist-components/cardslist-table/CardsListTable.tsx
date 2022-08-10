@@ -1,6 +1,4 @@
 import React from 'react';
-import {useSelector} from "react-redux";
-import {AppStoreType} from "../../../../../app/store";
 import {CardItemsType} from "../../api-cardslist/api-cardsList";
 import {CardsListButtons} from "./buttons/CardsListButtons";
 
@@ -11,6 +9,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
+import {useAppSelector} from "../../../../../app/hooks";
 
 
 type CardsListTableType = {
@@ -18,7 +17,7 @@ type CardsListTableType = {
     callbackEdit: (id: string) => void
 }
 export const CardsListTable = (props: CardsListTableType) => {
-    let selector = useSelector<AppStoreType, Array<CardItemsType>>(state => state.cardsList.cards)
+    let selector =  useAppSelector<Array<CardItemsType>>(state => state.cardsList.cards)
 
     return (
         <TableContainer component={Paper}>
