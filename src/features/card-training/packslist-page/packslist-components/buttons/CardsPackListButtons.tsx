@@ -5,8 +5,8 @@ type ButtonsProps = {
     id: string
     title: string
     callbackDelete: (id: string) => void
-    callbackEdit: (id: string) => void
-    editNewCardsPack: (title: string) => void
+    titleCardsPack: (id: string, title: string) => void
+    addNewCardsPack: (title: string) => void
 }
 
 export const CardsPackListButtons = (props: ButtonsProps) => {
@@ -15,8 +15,7 @@ export const CardsPackListButtons = (props: ButtonsProps) => {
         props.callbackDelete(props.id)
     }
     const HandlerEdit = () => {
-        props.callbackEdit(props.id)
-        props.editNewCardsPack(props.title)
+        props.titleCardsPack(props.id, props.title)
     }
     const handleLearn = () => {
         navigate(`/cardslist/${props.id}`)

@@ -10,44 +10,77 @@ import {Button} from "@mui/material";
 
 import style from './CardsList.module.css'
 import '../../auth/auth.css'
+import {AddCardModal} from "../modals/AddCardsModal";
+import {EditCardModal} from "../modals/EditCardModal";
 
 export const CardsList = () => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const {id} = useParams<{ id: string }>()
 
+    const [openAddCard, setOpenAddCard] = React.useState(false);
+    const [openEditCard, setOpenEditCard] = React.useState(false);
+    const [previousQuestion, setpreviousQuestion] = React.useState('');
+    const [previousAnswer, setpreviousAnswer] = React.useState('');
+    const [idCard, setIdCard] = React.useState('');
+
+
+    const handleClose = () => setOpenAddCard(false);
+    const handleCloseEdit = () => setOpenEditCard(false);
+
     useEffect(() => {
         id && dispatch(FetchCardsListTC({id}))
     }, [dispatch])
 
-    const HandleClickDelete = (id: string) => {
+    const handleClickDelete = (id: string) => {
         dispatch(DeleteCardTC(id))
     }
-    const HandleClickEdit = (id: string) => {
-        dispatch(EditCardTC(id))
+
+    const handleClickEdit = (id: string, previousQuestion: string, previousAnswer: string) => {
+        setOpenEditCard(true)
+        setIdCard(id)
+        setpreviousQuestion(previousQuestion)
+        setpreviousAnswer(previousAnswer)
     }
-    const HandlerToPacksList = () => {
+
+    const handlerEditCard = (newQuestion: string, newAnswer: string) => {
+        dispatch(EditCardTC(idCard, newQuestion, newAnswer))
+        setOpenEditCard(false)
+    }
+
+    const handleAddNewCardModal = () => {
+        setOpenAddCard(true)
+    }
+
+    const handlerAddNewCard = (question: string, answer: string) => {
+        id && dispatch(AddNewCardTC(id, question, answer))
+        setOpenAddCard(false)
+    }
+
+    const handlerToPacksList = () => {
         navigate(PATH.PACKSLISTPAGE)
     }
-    const HandlerAddNewCard = () => {
-        id && dispatch(AddNewCardTC(id))
-    }
+
     return (
         <div className={'auth'}>
+            <AddCardModal open={openAddCard} addNewCard={handlerAddNewCard}
+                          handleClose={handleClose}/>
+            <EditCardModal open={openEditCard} editCard={handlerEditCard} previousQuestion={previousQuestion}
+                           previousAnswer={previousAnswer} handleCloseEdit={handleCloseEdit}/>
             <div className={style.cardsListContainer}>
-                <div><Button onClick={HandlerToPacksList}> <i className={style.left}></i> Back to Packs List
+                <div><Button onClick={handlerToPacksList}> <i className={style.left}></i> Back to Packs List
                 </Button></div>
 
                 <div className={style.cardsListHeader}>
-                    <h2>My Pack</h2>  <Button onClick={HandlerAddNewCard} variant="contained"
-                                              style={{height: '35px'}}>Add new
-                    card</Button>
+                    <h2>My Cards</h2>
+                    <Button onClick={handleAddNewCardModal} variant="contained"
+                            style={{height: '35px'}}>Add new card</Button>
                 </div>
                 <div className={style.toolsContainer}>
                     <div><Search/></div>
                 </div>
                 <div className={style.tableContainer}>
-                    <CardsListTable callbackDelete={HandleClickDelete} callbackEdit={HandleClickEdit}/>
+                    <CardsListTable callbackDelete={handleClickDelete} getPreviousCard={handleClickEdit}/>
                 </div>
             </div>
         </div>

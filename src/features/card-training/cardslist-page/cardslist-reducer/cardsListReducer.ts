@@ -10,12 +10,14 @@ import {
 
 export const initCardsListState = {
     cards: [] as CardItemsType[],
-    cardsTotalCount: null,
-    maxGrade: null,
-    minGrade: null,
-    page: null,
-    pageCount: null,
-    packUserId: ''
+    cardsTotalCount: 0,
+    maxGrade: 0,
+    minGrade: 0,
+    page: 0,
+    pageCount: 0,
+    packUserId: '',
+    token: '',
+    tokenDeathTime: 0
 }
 
 export const cardsListReducer = (state: InitCardsListStateType = initCardsListState, action: AppActionsType): InitCardsListStateType => {
@@ -43,9 +45,9 @@ export const cardsListReducer = (state: InitCardsListStateType = initCardsListSt
         case 'DELETE-CARD':
             return {...state, cards: state.cards.filter(tl => tl._id !== action.payload)}
         case 'ADD-NEW-CARD':
-            return {...state}
+            return {...state, cards: [{...action.payload.newCard}, ...state.cards], token: action.payload.token, tokenDeathTime: action.payload.tokenDeathTime}
         case 'EDIT-CARD':
-            return {...state}
+            return {...state, cards: state.cards.map(el=> el._id===action.payload.updatedCard._id?action.payload.updatedCard: el), token: action.payload.token, tokenDeathTime: action.payload.tokenDeathTime}
         default:
             return state
     }
@@ -96,10 +98,10 @@ export const DeleteCardTC = (id: string): AppThunk => async (dispatch) => {
     }
 }
 
-export const AddNewCardTC = (id: string): AppThunk => async (dispatch) => {
+export const AddNewCardTC = (id: string, question: string, answer: string): AppThunk => async (dispatch) => {
     try {
         dispatch(setAppStatusAC('loading'))
-        const res = await cardsListAPI.addNewCard(id)
+        const res = await cardsListAPI.addNewCard(id, question, answer)
         dispatch(AddNewCardAC(res.data))
         dispatch(setAppStatusAC('succeded'))
     } catch (error: any) {
@@ -110,10 +112,10 @@ export const AddNewCardTC = (id: string): AppThunk => async (dispatch) => {
     }
 }
 
-export const EditCardTC = (id: string): AppThunk => async (dispatch) => {
+export const EditCardTC = (id: string, newQuestion: string, newAnswer: string): AppThunk => async (dispatch) => {
     try {
         dispatch(setAppStatusAC('loading'))
-        const res = await cardsListAPI.editCard(id)
+        const res = await cardsListAPI.editCard(id, newQuestion, newAnswer)
         dispatch(EditCardAC(res.data))
         dispatch(setAppStatusAC('succeded'))
     } catch (error: any) {
