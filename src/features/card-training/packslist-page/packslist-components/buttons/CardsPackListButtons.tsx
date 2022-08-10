@@ -19,7 +19,8 @@ export const CardsPackListButtons = (props: ButtonsProps) => {
         props.editNewCardsPack(props.title)
     }
     const handleLearn = () => {
-        navigate(`/cardslist/${props.id}`)
+        navigate(`/learn-page/${props.id}`)
+
     }
     if (props.id === '') {
         return null
