@@ -47,7 +47,7 @@ export const App = () => {
 const NavigateButtons=()=>{
     const navigate = useNavigate()
     return(
-        <div>
+        <div className={'header'} >
             <Button onClick={() => {    // Блок кнопок для переключения между страницами
                 navigate(PATH.LOGINPAGE)
             }} variant={'contained'}
@@ -68,6 +68,7 @@ const NavigateButtons=()=>{
                 navigate(PATH.EMPTYCARDSLISTPAGE)
             }} variant={'contained'}
                     color="primary">Empty Cards List</Button>
+            <div style={{width:'25px',height:'25px',background:'#1976d2',borderRadius:'13px',marginLeft:'10px'}}/>
         </div>
     )
 }

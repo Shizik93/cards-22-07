@@ -99,7 +99,6 @@ export const ResponsiveAppBar = () => {
                                     const onClickHandler = () => {
                                         if (setting.page === PATH.LOGINPAGE) {
                                             dispatch(logOutTC())
-                                            navigate(setting.page)
                                         } else {
                                             navigate(setting.page)
                                         }
