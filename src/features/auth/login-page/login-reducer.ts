@@ -59,7 +59,20 @@ export const loginReducer = (state: initialStateType = initialState, action: App
 const logoutUserAC = () => {
     return {
         type: 'LOGOUT-USER',
-        data: initialState
+        data: {
+            isAuth: false,
+            _id: null,
+            email: null,
+            name: null,
+            avatar: null,
+            publicCardPacksCount: null,
+            created: null,
+            updated: null,
+            isAdmin: false,
+            verified: false,
+            rememberMe: false,
+            error: null,
+        }
     } as const
 }
 type logoutUserType = ReturnType<typeof logoutUserAC>
@@ -79,7 +92,7 @@ export const setLoginTC = (email: string, password: string, rememberMe: boolean)
         const data = await apiLogin.setLogin(email, password, rememberMe)
         dispatch(setLoginAC({...data.data, isAuth: true}))
         dispatch(setAppStatusAC('succeded'))
-    } catch(err:any) {
+    } catch (err: any) {
         dispatch(setAppStatusAC('failed'))
         dispatch(setAppErrorAC(err.response.data.error))
 
@@ -91,7 +104,7 @@ export const authMeTC = (): AppThunk => async (dispatch) => {
         const data = await apiLogin.me()
         dispatch(setLoginAC({...data.data, isAuth: true}))
         dispatch(setAppStatusAC('succeded'))
-    } catch(err:any) {
+    } catch (err: any) {
         dispatch(setAppStatusAC('failed'))
         dispatch(setAppErrorAC(err.response.data.error))
 
@@ -103,7 +116,7 @@ export const logOutTC = (): AppThunk => async (dispatch) => {
         await apiLogin.logOut()
         dispatch(logoutUserAC())
         dispatch(setAppStatusAC('succeded'))
-    } catch(err:any) {
+    } catch (err: any) {
         dispatch(setAppStatusAC('failed'))
         dispatch(setAppErrorAC(err.response.data.error))
     }

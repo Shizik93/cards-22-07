@@ -2,7 +2,7 @@
 
 }
 
-.name{
+.name {
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 500;
@@ -11,9 +11,23 @@
     color: #000000;
     text-align: center;
 }
+
 .avatar {
     margin-left: 15px;
     border-radius: 18px;
     width: 36px;
     height: 36px;
+}
+
+.header {
+    display: flex;
+    width: 670px;
+    transition-duration: 600ms;
+    transform: translate(-640px);
+
+}
+
+.header:hover {
+    transition-duration: 600ms;
+    transform: translate(0px);
 }

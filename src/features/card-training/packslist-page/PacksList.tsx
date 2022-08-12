@@ -21,7 +21,7 @@ import {EditCardsPackModal} from "../modals/EditCardsPackModal";
 import {DeleteCardsPackModal} from "../modals/DeleteCardsPackModal";
 
 
-export const PacksList = () => {
+export const PacksList =React.memo (() => {
     const dispatch = useAppDispatch()
 
     const [openAdd, setOpenAdd] = React.useState(false);
@@ -104,3 +104,4 @@ export const PacksList = () => {
         </div>
     )
 }
+)
