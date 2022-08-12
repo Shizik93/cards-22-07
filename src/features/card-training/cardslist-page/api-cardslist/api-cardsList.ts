@@ -8,8 +8,9 @@ const instance = axios.create({
 export const cardsListAPI = {
     fetchCardsList(body:RequestBodyCardsType): Promise<AxiosResponse<ResponseCardsListType>> {
         return instance.get<ResponseCardsListType>(`cards/card`, {
-            params: body
-            // cardsPack_id:body.cardsPack_id
+            params:
+            // body
+                {cardsPack_id:body.cardsPack_id}
         })
     },
     deleteCard(id: string): Promise<AxiosResponse<ResponseDeleteCardType>> {

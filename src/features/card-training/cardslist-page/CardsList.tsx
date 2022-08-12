@@ -50,7 +50,7 @@ export const CardsList = () => {
 
     useEffect(() => {
         id && dispatch(FetchCardsListTC({id}))
-    }, [dispatch, pageForEffect, pageCountForEffect])
+    }, [pageForEffect, pageCountForEffect])
 
 
     const handleAddNewCardModal = () => {
@@ -79,15 +79,13 @@ export const CardsList = () => {
     }
     const handlerDeleteCard = () => {
         dispatch(DeleteCardTC(idCard))
-        setOpenAddCard(false)
+        setOpenDeleteCard(false)
     }
 
     const handlerToPacksList = () => {
         navigate(PATH.PACKSLISTPAGE)
     }
-/*    const HandlerAddNewCard = () => {
-        id && dispatch(AddNewCardTC(id))
-    }*/
+
     const gradeHandler = (cardId: string, e: SyntheticEvent, value: number | null) => {
 
          if (e&&value!== null) {
