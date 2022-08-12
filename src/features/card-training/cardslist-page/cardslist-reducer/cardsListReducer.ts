@@ -13,7 +13,7 @@ export const initCardsListState = {
     cardsTotalCount: 0,
     maxGrade: 0,
     minGrade: 0,
-    page: 0,
+    page: 1,
     pageCount: 0,
     packUserId: '',
     token: '',
@@ -89,6 +89,7 @@ export const setPageAC = (payload: {page: number})=>({type:SET_PAGE_CARDS_LIST, 
 export const setPageCountAC = (payload: {pageCount: number})=>({type:SET_PAGE_COUNT_CARDS_LIST, payload}as const)
 
 export const FetchCardsListTC = ({id}: { id: string }): AppThunk => async (dispatch, getState) => {
+    debugger
     const state = getState().cardsList.requestBodyCards
     const requestCardsBody = {
         cardAnswer: state.cardAnswer,
@@ -102,7 +103,7 @@ export const FetchCardsListTC = ({id}: { id: string }): AppThunk => async (dispa
     }
     try {
         dispatch(setAppStatusAC('loading'))
-        const res = await cardsListAPI.fetchCardsList({id})
+        const res = await cardsListAPI.fetchCardsList(requestCardsBody)
         dispatch(FetchCardsListAC(res.data))
         dispatch(setAppStatusAC('succeded'))
     } catch (error: any) {
@@ -195,6 +196,8 @@ export const GradeCardTC = ( id: string, grade:number|null): AppThunk => async (
 export type InitCardsListStateType = typeof initCardsListState
 export type CardsListActionsType = FetchCardsListActionsType | DeleteCardActionsType | AddNewCardActionsType
     | EditCardActionsType
+    | ReturnType<typeof setPageAC>
+    | ReturnType<typeof setPageCountAC>
 export type FetchCardsListActionsType = ReturnType<typeof FetchCardsListAC>
 export type DeleteCardActionsType = ReturnType<typeof DeleteCardAC>
 export type AddNewCardActionsType = ReturnType<typeof AddNewCardAC>

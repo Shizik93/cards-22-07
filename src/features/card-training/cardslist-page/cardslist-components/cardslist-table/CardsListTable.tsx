@@ -21,7 +21,7 @@ type CardsListTableType = {
 }
 export const CardsListTable = (props: CardsListTableType) => {
     let selector =  useAppSelector<Array<CardItemsType>>(state => state.cardsList.cards)
-
+console.dir(selector)
     return (
         <TableContainer component={Paper}>
             <Table aria-label="simple table">
