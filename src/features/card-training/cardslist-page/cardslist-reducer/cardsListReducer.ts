@@ -89,14 +89,11 @@ export const setPageAC = (payload: {page: number})=>({type:SET_PAGE_CARDS_LIST, 
 export const setPageCountAC = (payload: {pageCount: number})=>({type:SET_PAGE_COUNT_CARDS_LIST, payload}as const)
 
 export const FetchCardsListTC = ({id}: { id: string }): AppThunk => async (dispatch, getState) => {
-    debugger
     const state = getState().cardsList.requestBodyCards
     const requestCardsBody = {
         cardAnswer: state.cardAnswer,
         cardQuestion: state.cardQuestion,
         cardsPack_id: id,
-        min: state.min,
-        max: state.max,
         sortCards: state.sortCards,
         page: state.page,
         pageCount: state.pageCount
