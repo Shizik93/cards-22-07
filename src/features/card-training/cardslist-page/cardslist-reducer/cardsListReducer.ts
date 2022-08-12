@@ -123,6 +123,32 @@ export const EditCardTC = (id: string): AppThunk => async (dispatch) => {
         dispatch(setAppStatusAC('failed'))
     }
 }
+export const GradeCardTC = ( {id}: { id: string }, grade:number|null, shot:number): AppThunk => async (dispatch) => {
+    try {
+        dispatch(setAppStatusAC('loading'))
+        await cardsListAPI.gradeCard(id,grade,shot)
+        dispatch(FetchCardsListTC({id}))
+        dispatch(setAppStatusAC('succeded'))
+    } catch (error: any) {
+        dispatch(setAppErrorAC(error.message ? `${error.message}' more about concole error'` : 'Some error occurred'))
+
+    } finally {
+        dispatch(setAppStatusAC('failed'))
+    }
+}
+export const updatePageCardTC = ( {id}: { id: string }, value:number): AppThunk => async (dispatch) => {
+    try {
+        dispatch(setAppStatusAC('loading'))
+        await cardsListAPI.updatePage(id,value)
+        dispatch(FetchCardsListTC({id}))
+        dispatch(setAppStatusAC('succeded'))
+    } catch (error: any) {
+        dispatch(setAppErrorAC(error.message ? `${error.message}' more about concole error'` : 'Some error occurred'))
+
+    } finally {
+        dispatch(setAppStatusAC('failed'))
+    }
+}
 
 export type InitCardsListStateType = typeof initCardsListState
 export type CardsListActionsType = FetchCardsListActionsType | DeleteCardActionsType | AddNewCardActionsType

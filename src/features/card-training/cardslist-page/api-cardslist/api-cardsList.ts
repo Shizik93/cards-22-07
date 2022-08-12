@@ -1,7 +1,7 @@
 import axios, {AxiosResponse} from 'axios'
 
 const instance = axios.create({
-    baseURL:'https://neko-back.herokuapp.com/2.0/', /*process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0/',*/
+    baseURL: 'https://neko-back.herokuapp.com/2.0/', /*process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0/',*/
     withCredentials: true,
 })
 
@@ -32,7 +32,26 @@ export const cardsListAPI = {
                     comments: 'new comments'
                 }
             })
-    }
+    },
+    gradeCard(id: string, grade: number | null, shots: number) {
+        return instance.post<ResponseAddNewCardType, AxiosResponse<ResponseAddNewCardType>, RequestAddNewCardType>(`cards/card?id=${id}`, {
+            card: {
+                cardsPack_id: id,
+                grade,
+                shots
+            }
+        })
+
+    },
+    updatePage(id: string, value: number) {
+        return instance.get<ResponseAddNewCardType, AxiosResponse<ResponseAddNewCardType>, RequestAddNewCardType>('cards/card', {
+            params: {
+                cardsPack_id: id,
+                pageCount:value
+            }
+        })
+
+    },
 }
 
 export type CardItemsType = {

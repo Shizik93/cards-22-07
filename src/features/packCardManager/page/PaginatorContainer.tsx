@@ -21,12 +21,10 @@ export const PaginatorContainer = React.memo(() => {
         return (
             <>
                 <Paginator
-                    totalcardPacksCount={totalcardPacksCount}
-                    currentPageNumber={page}
-                    onClickPageChosen={setCurrentPage}
+                    totalCount={totalcardPacksCount}
+                    page={page}
+                    onClickHandler={setCurrentPage}
                     portionSize={pageCount}
-                    minCardsShow={3}
-                    maxCardsShow={9}
                 />
                 <Select portionSize={pageCount} setCountPage={setCardsPackOnPage}/>
             </>

@@ -5,7 +5,6 @@ import SearchIcon from '@mui/icons-material/Search';
 
 import {useDebounce} from 'usehooks-ts'
 import {Divider, IconButton, InputBase, Paper} from "@mui/material";
-import {setPackNameDataAC} from "../../card-training/packslist-page/packslist-reducer/packsListReducer";
 
 
 export const Searchinator2 = React.memo(() => {
@@ -18,7 +17,7 @@ export const Searchinator2 = React.memo(() => {
         }
 
         useEffect(() => {
-            dispatch(setPackNameDataAC({packName: value}))
+            // dispatch(setPackNameDataAC({packName: value}))
         }, [debouncedValue])
 
         return (
