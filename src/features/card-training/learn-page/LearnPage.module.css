@@ -30,6 +30,7 @@
     border-radius: 2px;
 }
 .answer_container{
+    margin-bottom: 50px;
     margin-top: 50px ;
     display: flex;
     flex-direction: column;

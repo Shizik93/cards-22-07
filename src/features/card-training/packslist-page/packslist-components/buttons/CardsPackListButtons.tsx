@@ -17,8 +17,8 @@ export const CardsPackListButtons = (props: ButtonsProps) => {
     const handlerEdit = () => {
         props.editCardsPack(props.id, props.title)
     }
-    const handleLearn = () => {
-        navigate(`/cardslist/${props.id}`)
+    const handlerLearn = () => {
+        navigate(`/learn-page/${props.id}`)
     }
     if (props.id === '') {
         return null
