@@ -24,7 +24,6 @@ type PropsType = {
 export const BasicModal: FC<PropsType> = ({children, open}: PropsType) => {
     return (
         <div>
-
             <Modal
                 open={open}
                 aria-labelledby="modal-modal-title"

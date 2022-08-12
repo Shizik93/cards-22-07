@@ -7,29 +7,21 @@ type PageType = {
     number: number
 }
 type PaginatorPropsType = {
-    totalcardPacksCount: number
-    currentPageNumber: number
-    onClickPageChosen: (pageNumber: number) => void
+    totalCount: number
+    page: number
+    onClickHandler: (pageNumber: number) => void
     portionSize?: number
-    minCardsShow: number
-    maxCardsShow: number
     }
 
 export const Paginator: React.FC<PaginatorPropsType> = (
     {
-        totalcardPacksCount,
-        currentPageNumber,
-        onClickPageChosen,
-        portionSize = 4,
-        minCardsShow=3,
-        maxCardsShow=9,
+        totalCount,
+        page,
+        onClickHandler,
+        portionSize = 1,
     }
 ) => {
-    let totalPages = Math.ceil(totalcardPacksCount / portionSize)
-    let maxValueSelect =[]
-    for(let i=minCardsShow; i<=maxCardsShow;i++){
-        maxValueSelect.push(i)
-    }
+    let totalPages = Math.ceil(totalCount / portionSize)
     let pages: Array<PageType> = []
     for (let i = 1; i <= totalPages; i++) {
         let newPage = {
@@ -53,8 +45,8 @@ export const Paginator: React.FC<PaginatorPropsType> = (
             }} className={styles.arrow}>Prev</button>}
             {pages.filter(p => p.number >= leftPortionPageNumber && p.number <= rigthPortionPageNumber)
                 .map((p) => {
-                    return (<span key={p.id} onClick={() => onClickPageChosen(p.number)}
-                                  className={currentPageNumber === p.number ? styles.chosedPage : styles.unChosedPage}>{p.number}</span>
+                    return (<span key={p.id} onClick={() => onClickHandler(p.number)}
+                                  className={page === p.number ? styles.chosedPage : styles.unChosedPage}>{p.number}</span>
                     )
                 })
             }
