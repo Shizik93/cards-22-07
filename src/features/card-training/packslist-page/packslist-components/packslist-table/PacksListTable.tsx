@@ -72,7 +72,7 @@ export const PacksListTable = (props: PacksListTableType) => {
                             <TableCell align="center">{row.user_name}</TableCell>
                             <TableCell align="center">{<CardsPackListButtons
                                 callbackDelete={props.callbackDelete} editCardsPack={props.editCardsPack}
-                                title={row.name} editNewCardsPack={props.editNewCardsPack}
+                                title={row.name}
                                 id={row._id}/>}</TableCell>
                         </TableRow>
                     ))}

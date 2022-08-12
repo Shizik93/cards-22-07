@@ -85,15 +85,14 @@ export const CardsList = () => {
     const handlerToPacksList = () => {
         navigate(PATH.PACKSLISTPAGE)
     }
-    const HandlerAddNewCard = () => {
+/*    const HandlerAddNewCard = () => {
         id && dispatch(AddNewCardTC(id))
-    }
+    }*/
     const gradeHandler = (cardId: string, e: SyntheticEvent, value: number | null) => {
-        console.log(e.currentTarget)
-        console.log(value)
-        // if (e&&value!== null) {
-        //     dispatch(GradeCardTC(cardId, e.currentTarget.value))
-        // }
+
+         if (e&&value!== null) {
+             dispatch(GradeCardTC(cardId,value))
+        }
     }
     const paginationHandler = (page: number) => {
         dispatch(setPageAC({page}))
@@ -122,7 +121,7 @@ export const CardsList = () => {
                     <div><Searchinator2/></div>
                 </div>
                 <div className={style.tableContainer}>
-                    <CardsListTable callbackDelete={handlerClickDelete} getPreviousCard={handlerClickEdit}/>
+                    <CardsListTable callbackGrade={gradeHandler} callbackDelete={handlerClickDelete} getPreviousCard={handlerClickEdit}/>
 
                     <Paginator
                         totalCount={cardsTotalCount === null ? 0 : cardsTotalCount}
