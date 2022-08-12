@@ -6,10 +6,13 @@
 
 }
 .firstItem {
-    width: 50px;
-    border: 1px solid;
+    border-radius: 40px;
+    width: 40px;
     display: flex;
     justify-content: space-around;
+    padding: 1px;
+    border: 1px whitesmoke solid;
+    font-weight: lighter;
 }
 .arrow {
     width: 50px;
@@ -18,27 +21,31 @@
     justify-content: space-around;
 }
 .lastItem {
-    width: 50px;
-    border: 1px solid;
+    border-radius: 40px;
+    width: 40px;
     display: flex;
     justify-content: space-around;
+    padding: 1px;
+    border: 1px whitesmoke solid;
+    font-weight: lighter;
 }
 .chosedPage {
     width: 40px;
     display: flex;
     justify-content: space-around;
-    background-color: whitesmoke;
-    border-radius: 2px;
+    border-radius: 5px;
     padding: 3px;
-    border: 1px black solid;
     font-weight: bolder;
+    background-color: dodgerblue;
+    color: #FFFFFF;
 }
 
 .unChosedPage {
+    border-radius: 40px;
     width: 40px;
     display: flex;
     justify-content: space-around;
     padding: 1px;
-    border: 1px black solid;
+    border: 1px whitesmoke solid;
     font-weight: lighter;
 }

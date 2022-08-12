@@ -9,7 +9,8 @@ import {
     EditCardTC,
     FetchCardsListTC,
     GradeCardTC,
-    updatePageCardTC
+    setPageAC,
+    setPageCountAC
 } from "./cardslist-reducer/cardsListReducer";
 
 import {Button} from "@mui/material";
@@ -24,7 +25,9 @@ export const CardsList = () => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const cardsTotalCount = useAppSelector(state => state.cardsList.cardsTotalCount)
+    const pageForEffect = useAppSelector(state => state.cardsList.requestBodyCards.page)
     const page = useAppSelector(state => state.cardsList.page)
+    const pageCountForEffect = useAppSelector(state => state.cardsList.requestBodyCards.pageCount)
     const pageCount = useAppSelector(state => state.cardsList.pageCount)
 
     console.log(pageCount)
@@ -32,7 +35,7 @@ export const CardsList = () => {
 
     useEffect(() => {
         id && dispatch(FetchCardsListTC({id}))
-    }, [dispatch])
+    }, [dispatch, pageForEffect, pageCountForEffect])
 
     const HandleClickDelete = (id: string) => {
         dispatch(DeleteCardTC(id))
@@ -47,18 +50,17 @@ export const CardsList = () => {
         id && dispatch(AddNewCardTC(id))
     }
     const gradeHandler = (cardId: string, e: SyntheticEvent, value: number | null) => {
-        if (e) {
-            id &&
-            dispatch(GradeCardTC(cardId, value))
-        }
+        console.log(e.currentTarget)
+        console.log(value)
+        // if (e&&value!== null) {
+        //     dispatch(GradeCardTC(cardId, e.currentTarget.value))
+        // }
     }
     const paginationHandler = (page: number) => {
-        id &&
-        dispatch(updatePageCardTC({id}, page))
+        dispatch(setPageAC({page}))
     }
     const selectHandler = (pageCount: number) => {
-        id &&
-        dispatch(updatePageCardTC({id}, pageCount))
+        dispatch(setPageCountAC({pageCount}))
     }
     return (
         <div className={'auth'}>

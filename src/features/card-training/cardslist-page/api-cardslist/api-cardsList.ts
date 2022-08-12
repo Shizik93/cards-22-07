@@ -6,11 +6,10 @@ const instance = axios.create({
 })
 
 export const cardsListAPI = {
-    fetchCardsList({id}: { id: string }): Promise<AxiosResponse<ResponseCardsListType>> {
+    fetchCardsList(body:RequestBodyCardsType): Promise<AxiosResponse<ResponseCardsListType>> {
         return instance.get<ResponseCardsListType>(`cards/card`, {
-            params: {
-                cardsPack_id: id
-            }
+            params: body
+            // cardsPack_id:body.cardsPack_id
         })
     },
     deleteCard(id: string): Promise<AxiosResponse<ResponseDeleteCardType>> {
@@ -41,15 +40,11 @@ export const cardsListAPI = {
                     })
 
     },
-    updatePage(id: string, value: number) {
-        return instance.get<ResponseAddNewCardType, AxiosResponse<ResponseAddNewCardType>, RequestAddNewCardType>('cards/card', {
-            params: {
-                cardsPack_id: id,
-                pageCount:value
-            }
-        })
-
-    },
+    // updatePage(data:RequestBodyCardsType): Promise<AxiosResponse<ResponseCardsListType>> {
+    //     return instance.get<ResponseCardsListType>(`cards/card`, {
+    //         params: data
+    //     })
+    // },
 }
 
 export type CardItemsType = {
@@ -83,6 +78,16 @@ export type ResponseUpdateGradeCardType = {
         grade: number
         shots: number
     }
+}
+export type RequestBodyCardsType = {
+    cardAnswer?: string
+    cardQuestion?: string
+    cardsPack_id: string
+    min?: number
+    max?: number
+    sortCards?: string,
+    page?: number
+    pageCount?: number
 }
 
 export type ResponseDeleteCardType = {

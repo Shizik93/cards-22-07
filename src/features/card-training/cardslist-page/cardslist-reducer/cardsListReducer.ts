@@ -5,7 +5,7 @@ import {
     cardsListAPI,
     ResponseAddNewCardType,
     ResponseEditCardType,
-    ResponseCardsListType
+    ResponseCardsListType, RequestBodyCardsType
 } from "../api-cardslist/api-cardsList";
 
 export const initCardsListState = {
@@ -15,9 +15,20 @@ export const initCardsListState = {
     minGrade: null,
     page: null,
     pageCount: null,
-    packUserId: ''
+    packUserId: '',
+    requestBodyCards:{
+        cardAnswer: '',
+        cardQuestion: '',
+        cardsPack_id: '',
+        min: 1,
+        max: 4,
+        sortCards: '',
+        page: 1,
+        pageCount: 7
+    }
 }
-
+const SET_PAGE_CARDS_LIST = "cardsList/SET_PAGE_CARDS_LIST"
+const SET_PAGE_COUNT_CARDS_LIST = "cardsList/SET_PAGE_COUNT_CARDS_LIST"
 export const cardsListReducer = (state: InitCardsListStateType = initCardsListState, action: AppActionsType): InitCardsListStateType => {
     switch (action.type) {
         case 'FETCH-CARDSLIST':
@@ -46,6 +57,10 @@ export const cardsListReducer = (state: InitCardsListStateType = initCardsListSt
             return {...state}
         case 'EDIT-CARD':
             return {...state}
+        case SET_PAGE_CARDS_LIST:
+            return {...state,requestBodyCards:{...state.requestBodyCards,page:action.payload.page}}
+        case SET_PAGE_COUNT_CARDS_LIST:
+            return {...state,requestBodyCards:{...state.requestBodyCards,pageCount:action.payload.pageCount}}
         default:
             return state
     }
@@ -67,11 +82,24 @@ export const EditCardAC = (payload: ResponseEditCardType) =>
     ({
         type: 'EDIT-CARD', payload
     } as const)
+export const setPageAC = (payload: {page: number})=>({type:SET_PAGE_CARDS_LIST, payload}as const)
+export const setPageCountAC = (payload: {pageCount: number})=>({type:SET_PAGE_COUNT_CARDS_LIST, payload}as const)
 
-export const FetchCardsListTC = ({id}: { id: string }): AppThunk => async (dispatch) => {
+export const FetchCardsListTC = ({id}: { id: string }): AppThunk => async (dispatch, getState) => {
+    const state = getState().cardsList.requestBodyCards
+    const requestCardsBody = {
+        cardAnswer: state.cardAnswer,
+        cardQuestion: state.cardQuestion,
+        cardsPack_id: id,
+        min: state.min,
+        max: state.max,
+        sortCards: state.sortCards,
+        page: state.page,
+        pageCount: state.pageCount
+    }
     try {
         dispatch(setAppStatusAC('loading'))
-        const res = await cardsListAPI.fetchCardsList({id})
+        const res = await cardsListAPI.fetchCardsList(requestCardsBody)
         dispatch(FetchCardsListAC(res.data))
         dispatch(setAppStatusAC('succeded'))
     } catch (error: any) {
@@ -136,24 +164,38 @@ export const GradeCardTC = ( id: string, grade:number|null): AppThunk => async (
         dispatch(setAppStatusAC('failed'))
     }
 }
-export const updatePageCardTC = ( {id}: { id: string }, value:number): AppThunk => async (dispatch) => {
-    try {
-        dispatch(setAppStatusAC('loading'))
-        await cardsListAPI.updatePage(id,value)
-        dispatch(FetchCardsListTC({id}))
-        dispatch(setAppStatusAC('succeded'))
-    } catch (error: any) {
-        dispatch(setAppErrorAC(error.message ? `${error.message}' more about concole error'` : 'Some error occurred'))
-
-    } finally {
-        dispatch(setAppStatusAC('failed'))
-    }
-}
+// export const updatePageCardTC = ({id}: { id: string }): AppThunk => async (dispatch,getState) => {
+//     const state = getState().cardsList.requestBodyCards
+//     const requestBody = {
+//         cardAnswer: state.cardAnswer,
+//         cardQuestion: state.cardQuestion,
+//         cardsPack_id: state.cardsPack_id,
+//         min: state.min,
+//         max: state.max,
+//         sortCards: state.sortCards,
+//         page: state.page,
+//         pageCount: state.pageCount
+//     }
+//     try {
+//         dispatch(setAppStatusAC('loading'))
+//         const res = await cardsListAPI.updatePage(requestBody)
+//         dispatch(FetchCardsListTC({id:requestBody.cardsPack_id}))
+//         dispatch(setAppStatusAC('succeded'))
+//     } catch (error: any) {
+//         dispatch(setAppErrorAC(error.message ? `${error.message}' more about concole error'` : 'Some error occurred'))
+//
+//     } finally {
+//         dispatch(setAppStatusAC('failed'))
+//     }
+// }
 
 export type InitCardsListStateType = typeof initCardsListState
 export type CardsListActionsType = FetchCardsListActionsType | DeleteCardActionsType | AddNewCardActionsType
     | EditCardActionsType
+    | ReturnType<typeof setPageAC>
+    | ReturnType<typeof setPageCountAC>
 export type FetchCardsListActionsType = ReturnType<typeof FetchCardsListAC>
 export type DeleteCardActionsType = ReturnType<typeof DeleteCardAC>
 export type AddNewCardActionsType = ReturnType<typeof AddNewCardAC>
 export type EditCardActionsType = ReturnType<typeof EditCardAC>
+

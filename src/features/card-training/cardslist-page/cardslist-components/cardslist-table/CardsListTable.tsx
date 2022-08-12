@@ -11,6 +11,7 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import {useAppSelector} from "../../../../../app/hooks";
 import {Badge, Rating} from "@mui/material";
+import StarIcon from '@mui/icons-material/Star';
 
 
 type CardsListTableType = {
@@ -35,7 +36,6 @@ export const CardsListTable = (props: CardsListTableType) => {
                 </TableHead>
                 <TableBody>
                     {selector.map((row) => {
-                        console.log(row.grade)
                         return(
 
                         <TableRow
@@ -48,8 +48,9 @@ export const CardsListTable = (props: CardsListTableType) => {
                                 <Badge badgeContent={row.shots} color="secondary">
                                     <Rating
                                         name="size-small"
+                                        emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
                                         onChange={(e,value)=>props.callbackGrade(row._id,e,value)}
-                                        defaultValue={row.grade===null?0:row.grade}
+                                        value={row.grade}
                                         size="small"
                                     />
                                 </Badge>
