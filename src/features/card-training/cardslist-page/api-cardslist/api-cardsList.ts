@@ -46,18 +46,18 @@ export const cardsListAPI = {
     //     })
     // },
 }
-
-export type CardItemsType = {
-    answer: string
-    question: string
-    cardsPack_id: string
-    grade: null
-    shots: null
-    user_id: string
-    created: string
-    updated: string
-    _id: string
-}
+//
+// export type CardItemsType = {
+//     answer: string
+//     question: string
+//     cardsPack_id: string
+//     grade: null
+//     shots: null
+//     user_id: string
+//     created: string
+//     updated: string
+//     _id: string
+// }
 
 export type ResponseCardsListType = {
     cards: Array<CardItemsType>,
@@ -111,19 +111,19 @@ export type ResponseEditCardType = {
     token: string;
     tokenDeathTime: number;
 }
-export type RequestAddNewCardType = {
-    card: {
-        cardsPack_id: string
-        question?: string // если не отправить будет таким
-        answer?: string // если не отправить будет таким
-        grade?: null | number // 0..5, не обязателен
-        shots?: null | number // не обязателен
-        answerImg?: string // не обязателен
-        questionImg?: string // не обязателен
-        questionVideo?: string // не обязателен
-        answerVideo?: string // не обязателен
-    }
-}
+// export type RequestAddNewCardType = {
+//     card: {
+//         cardsPack_id: string
+//         question?: string // если не отправить будет таким
+//         answer?: string // если не отправить будет таким
+//         grade?: null | number // 0..5, не обязателен
+//         shots?: null | number // не обязателен
+//         answerImg?: string // не обязателен
+//         questionImg?: string // не обязателен
+//         questionVideo?: string // не обязателен
+//         answerVideo?: string // не обязателен
+//     }
+// }
 
 export type RequestEditCardType = {
     card: {
