@@ -14,13 +14,14 @@ export const packsListAPI = {
     deleteCardsPack(id: string): Promise<AxiosResponse<ResponseDeleteCardsPackType>> {
         return instance.delete<ResponseDeleteCardsPackType>(`cards/pack/?id=${id}`)
     },
-    addNewCardsPack(title: string) {
+    addNewCardsPack(title: string, privatePack: boolean) {
         //<тип нашего ответа от сервера, полный тип ответа от сервера который обернут в объект аксиоса, тип даты который мы отправляем на сервер>
-        return instance.post<ResponseAddNewCardsPackType, AxiosResponse<ResponseAddNewCardsPackType>, RequestAddNewCardsPackType>(`cards/pack`, {cardsPack: {name: title}})
+        return instance.post<ResponseAddNewCardsPackType, AxiosResponse<ResponseAddNewCardsPackType>, RequestAddNewCardsPackType>(`cards/pack`,
+            {cardsPack: {name: title, private: privatePack}})
     },
-    editCardsPack(id: string, newTitle: string) {
+    editCardsPack(id: string, newTitle: string, privatePack: boolean) {
         return instance.put<ResponseEditCardsPackType, AxiosResponse<ResponseEditCardsPackType>, RequestEditCardsPackType>(`cards/pack/`,
-            {cardsPack: {_id: id, name: newTitle}})
+            {cardsPack: {_id: id, name: newTitle, private: privatePack}})
     }
 }
 export type RequestBodyType = {
@@ -49,15 +50,15 @@ export type ResponseEditCardsPackType = {
     tokenDeathTime: number;
 }
 export type RequestAddNewCardsPackType = {
-    cardsPack: { name: string }
+    cardsPack: { name: string, private: boolean}
 }
 export type RequestEditCardsPackType = {
     cardsPack: {
         _id: string,
-        name: string
+        name: string,
+        private: boolean
     }
 }
-
 
 export type ResponseCardsPackListType = {
     cardPacks: CardPackItemsType[];
@@ -88,55 +89,3 @@ export type CardPackItemsType = {
     deckCover?: any;
 }
 
-//
-// export type RootObject = {
-// 	cardPacks: RootObjectCardPacks[];
-// 	page: number;
-// 	pageCount: number;
-// 	cardPacksTotalCount: number;
-// 	minCardsCount: number;
-// 	maxCardsCount: number;
-// 	token: string;
-// 	tokenDeathTime: number;
-// }
-// export type RootObjectCardPacks = {
-// 	_id: string;
-// 	user_id: string;
-// 	user_name: string;
-// 	private: boolean;
-// 	name: string;
-// 	path: string;
-// 	grade: number;
-// 	shots: number;
-// 	cardsCount: number;
-// 	type: string;
-// 	rating: number;
-// 	created: string;
-// 	updated: string;
-// 	more_id: string;
-// 	__v: number;
-// }
-
-
-export type RootObject = {
-	newCardsPack: RootObjectNewCardsPack;
-	token: string;
-	tokenDeathTime: number;
-}
-export type RootObjectNewCardsPack = {
-	_id: string;
-	user_id: string;
-	user_name: string;
-	private: boolean;
-	name: string;
-	path: string;
-	grade: number;
-	shots: number;
-	cardsCount: number;
-	type: string;
-	rating: number;
-	created: string;
-	updated: string;
-	more_id: string;
-	__v: number;
-}
