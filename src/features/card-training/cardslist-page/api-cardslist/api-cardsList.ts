@@ -1,7 +1,7 @@
 import axios, {AxiosResponse} from 'axios'
 
 const instance = axios.create({
-    baseURL: 'https://neko-back.herokuapp.com/2.0/', /*process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0/',*/
+    baseURL:'https://neko-back.herokuapp.com/2.0/', /*process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0/',*/
     withCredentials: true,
 })
 
@@ -47,7 +47,7 @@ export const cardsListAPI = {
     // },
 }
 
-export type CardItemsType = {
+/*export type CardItemsType = {
     answer: string
     question: string
     cardsPack_id: string
@@ -57,7 +57,7 @@ export type CardItemsType = {
     created: string
     updated: string
     _id: string
-}
+}*/
 
 export type ResponseCardsListType = {
     cards: Array<CardItemsType>,
@@ -71,16 +71,6 @@ export type ResponseCardsListType = {
     tokenDeathTime: number;
 }
 
-export type RequestCardsListType = {
-    cardAnswer?: string,
-    cardQuestion?: string,
-    cardsPack_id?: string,
-    min?: number,
-    max?: number,
-    sortCards?:string
-    page?: number,
-    pageCount?: number
-}
 export type ResponseUpdateGradeCardType = {
     updatedGrade: {
         _id: string
@@ -134,7 +124,7 @@ export type RequestEditCardType = {
     }
 }
 
-export type RequestAddNewCardType = {
+/*export type RequestAddNewCardType = {
     card: {
         cardsPack_id: string
         question?: string
@@ -146,7 +136,7 @@ export type RequestAddNewCardType = {
         questionVideo?: string
         answerVideo?: string
     }
-}
+}*/
 
 
 

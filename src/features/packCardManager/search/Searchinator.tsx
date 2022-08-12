@@ -16,9 +16,9 @@ export const Searchinator2 = React.memo(() => {
             setValue(event.target.value)
         }
 
-        useEffect(() => {
+ /*       useEffect(() => {
             // dispatch(setPackNameDataAC({packName: value}))
-        }, [debouncedValue])
+        }, [debouncedValue])*/
 
         return (
             <div className={styles.searchBlock}>
