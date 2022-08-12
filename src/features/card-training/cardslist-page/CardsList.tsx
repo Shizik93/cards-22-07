@@ -12,6 +12,7 @@ import style from './CardsList.module.css'
 import '../../auth/auth.css'
 import {AddCardModal} from "../modals/AddCardsModal";
 import {EditCardModal} from "../modals/EditCardModal";
+import {DeleteCardModal} from "../modals/DeleteCardsModal";
 
 export const CardsList = () => {
     const dispatch = useAppDispatch()
@@ -20,40 +21,47 @@ export const CardsList = () => {
 
     const [openAddCard, setOpenAddCard] = React.useState(false);
     const [openEditCard, setOpenEditCard] = React.useState(false);
+    const [openDeleteCard, setOpenDeleteCard] = React.useState(false);
     const [previousQuestion, setpreviousQuestion] = React.useState('');
     const [previousAnswer, setpreviousAnswer] = React.useState('');
     const [idCard, setIdCard] = React.useState('');
 
 
-    const handleClose = () => setOpenAddCard(false);
-    const handleCloseEdit = () => setOpenEditCard(false);
+    const handlerCloseAdd = () => setOpenAddCard(false);
+    const handlerCloseEdit = () => setOpenEditCard(false);
+    const handlerCloseDelete = () => setOpenDeleteCard(false);
 
     useEffect(() => {
         id && dispatch(FetchCardsListTC({id}))
     }, [dispatch])
 
-    const handleClickDelete = (id: string) => {
-        dispatch(DeleteCardTC(id))
+
+    const handleAddNewCardModal = () => {
+        setOpenAddCard(true)
+    }
+    const handlerAddNewCard = (question: string, answer: string) => {
+        id && dispatch(AddNewCardTC(id, question, answer))
+        setOpenAddCard(false)
     }
 
-    const handleClickEdit = (id: string, previousQuestion: string, previousAnswer: string) => {
+    const handlerClickEdit = (id: string, previousQuestion: string, previousAnswer: string) => {
         setOpenEditCard(true)
         setIdCard(id)
         setpreviousQuestion(previousQuestion)
         setpreviousAnswer(previousAnswer)
     }
-
     const handlerEditCard = (newQuestion: string, newAnswer: string) => {
         dispatch(EditCardTC(idCard, newQuestion, newAnswer))
         setOpenEditCard(false)
-    }
+           }
 
-    const handleAddNewCardModal = () => {
-        setOpenAddCard(true)
+    const handlerClickDelete = (id: string, deleteQuestion: string) => {
+        setOpenDeleteCard(true)
+        setIdCard(id)
+        setpreviousQuestion(deleteQuestion)
     }
-
-    const handlerAddNewCard = (question: string, answer: string) => {
-        id && dispatch(AddNewCardTC(id, question, answer))
+    const handlerDeleteCard = () => {
+        dispatch(DeleteCardTC(idCard))
         setOpenAddCard(false)
     }
 
@@ -64,9 +72,11 @@ export const CardsList = () => {
     return (
         <div className={'auth'}>
             <AddCardModal open={openAddCard} addNewCard={handlerAddNewCard}
-                          handleClose={handleClose}/>
+                          handleClose={handlerCloseAdd}/>
             <EditCardModal open={openEditCard} editCard={handlerEditCard} previousQuestion={previousQuestion}
-                           previousAnswer={previousAnswer} handleCloseEdit={handleCloseEdit}/>
+                           previousAnswer={previousAnswer} handleCloseEdit={handlerCloseEdit}/>
+            <DeleteCardModal open={openDeleteCard} deleteCard={handlerDeleteCard} deleteQuestion={previousQuestion}
+                           handleCloseDelete={handlerCloseDelete}/>
             <div className={style.cardsListContainer}>
                 <div><Button onClick={handlerToPacksList}> <i className={style.left}></i> Back to Packs List
                 </Button></div>
@@ -80,7 +90,7 @@ export const CardsList = () => {
                     <div><Search/></div>
                 </div>
                 <div className={style.tableContainer}>
-                    <CardsListTable callbackDelete={handleClickDelete} getPreviousCard={handleClickEdit}/>
+                    <CardsListTable callbackDelete={handlerClickDelete} getPreviousCard={handlerClickEdit}/>
                 </div>
             </div>
         </div>

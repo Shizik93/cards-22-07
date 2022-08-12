@@ -140,10 +140,10 @@ export const deleteCardsPackTC = (id: string): AppThunk => async (dispatch) => {
     }
 }
 
-export const addNewPackTC = (title: string): AppThunk => async (dispatch) => {
+export const addNewPackTC = (title: string, privatePack: boolean): AppThunk => async (dispatch) => {
     try {
         dispatch(setAppStatusAC('loading'))
-        const res = await packsListAPI.addNewCardsPack(title)
+        const res = await packsListAPI.addNewCardsPack(title, privatePack)
         dispatch(addNewCardsPacksActionsAC(res.data))
         dispatch(setAppStatusAC('succeded'))
     } catch (error: any) {
@@ -154,10 +154,10 @@ export const addNewPackTC = (title: string): AppThunk => async (dispatch) => {
     }
 }
 
-export const editCardsPackTC = (id: string, newTitle: string): AppThunk => async (dispatch) => {
+export const editCardsPackTC = (id: string, newTitle: string, privatePack: boolean): AppThunk => async (dispatch) => {
     try {
         dispatch(setAppStatusAC('loading'))
-        const res = await packsListAPI.editCardsPack(id, newTitle)
+        const res = await packsListAPI.editCardsPack(id, newTitle, privatePack)
         dispatch(editCardsPackActionsAC(res.data))
         dispatch(setAppStatusAC('succeded'))
     } catch (error: any) {

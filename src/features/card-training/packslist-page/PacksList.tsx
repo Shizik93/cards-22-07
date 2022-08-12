@@ -18,21 +18,21 @@ import {PaginatorContainer} from "../../packCardManager/page/PaginatorContainer"
 import {AddCardsPackModal} from "../modals/AddCardsPackModal";
 import {Searchinator2} from "../../packCardManager/search/Searchinator";
 import {EditCardsPackModal} from "../modals/EditCardsPackModal";
-import {flushSync} from "react-dom";
+import {DeleteCardsPackModal} from "../modals/DeleteCardsPackModal";
 
 
 export const PacksList =React.memo (() => {
     const dispatch = useAppDispatch()
 
-    const [open, setOpen] = React.useState(false);
+    const [openAdd, setOpenAdd] = React.useState(false);
     const [openEdit, setOpenEdit] = React.useState(false);
+    const [openDelete, setOpenDelete] = React.useState(false);
     const [previousTitle, setpreviousTitle] = React.useState('');
     const [idPack, setIdPack] = React.useState('');
 
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-    const handleOpenEdit = () => setOpenEdit(true);
-    const handleCloseEdit = () => setOpenEdit(false);
+    const handlerCloseAdd = () => setOpenAdd(false);
+    const handlerCloseEdit = () => setOpenEdit(false);
+    const handlerCloseDelete = () => setOpenDelete(false);
 
     let isAuth = useAppSelector(state => state.login.isAuth)
     let page = useAppSelector(state => state.packsList.page)
@@ -45,38 +45,42 @@ export const PacksList =React.memo (() => {
     useEffect(() => {
         console.log(isAuth)
         isAuth && dispatch(FetchCardsPackListTC())
-    }, [ page, pageCount, min, max, packName, user_id, isAuth])
-    console.log(previousTitle)
-    const handleClickDelete = (id: string) => {
-        dispatch(deleteCardsPackTC(id))
+    }, [page, pageCount, min, max, packName, user_id, isAuth])
+
+    const handlerClickDelete = (id: string, title: string) => {
+        setOpenDelete(true)
+        setpreviousTitle(title)
+        setIdPack(id)
     }
-    const handleClickEdit = (id: string, title: string) => {
+    const handlerDeleteCardsPack = () => {
+        dispatch(deleteCardsPackTC(idPack))
+        setOpenDelete(false)
+    }
+    const handlerClickEdit = (id: string, title: string) => {
         setpreviousTitle(title)
         setOpenEdit(true)
         setIdPack(id)
-
     }
-    const editTitleCardsPack = (newTitle: string) => {
-        dispatch(editCardsPackTC(idPack, newTitle))
+    const editTitleCardsPack = (newTitle: string, privatePack: boolean) => {
+        dispatch(editCardsPackTC(idPack, newTitle, privatePack))
         setOpenEdit(false)
     }
-
     const handlerAddNewCardsPackModal = () => {
-        setOpen(true)
-
+        setOpenAdd(true)
     }
-    const addNewCardsPack = (title: string) => {
-        dispatch(addNewPackTC(title))
-        setOpen(false)
+    const handlerAddNewCardsPack = (title: string, privatePack: boolean) => {
+        dispatch(addNewPackTC(title, privatePack))
+        setOpenAdd(false)
     }
-
     return (
         <div className={'auth'}>
-            <AddCardsPackModal open={open} addNewCardsPack={addNewCardsPack} handleOpen={handleOpen}
-                               handleClose={handleClose}/>
+            <AddCardsPackModal open={openAdd} addNewCardsPack={handlerAddNewCardsPack}
+                               handleClose={handlerCloseAdd}/>
             <EditCardsPackModal open={openEdit} editTitleCardsPack={editTitleCardsPack} previousTitle={previousTitle}
-                                handleOpen={handleOpenEdit}
-                                handleClose={handleCloseEdit}/>
+                                handleClose={handlerCloseEdit}/>
+            <DeleteCardsPackModal open={openDelete} deleteQuestion={previousTitle}
+                                  deleteCardsPack={handlerDeleteCardsPack}
+                                  handleCloseDelete={handlerCloseDelete}/>
             <div className={style.packsListContainer}>
                 <div className={style.packsListHeader}>
                     <h2>Packs list</h2>
@@ -89,8 +93,9 @@ export const PacksList =React.memo (() => {
                     <div><CardsSlider/></div>
                 </div>
                 <div className={style.tableContainer}>
-                    <PacksListTable callbackDelete={handleClickDelete}
-                                    titleCardsPack={handleClickEdit} addNewCardsPack={addNewCardsPack}/>
+                    <PacksListTable callbackDelete={handlerClickDelete}
+                                    editCardsPack={handlerClickEdit}
+                    />
                 </div>
                 <div>
                     <PaginatorContainer/>

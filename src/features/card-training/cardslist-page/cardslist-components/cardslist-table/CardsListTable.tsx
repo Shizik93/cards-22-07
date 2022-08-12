@@ -13,7 +13,7 @@ import {useAppSelector} from "../../../../../app/hooks";
 
 
 type CardsListTableType = {
-    callbackDelete: (id: string) => void
+    callbackDelete: (id: string, deleteQuestion: string) => void
     getPreviousCard: (id: string, previousQuestion: string, previousAnswer: string) => void
 }
 export const CardsListTable = (props: CardsListTableType) => {

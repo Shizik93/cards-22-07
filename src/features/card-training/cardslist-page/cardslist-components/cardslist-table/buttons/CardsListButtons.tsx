@@ -2,17 +2,17 @@ import * as React from 'react';
 
 type ButtonsProps = {
     id: string
-    callbackDelete: (id: string) => void
+    callbackDelete: (id: string, deleteQuestion: string) => void
     getPreviousCard: (id: string, previousQuestion: string, previousAnswer: string) => void
     previousQuestion: string
     previousAnswer: string
 }
 
 export const CardsListButtons = (props: ButtonsProps) => {
-    const HandlerDelete = () => {
-        props.callbackDelete(props.id)
+    const handlerDelete = () => {
+        props.callbackDelete(props.id, props.previousQuestion)
     }
-    const HandlerEdit = () => {
+    const handlerEdit = () => {
         props.getPreviousCard(props.id, props.previousQuestion, props.previousAnswer)
     }
     if (props.id === '') {
@@ -20,8 +20,8 @@ export const CardsListButtons = (props: ButtonsProps) => {
     }
     return (
         <div>
-            <button onClick={HandlerDelete}> del</button>
-            <button onClick={HandlerEdit}> edit</button>
+            <button onClick={handlerDelete}> del</button>
+            <button onClick={handlerEdit}> edit</button>
         </div>
     )
 }
