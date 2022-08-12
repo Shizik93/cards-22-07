@@ -27,7 +27,7 @@ export const initPacksListState = {
     packName: '',
     min: 0,
     max: 110,
-    sortPacks: 0,
+    sortPacks: 1 + '',
     user_id: '',
     token:'',
     tokenDeathTime:0,
@@ -38,6 +38,7 @@ const SET_PACKNAME = 'cards/SET_SET_PACKNAME'
 const SET_PAGE_COUNT = 'cards/SET_PAGE_COUNT'
 const SET_CURRENT_PAGE = 'cards/SET_CURRENT_PAGE'
 const SET_USER_ID = 'cards/SET_USER_ID'
+const SET_SORT_COLUMN = 'cards/SET_SORT_COLUMN'
 
 export const packsListReducer = (state: InitPacksListStateType = initPacksListState, action: AppActionsType): InitPacksListStateType => {
     switch (action.type) {
@@ -48,7 +49,6 @@ export const packsListReducer = (state: InitPacksListStateType = initPacksListSt
                 cardPacksTotalCount: action.payload.cardPacksTotalCount,
                 maxCardsCount: action.payload.maxCardsCount,
                 minCardsCount: action.payload.minCardsCount,
-
                 pageCount: action.payload.pageCount
             }
         case 'DELETE-CARDSPACK':
@@ -72,8 +72,11 @@ export const packsListReducer = (state: InitPacksListStateType = initPacksListSt
         case SET_CURRENT_PAGE:
             return {...state,page:action.payload.data.page}
         case SET_USER_ID:
-
             return {...state,user_id: action.payload.data.user_id}
+        case SET_SORT_COLUMN:
+            return {...state,sortPacks:action.payload.data.sortPacks.value + action.payload.data.sortPacks.name }
+
+
 
         default:
             return state
@@ -100,6 +103,7 @@ export const setPackNameDataAC = (data:{packName:string}) => ({type: SET_PACKNAM
 export const setPageCountAC = (data:{pageCount:number}) => ({type: SET_PAGE_COUNT, payload:{data}} as const)
 export const setCurrentPageAC = (data:{page:number}) => ({type: SET_CURRENT_PAGE, payload:{data}} as const)
 export const setUserIdAC = (data:{user_id:string}) => ({type: SET_USER_ID, payload:{data}} as const)
+export const setSortColumnAC = (data:{sortPacks: { value: number, name: string }}) => ({type: SET_SORT_COLUMN, payload:{data}} as const)
 
 
 export const FetchCardsPackListTC = (/*body:RequestBodyType*/): AppThunk => async (dispatch,getState) => {
@@ -176,6 +180,7 @@ export type PacksListActionsType = FetchPacksListActionsType | DeleteCardsPackAc
     | ReturnType<typeof setPageCountAC>
     | ReturnType<typeof setCurrentPageAC>
     | ReturnType<typeof setUserIdAC>
+    | ReturnType<typeof setSortColumnAC>
 export type FetchPacksListActionsType = ReturnType<typeof fetchPacksListActionsAC>
 export type DeleteCardsPackActionsType = ReturnType<typeof deletePacksListActionsAC>
 export type AddNewCardsPackActionsType = ReturnType<typeof addNewCardsPacksActionsAC>
