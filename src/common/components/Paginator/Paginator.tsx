@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import styles from './Paginator.module.css'
 import {v1} from "uuid";
+import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
+import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
 
 type PageType = {
     id: string,
@@ -42,7 +44,8 @@ export const Paginator: React.FC<PaginatorPropsType> = (
             }} className={styles.firstItem}>1</button>}
             {portionNumber > 1 && <button onClick={() => {
                 setPortionNumber(portionNumber - 1)
-            }} className={styles.arrow}>Prev</button>}
+            }} ><ArrowBackIosNewOutlinedIcon color="action"
+                                                                     fontSize="small"/></button>}
             {pages.filter(p => p.number >= leftPortionPageNumber && p.number <= rigthPortionPageNumber)
                 .map((p) => {
                     return (<span key={p.id} onClick={() => onClickHandler(p.number)}
@@ -52,7 +55,12 @@ export const Paginator: React.FC<PaginatorPropsType> = (
             }
             {portionCount > portionNumber && <button onClick={() => {
                 setPortionNumber(portionNumber + 1)
-            }} className={styles.arrow}>Next</button>}
+            }} >
+                <ArrowForwardIosOutlinedIcon
+                    color="action"
+                    fontSize="small"
+                /></button>
+            }
 
             {portionNumber < portionCount && <button onClick={() => {
                 setPortionNumber(portionCount)

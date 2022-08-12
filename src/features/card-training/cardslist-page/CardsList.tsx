@@ -52,9 +52,9 @@ export const CardsList = () => {
     const gradeHandler = (cardId: string, e: SyntheticEvent, value: number | null) => {
         console.log(e.currentTarget)
         console.log(value)
-        // if (e&&value!== null) {
-        //     dispatch(GradeCardTC(cardId, e.currentTarget.value))
-        // }
+        if (e&&value!== null) {
+            dispatch(GradeCardTC(cardId, value))
+        }
     }
     const paginationHandler = (page: number) => {
         dispatch(setPageAC({page}))
