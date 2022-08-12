@@ -26,6 +26,7 @@ export const CardsList = () => {
     const cardsTotalCount = useAppSelector(state => state.cardsList.cardsTotalCount)
     const page = useAppSelector(state => state.cardsList.page)
     const pageCount = useAppSelector(state => state.cardsList.pageCount)
+
     console.log(pageCount)
     const {id} = useParams<{ id: string }>()
 
@@ -45,10 +46,10 @@ export const CardsList = () => {
     const HandlerAddNewCard = () => {
         id && dispatch(AddNewCardTC(id))
     }
-    const gradeHandler = (cardId: string, e: SyntheticEvent, value: number | null, shots: number) => {
+    const gradeHandler = (cardId: string, e: SyntheticEvent, value: number | null) => {
         if (e) {
             id &&
-            dispatch(GradeCardTC({id}, value, shots))
+            dispatch(GradeCardTC(cardId, value))
         }
     }
     const paginationHandler = (page: number) => {

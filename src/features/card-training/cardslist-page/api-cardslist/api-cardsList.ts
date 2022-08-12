@@ -33,14 +33,12 @@ export const cardsListAPI = {
                 }
             })
     },
-    gradeCard(id: string, grade: number | null, shots: number) {
-        return instance.post<ResponseAddNewCardType, AxiosResponse<ResponseAddNewCardType>, RequestAddNewCardType>(`cards/card?id=${id}`, {
-            card: {
-                cardsPack_id: id,
-                grade,
-                shots
-            }
-        })
+    gradeCard(id: string, grade: number| null) {
+        return instance.put<ResponseUpdateGradeCardType, AxiosResponse<ResponseUpdateGradeCardType>, RequestUpdateGradeCardType>(`cards/grade`,
+            {
+                grade: grade,
+                card_id: id,
+                    })
 
     },
     updatePage(id: string, value: number) {
@@ -76,6 +74,16 @@ export type ResponseCardsListType = {
     packUserId: string
 }
 
+export type ResponseUpdateGradeCardType = {
+    updatedGrade: {
+        _id: string
+        cardsPack_id: string
+        card_id: string
+        user_id: string
+        grade: number
+        shots: number
+    }
+}
 
 export type ResponseDeleteCardType = {
     deletedCard: {}
@@ -108,4 +116,8 @@ export type RequestEditCardType = {
         question: string
         comments: string
     }
+}
+export type RequestUpdateGradeCardType = {
+    grade: number | null
+    card_id: string
 }

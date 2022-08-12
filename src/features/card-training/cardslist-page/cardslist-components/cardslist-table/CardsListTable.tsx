@@ -16,7 +16,7 @@ import {Badge, Rating} from "@mui/material";
 type CardsListTableType = {
     callbackDelete: (id: string) => void
     callbackEdit: (id: string) => void
-    callbackGrade: (cardId: string, e: SyntheticEvent, value:number | null, shots: number) => void
+    callbackGrade: (cardId: string, e: SyntheticEvent, value:number | null) => void
 }
 export const CardsListTable = (props: CardsListTableType) => {
     let selector =  useAppSelector<Array<CardItemsType>>(state => state.cardsList.cards)
@@ -48,7 +48,7 @@ export const CardsListTable = (props: CardsListTableType) => {
                                 <Badge badgeContent={row.shots} color="secondary">
                                     <Rating
                                         name="size-small"
-                                        onChange={(e,value)=>props.callbackGrade(row._id,e,value,row.shots===null?+1:row.shots+1)}
+                                        onChange={(e,value)=>props.callbackGrade(row._id,e,value)}
                                         defaultValue={row.grade===null?0:row.grade}
                                         size="small"
                                     />

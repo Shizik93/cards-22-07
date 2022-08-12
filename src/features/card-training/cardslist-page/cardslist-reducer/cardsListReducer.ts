@@ -123,11 +123,11 @@ export const EditCardTC = (id: string): AppThunk => async (dispatch) => {
         dispatch(setAppStatusAC('failed'))
     }
 }
-export const GradeCardTC = ( {id}: { id: string }, grade:number|null, shot:number): AppThunk => async (dispatch) => {
+export const GradeCardTC = ( id: string, grade:number|null): AppThunk => async (dispatch) => {
     try {
         dispatch(setAppStatusAC('loading'))
-        await cardsListAPI.gradeCard(id,grade,shot)
-        dispatch(FetchCardsListTC({id}))
+        const res = await cardsListAPI.gradeCard(id,grade)
+        dispatch(FetchCardsListTC({id: res.data.updatedGrade.cardsPack_id}))
         dispatch(setAppStatusAC('succeded'))
     } catch (error: any) {
         dispatch(setAppErrorAC(error.message ? `${error.message}' more about concole error'` : 'Some error occurred'))
