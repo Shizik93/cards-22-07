@@ -5,7 +5,7 @@ import {
     cardsListAPI,
     ResponseAddNewCardType,
     ResponseEditCardType,
-    ResponseCardsListType, RequestBodyCardsType
+    ResponseCardsListType
 } from "../api-cardslist/api-cardsList";
 
 export const initCardsListState = {
@@ -22,12 +22,12 @@ export const initCardsListState = {
         cardAnswer: '',
         cardQuestion: '',
         cardsPack_id: '',
-        // min: 1,
-        // max: 4,
+        min: 1,
+        max: 4,
         sortCards: '',
         page: 1,
         pageCount: 7
-    } as RequestBodyCardsType
+    }
 }
 const SET_PAGE_CARDS_LIST = "cardsList/SET_PAGE_CARDS_LIST"
 const SET_PAGE_COUNT_CARDS_LIST = "cardsList/SET_PAGE_COUNT_CARDS_LIST"
@@ -89,14 +89,11 @@ export const setPageAC = (payload: {page: number})=>({type:SET_PAGE_CARDS_LIST, 
 export const setPageCountAC = (payload: {pageCount: number})=>({type:SET_PAGE_COUNT_CARDS_LIST, payload}as const)
 
 export const FetchCardsListTC = ({id}: { id: string }): AppThunk => async (dispatch, getState) => {
-
     const state = getState().cardsList.requestBodyCards
     const requestCardsBody = {
         cardAnswer: state.cardAnswer,
         cardQuestion: state.cardQuestion,
         cardsPack_id: id,
-        min: state.min,
-        max: state.max,
         sortCards: state.sortCards,
         page: state.page,
         pageCount: state.pageCount

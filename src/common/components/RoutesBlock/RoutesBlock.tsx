@@ -14,6 +14,7 @@ import {PaginatorContainer} from "../../../features/packCardManager/page/Paginat
 
 import {CheckEmail} from "../../../features/auth/forgotPassword/checkEmail/CheckEmail";
 import {PrivateRoute} from "./PrivateRoute/PrivateRoute";
+import {LearnPage} from "../../../features/card-training/learn-page/LearnPage";
 
 
 export const PATH = {
@@ -27,6 +28,7 @@ export const PATH = {
     EMPTYCARDSLISTPAGE: '/emptycardsslist',
     CARDS: '/cards',
     CHECK_EMAIL: '/check-email',
+    LEARN_PAGE:'/learn-page/:id',
 
 }
 
@@ -46,6 +48,8 @@ export const RoutesBlock = () => {
                 <Route path={PATH.CARDS} element={<PrivateRoute><PaginatorContainer/></PrivateRoute>}/>
                 <Route path={'*'} element={<Error404/>}/>
                 <Route path={PATH.CHECK_EMAIL} element={<CheckEmail/>}/>
+                <Route path={PATH.LEARN_PAGE} element={<PrivateRoute><LearnPage/></PrivateRoute>}/>
+
                 {/*               <Route path={'*'} element={<Error404/>}/>*/}
             </Routes>
         </>
