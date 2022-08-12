@@ -68,7 +68,7 @@ export const ResponsiveAppBar = () => {
                         <img src={logo}/>
                     </Typography>
                     {isAuth
-                        ?<Box style={{
+                        ? <Box style={{
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'space-between',
@@ -97,9 +97,9 @@ export const ResponsiveAppBar = () => {
                             >
                                 {settings.map((setting) => {
                                     const onClickHandler = () => {
+                                        console.log(setting)
                                         if (setting.page === PATH.LOGINPAGE) {
                                             dispatch(logOutTC())
-                                            navigate(setting.page)
                                         } else {
                                             navigate(setting.page)
                                         }

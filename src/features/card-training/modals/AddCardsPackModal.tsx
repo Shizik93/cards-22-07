@@ -10,7 +10,6 @@ type PropsType = {
     handleOpen: () => void
     handleClose: () => void
     addNewCardsPack: (title: string) => void
-    editNewCardsPack: (title: string) => void
 }
 
 export const AddCardsPackModal = (props: PropsType) => {
@@ -24,7 +23,6 @@ const handleSetTitle = (e: ChangeEvent<HTMLInputElement>)=> {
 }
     const handleSubmit = ()=> {
         props.addNewCardsPack(title)
-        props.editNewCardsPack(title)
         setTitle('')
     }
 

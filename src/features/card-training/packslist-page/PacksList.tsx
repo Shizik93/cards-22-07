@@ -2,7 +2,11 @@ import React, {useEffect} from "react";
 import {ShowPacks} from "./packslist-components/show-packs/ShowPacks";
 import {CardsSlider} from "./packslist-components/cards-slider/CardsSlider";
 import {useAppDispatch, useAppSelector} from "../../../app/hooks";
-import {addNewPackTC, deleteCardsPackTC, FetchCardsPackListTC,} from "./packslist-reducer/packsListReducer";
+import {
+    addNewPackTC,
+    deleteCardsPackTC, editCardsPackTC, FetchCardsPackListTC,
+
+} from "./packslist-reducer/packsListReducer";
 import {PacksListTable} from "./packslist-components/packslist-table/PacksListTable";
 
 import {Button} from "@mui/material";
@@ -13,43 +17,48 @@ import '../../auth/auth.css'
 import {PaginatorContainer} from "../../packCardManager/page/PaginatorContainer";
 import {AddCardsPackModal} from "../modals/AddCardsPackModal";
 import {Searchinator2} from "../../packCardManager/search/Searchinator";
+import {EditCardsPackModal} from "../modals/EditCardsPackModal";
+import {flushSync} from "react-dom";
 
 
-export const PacksList = () => {
+export const PacksList =React.memo (() => {
     const dispatch = useAppDispatch()
+
     const [open, setOpen] = React.useState(false);
+    const [openEdit, setOpenEdit] = React.useState(false);
+    const [previousTitle, setpreviousTitle] = React.useState('');
+    const [idPack, setIdPack] = React.useState('');
+
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const handleOpenEdit = () => setOpenEdit(true);
+    const handleCloseEdit = () => setOpenEdit(false);
 
-
-   /* let page = useAppSelector(state => state.packsList.page)
-    let pageCount = useAppSelector(state=> state.packsList.pageCount)
-    let min = useAppSelector(state => state.packsList.RequestBody.min)
-    let max = useAppSelector(state => state.packsList.RequestBody.max)
-    let packName = useAppSelector(state => state.packsList.RequestBody.packName)
-    let user_id = useAppSelector(state => state.packsList.RequestBody.user_id)
-    // const isAuth = useAppSelector(state => state.login.isAuth)*/
-let isAuth=useAppSelector(state => state.login.isAuth)
+    let isAuth = useAppSelector(state => state.login.isAuth)
     let page = useAppSelector(state => state.packsList.page)
-    let pageCount = useAppSelector(state=> state.packsList.pageCount)
+    let pageCount = useAppSelector(state => state.packsList.pageCount)
     let min = useAppSelector(state => state.packsList.min)
     let max = useAppSelector(state => state.packsList.max)
     let packName = useAppSelector(state => state.packsList.packName)
     let user_id = useAppSelector(state => state.packsList.user_id)
-    let sortPacks = useAppSelector(state => state.packsList.sortPacks)
-    useEffect(() => {
-        isAuth&&dispatch(FetchCardsPackListTC())
-    }, [dispatch, page, pageCount, min, max, packName, user_id, sortPacks])
 
+    useEffect(() => {
+        console.log(isAuth)
+        isAuth && dispatch(FetchCardsPackListTC())
+    }, [ page, pageCount, min, max, packName, user_id, isAuth])
+    console.log(previousTitle)
     const handleClickDelete = (id: string) => {
         dispatch(deleteCardsPackTC(id))
     }
-    const handleClickEdit = (id: string) => {
-        // dispatch(editCardsPackTC(id))
+    const handleClickEdit = (id: string, title: string) => {
+        setpreviousTitle(title)
+        setOpenEdit(true)
+        setIdPack(id)
+
     }
-    const editNewCardsPack = (id: string, title: string) => {
-        // dispatch(addNewPackTC(title))
-        setOpen(false)
+    const editTitleCardsPack = (newTitle: string) => {
+        dispatch(editCardsPackTC(idPack, newTitle))
+        setOpenEdit(false)
     }
 
     const handlerAddNewCardsPackModal = () => {
@@ -63,9 +72,11 @@ let isAuth=useAppSelector(state => state.login.isAuth)
 
     return (
         <div className={'auth'}>
-            <AddCardsPackModal open={open} addNewCardsPack={addNewCardsPack} editNewCardsPack={handleClickEdit} handleOpen={handleOpen}
+            <AddCardsPackModal open={open} addNewCardsPack={addNewCardsPack} handleOpen={handleOpen}
                                handleClose={handleClose}/>
-            {/*<EditCardsPackModal/>*/}
+            <EditCardsPackModal open={openEdit} editTitleCardsPack={editTitleCardsPack} previousTitle={previousTitle}
+                                handleOpen={handleOpenEdit}
+                                handleClose={handleCloseEdit}/>
             <div className={style.packsListContainer}>
                 <div className={style.packsListHeader}>
                     <h2>Packs list</h2>
@@ -78,7 +89,8 @@ let isAuth=useAppSelector(state => state.login.isAuth)
                     <div><CardsSlider/></div>
                 </div>
                 <div className={style.tableContainer}>
-                    <PacksListTable callbackDelete={handleClickDelete} editNewCardsPack={handleClickEdit} callbackEdit={handleClickEdit}/>
+                    <PacksListTable callbackDelete={handleClickDelete}
+                                    titleCardsPack={handleClickEdit} addNewCardsPack={addNewCardsPack}/>
                 </div>
                 <div>
                     <PaginatorContainer/>
@@ -87,3 +99,4 @@ let isAuth=useAppSelector(state => state.login.isAuth)
         </div>
     )
 }
+)

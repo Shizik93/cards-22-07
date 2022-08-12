@@ -3,7 +3,9 @@ import * as React from 'react';
 type ButtonsProps = {
     id: string
     callbackDelete: (id: string) => void
-    callbackEdit: (id: string) => void
+    getPreviousCard: (id: string, previousQuestion: string, previousAnswer: string) => void
+    previousQuestion: string
+    previousAnswer: string
 }
 
 export const CardsListButtons = (props: ButtonsProps) => {
@@ -11,7 +13,7 @@ export const CardsListButtons = (props: ButtonsProps) => {
         props.callbackDelete(props.id)
     }
     const HandlerEdit = () => {
-        props.callbackEdit(props.id)
+        props.getPreviousCard(props.id, props.previousQuestion, props.previousAnswer)
     }
     if (props.id === '') {
         return null

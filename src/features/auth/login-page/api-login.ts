@@ -45,10 +45,10 @@ export const apiLogin = {
         })
     },
     me() {
-        return instance.post<null,AxiosResponse<ResponseLoginType>>('auth/me', {})
+        return instance.post<null,AxiosResponse<ResponseLoginType>>('auth/me')
     },
     logOut() {
-        return instance.delete<null,AxiosResponse<LogOutType>>('auth/me', {})
+        return instance.delete<null,AxiosResponse<LogOutType>>('auth/me')
     },
     updateUser(data:DataType){
         return instance.put<null,AxiosResponse<UpdateUserResponse>>('auth/me',data)

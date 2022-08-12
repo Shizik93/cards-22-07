@@ -18,9 +18,9 @@ export const packsListAPI = {
         //<тип нашего ответа от сервера, полный тип ответа от сервера который обернут в объект аксиоса, тип даты который мы отправляем на сервер>
         return instance.post<ResponseAddNewCardsPackType, AxiosResponse<ResponseAddNewCardsPackType>, RequestAddNewCardsPackType>(`cards/pack`, {cardsPack: {name: title}})
     },
-    editCardsPack(id: string) {
+    editCardsPack(id: string, newTitle: string) {
         return instance.put<ResponseEditCardsPackType, AxiosResponse<ResponseEditCardsPackType>, RequestEditCardsPackType>(`cards/pack/`,
-            {cardsPack: {_id: id, name: 'DeniKonst'}})
+            {cardsPack: {_id: id, name: newTitle}})
     }
 }
 export type RequestBodyType = {
