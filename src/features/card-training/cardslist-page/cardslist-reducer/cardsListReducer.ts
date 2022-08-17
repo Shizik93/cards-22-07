@@ -24,7 +24,7 @@ export const initCardsListState = {
         cardsPack_id: '',
         sortCards: 1 + '',
         page: 1,
-        pageCount: 7
+        pageCount: 3
     }
 }
 const SET_PAGE_CARDS_LIST = "cardsList/SET_PAGE_CARDS_LIST"
@@ -112,11 +112,12 @@ export const FetchCardsListTC = ({id}: { id: string }): AppThunk => async (dispa
     }
 }
 
-export const DeleteCardTC = (id: string): AppThunk => async (dispatch) => {
+export const DeleteCardTC = (idCard: string, idPack: string): AppThunk => async (dispatch) => {
     try {
         dispatch(setAppStatusAC('loading'))
-        await cardsListAPI.deleteCard(id)
-        dispatch(DeleteCardAC(id))
+        await cardsListAPI.deleteCard(idCard)
+        // dispatch(DeleteCardAC(id))
+        dispatch(FetchCardsListTC({id: idPack}))
         dispatch(setAppStatusAC('succeded'))
     } catch (error: any) {
         dispatch(setAppErrorAC(error.message ? `${error.message}' more about concole error'` : 'Some error occurred'))
@@ -130,7 +131,8 @@ export const AddNewCardTC = (id: string, question: string, answer: string): AppT
     try {
         dispatch(setAppStatusAC('loading'))
         const res = await cardsListAPI.addNewCard(id, question, answer)
-        dispatch(AddNewCardAC(res.data))
+        dispatch(FetchCardsListTC({id}))
+        // dispatch(AddNewCardAC(res.data))
         dispatch(setAppStatusAC('succeded'))
     } catch (error: any) {
         dispatch(setAppErrorAC(error.message ? `${error.message}' more about concole error'` : 'Some error occurred'))
@@ -140,11 +142,12 @@ export const AddNewCardTC = (id: string, question: string, answer: string): AppT
     }
 }
 
-export const EditCardTC = (id: string, newQuestion: string, newAnswer: string): AppThunk => async (dispatch) => {
+export const EditCardTC = (idCard: string, newQuestion: string, newAnswer: string, idPack: string): AppThunk => async (dispatch) => {
     try {
         dispatch(setAppStatusAC('loading'))
-        const res = await cardsListAPI.editCard(id, newQuestion, newAnswer)
-        dispatch(EditCardAC(res.data))
+        const res = await cardsListAPI.editCard(idCard, newQuestion, newAnswer)
+        dispatch(FetchCardsListTC({id: idPack}))
+        // dispatch(EditCardAC(res.data))
         dispatch(setAppStatusAC('succeded'))
     } catch (error: any) {
         dispatch(setAppErrorAC(error.message ? `${error.message}' more about concole error'` : 'Some error occurred'))

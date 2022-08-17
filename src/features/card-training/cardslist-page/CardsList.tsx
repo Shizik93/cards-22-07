@@ -67,7 +67,7 @@ export const CardsList = () => {
         setpreviousAnswer(previousAnswer)
     }
     const handlerEditCard = (newQuestion: string, newAnswer: string) => {
-        dispatch(EditCardTC(idCard, newQuestion, newAnswer))
+        id&&dispatch(EditCardTC(idCard, newQuestion, newAnswer, id))
         setOpenEditCard(false)
     }
 
@@ -77,7 +77,7 @@ export const CardsList = () => {
         setpreviousQuestion(deleteQuestion)
     }
     const handlerDeleteCard = () => {
-        dispatch(DeleteCardTC(idCard))
+        id && dispatch(DeleteCardTC(idCard, id))
         setOpenDeleteCard(false)
     }
 
