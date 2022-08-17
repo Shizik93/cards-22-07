@@ -134,7 +134,8 @@ export const deleteCardsPackTC = (id: string): AppThunk => async (dispatch) => {
     try {
         dispatch(setAppStatusAC('loading'))
         await packsListAPI.deleteCardsPack(id)
-        dispatch(deletePacksListActionsAC(id))
+        dispatch(FetchCardsPackListTC())
+        // dispatch(deletePacksListActionsAC(id))
         dispatch(setAppStatusAC('succeded'))
     } catch (error: any) {
         dispatch(setAppErrorAC(error.message ? `${error.message}' more about concole error'` : 'Some error occurred'))
@@ -148,7 +149,8 @@ export const addNewPackTC = (title: string, privatePack: boolean): AppThunk => a
     try {
         dispatch(setAppStatusAC('loading'))
         const res = await packsListAPI.addNewCardsPack(title, privatePack)
-        dispatch(addNewCardsPacksActionsAC(res.data))
+        dispatch(FetchCardsPackListTC())
+        // dispatch(addNewCardsPacksActionsAC(res.data))
         dispatch(setAppStatusAC('succeded'))
     } catch (error: any) {
         dispatch(setAppErrorAC(error.message ? `${error.message}' more about concole error'` : 'Some error occurred'))
@@ -162,7 +164,8 @@ export const editCardsPackTC = (id: string, newTitle: string, privatePack: boole
     try {
         dispatch(setAppStatusAC('loading'))
         const res = await packsListAPI.editCardsPack(id, newTitle, privatePack)
-        dispatch(editCardsPackActionsAC(res.data))
+        dispatch(FetchCardsPackListTC())
+        // dispatch(editCardsPackActionsAC(res.data))
         dispatch(setAppStatusAC('succeded'))
     } catch (error: any) {
         dispatch(setAppErrorAC(error.message ? `${error.message}' more about concole error'` : 'Some error occurred'))
