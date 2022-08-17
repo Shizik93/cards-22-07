@@ -20,7 +20,6 @@ import '../../auth/auth.css'
 import {AddCardModal} from "../modals/AddCardsModal";
 import {EditCardModal} from "../modals/EditCardModal";
 import {DeleteCardModal} from "../modals/DeleteCardsModal";
-import {Searchinator2} from "../../packCardManager/search/Searchinator";
 import {Paginator} from "../../../common/components/Paginator/Paginator";
 import {Select} from "../../packCardManager/selector/Select";
 
@@ -32,8 +31,8 @@ export const CardsList = () => {
     const page = useAppSelector(state => state.cardsList.page)
     const pageCountForEffect = useAppSelector(state => state.cardsList.requestBodyCards.pageCount)
     const pageCount = useAppSelector(state => state.cardsList.pageCount)
+    const sortCards = useAppSelector(state => state.cardsList.requestBodyCards.sortCards)
 
-    console.log(pageCount)
     const {id} = useParams<{ id: string }>()
 
     const [openAddCard, setOpenAddCard] = React.useState(false);
@@ -50,7 +49,7 @@ export const CardsList = () => {
 
     useEffect(() => {
         id && dispatch(FetchCardsListTC({id}))
-    }, [dispatch, pageForEffect, pageCountForEffect])
+    }, [dispatch, pageForEffect, pageCountForEffect, sortCards])
 
 
     const handleAddNewCardModal = () => {
@@ -79,7 +78,7 @@ export const CardsList = () => {
     }
     const handlerDeleteCard = () => {
         dispatch(DeleteCardTC(idCard))
-        setOpenAddCard(false)
+        setOpenDeleteCard(false)
     }
 
     const handlerToPacksList = () => {
@@ -118,7 +117,7 @@ export const CardsList = () => {
                             style={{height: '35px'}}>Add new card</Button>
                 </div>
                 <div className={style.toolsContainer}>
-                    <div><Searchinator2/></div>
+                    {/*<div><Searchinator2/></div>*/}
                 </div>
                 <div className={style.tableContainer}>
                     <CardsListTable callbackGrade={gradeHandler} callbackDelete={handlerClickDelete} getPreviousCard={handlerClickEdit}/>

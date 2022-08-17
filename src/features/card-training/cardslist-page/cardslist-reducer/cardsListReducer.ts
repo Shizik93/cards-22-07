@@ -22,15 +22,14 @@ export const initCardsListState = {
         cardAnswer: '',
         cardQuestion: '',
         cardsPack_id: '',
-        min: 1,
-        max: 4,
-        sortCards: '',
+        sortCards: 1 + '',
         page: 1,
         pageCount: 7
     }
 }
 const SET_PAGE_CARDS_LIST = "cardsList/SET_PAGE_CARDS_LIST"
 const SET_PAGE_COUNT_CARDS_LIST = "cardsList/SET_PAGE_COUNT_CARDS_LIST"
+const SET_SORT_CARD_VALUE_COLUMN = "cardsList/SET_SORT_VALUE_COLUMN"
 export const cardsListReducer = (state: InitCardsListStateType = initCardsListState, action: AppActionsType): InitCardsListStateType => {
     switch (action.type) {
         case 'FETCH-CARDSLIST':
@@ -59,11 +58,12 @@ export const cardsListReducer = (state: InitCardsListStateType = initCardsListSt
             return {...state, cards: [{...action.payload.newCard}, ...state.cards], token: action.payload.token, tokenDeathTime: action.payload.tokenDeathTime}
         case 'EDIT-CARD':
             return {...state, cards: state.cards.map(el=> el._id===action.payload.updatedCard._id?action.payload.updatedCard: el), token: action.payload.token, tokenDeathTime: action.payload.tokenDeathTime}
-            return {...state}
         case SET_PAGE_CARDS_LIST:
             return {...state,requestBodyCards:{...state.requestBodyCards,page:action.payload.page}}
         case SET_PAGE_COUNT_CARDS_LIST:
             return {...state,requestBodyCards:{...state.requestBodyCards,pageCount:action.payload.pageCount}}
+        case SET_SORT_CARD_VALUE_COLUMN:
+            return {...state,requestBodyCards: {...state.requestBodyCards,sortCards: action.payload.sortPacks.value + action.payload.sortPacks.name}}
         default:
             return state
     }
@@ -87,16 +87,14 @@ export const EditCardAC = (payload: ResponseEditCardType) =>
     } as const)
 export const setPageAC = (payload: {page: number})=>({type:SET_PAGE_CARDS_LIST, payload}as const)
 export const setPageCountAC = (payload: {pageCount: number})=>({type:SET_PAGE_COUNT_CARDS_LIST, payload}as const)
+export const setSortCardsColumnAC = (payload: {sortPacks: { value: number, name: string}})=>({type:SET_SORT_CARD_VALUE_COLUMN, payload}as const)
 
 export const FetchCardsListTC = ({id}: { id: string }): AppThunk => async (dispatch, getState) => {
-    debugger
     const state = getState().cardsList.requestBodyCards
     const requestCardsBody = {
         cardAnswer: state.cardAnswer,
         cardQuestion: state.cardQuestion,
         cardsPack_id: id,
-        min: state.min,
-        max: state.max,
         sortCards: state.sortCards,
         page: state.page,
         pageCount: state.pageCount
@@ -198,6 +196,7 @@ export type CardsListActionsType = FetchCardsListActionsType | DeleteCardActions
     | EditCardActionsType
     | ReturnType<typeof setPageAC>
     | ReturnType<typeof setPageCountAC>
+    | ReturnType<typeof setSortCardsColumnAC>
 export type FetchCardsListActionsType = ReturnType<typeof FetchCardsListAC>
 export type DeleteCardActionsType = ReturnType<typeof DeleteCardAC>
 export type AddNewCardActionsType = ReturnType<typeof AddNewCardAC>
