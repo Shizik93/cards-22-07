@@ -25,20 +25,17 @@ export const Select: React.FC<SelectPropsType> = (
 
     const onChangeSelectHandler = (e: ChangeEvent<HTMLSelectElement>) => {
         setCountPage(+e.currentTarget.value)
-
     }
 
     return (
         <div className={styles.selectBlock}>
 
-
-            <select value={portionSize} onChange={onChangeSelectHandler}>*
+            <select value={portionSize} onChange={onChangeSelectHandler} className={styles.select}>
                 {maxValueSelect.map((v,i) => {
                     return (
                         <option value={v} key={i}>{v}</option>
                     )
                 })}
-
 
             </select>
 

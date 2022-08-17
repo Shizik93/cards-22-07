@@ -22,7 +22,7 @@ export const initPacksListState = {
     cardPacksTotalCount: 0,
     maxCardsCount: 0,
     minCardsCount: 0,
-    page: 0,
+    page: 1,
     pageCount: 5,
     packName: '',
     min: 0,
@@ -64,11 +64,11 @@ export const packsListReducer = (state: InitPacksListStateType = initPacksListSt
                 token: action.payload.token, tokenDeathTime: action.payload.tokenDeathTime
             }
             case SET_MIN_MAX_CARDS:
-            return {...state,min: action.payload.data.min, max:action.payload.data.max }
+            return {...state,min: action.payload.data.min, max:action.payload.data.max, page: 1 }
         case SET_PACKNAME:
-            return {...state,packName: action.payload.data.packName }
+            return {...state,packName: action.payload.data.packName,page: 1 }
         case SET_PAGE_COUNT:
-            return {...state,pageCount: action.payload.data.pageCount}
+            return {...state,pageCount: action.payload.data.pageCount, page: 1}
         case SET_CURRENT_PAGE:
             return {...state,page:action.payload.data.page}
         case SET_USER_ID:

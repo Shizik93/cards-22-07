@@ -13,15 +13,15 @@ import {
     setPageCountAC
 } from "./cardslist-reducer/cardsListReducer";
 
-import {Button} from "@mui/material";
+import {Button, Pagination} from "@mui/material";
 
 import style from './CardsList.module.css'
 import '../../auth/auth.css'
 import {AddCardModal} from "../modals/AddCardsModal";
 import {EditCardModal} from "../modals/EditCardModal";
 import {DeleteCardModal} from "../modals/DeleteCardsModal";
-import {Paginator} from "../../../common/components/Paginator/Paginator";
 import {Select} from "../../packCardManager/selector/Select";
+import styles from "../../packCardManager/page/Pagination.module.css";
 
 export const CardsList = () => {
     const dispatch = useAppDispatch()
@@ -69,7 +69,7 @@ export const CardsList = () => {
     const handlerEditCard = (newQuestion: string, newAnswer: string) => {
         dispatch(EditCardTC(idCard, newQuestion, newAnswer))
         setOpenEditCard(false)
-           }
+    }
 
     const handlerClickDelete = (id: string, deleteQuestion: string) => {
         setOpenDeleteCard(true)
@@ -84,51 +84,71 @@ export const CardsList = () => {
     const handlerToPacksList = () => {
         navigate(PATH.PACKSLISTPAGE)
     }
-/*    const HandlerAddNewCard = () => {
-        id && dispatch(AddNewCardTC(id))
-    }*/
+    /*    const HandlerAddNewCard = () => {
+            id && dispatch(AddNewCardTC(id))
+        }*/
     const gradeHandler = (cardId: string, e: SyntheticEvent, value: number | null) => {
 
-         if (e&&value!== null) {
-             dispatch(GradeCardTC(cardId,value))
+        if (e && value !== null) {
+            dispatch(GradeCardTC(cardId, value))
         }
-    }
-    const paginationHandler = (page: number) => {
-        dispatch(setPageAC({page}))
     }
     const selectHandler = (pageCount: number) => {
         dispatch(setPageCountAC({pageCount}))
     }
+    const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+        dispatch(setPageAC({page: value}))
+    }
     return (
         <div className={'auth'}>
-            <AddCardModal open={openAddCard} addNewCard={handlerAddNewCard}
-                          handleClose={handlerCloseAdd}/>
-            <EditCardModal open={openEditCard} editCard={handlerEditCard} previousQuestion={previousQuestion}
-                           previousAnswer={previousAnswer} handleCloseEdit={handlerCloseEdit}/>
-            <DeleteCardModal open={openDeleteCard} deleteCard={handlerDeleteCard} deleteQuestion={previousQuestion}
-                           handleCloseDelete={handlerCloseDelete}/>
+            <AddCardModal
+                open={openAddCard}
+                addNewCard={handlerAddNewCard}
+                handleClose={handlerCloseAdd}/>
+            <EditCardModal
+                open={openEditCard}
+                editCard={handlerEditCard}
+                previousQuestion={previousQuestion}
+                previousAnswer={previousAnswer}
+                handleCloseEdit={handlerCloseEdit}/>
+            <DeleteCardModal
+                open={openDeleteCard}
+                deleteCard={handlerDeleteCard}
+                deleteQuestion={previousQuestion}
+                handleCloseDelete={handlerCloseDelete}/>
             <div className={style.cardsListContainer}>
-                <div><Button onClick={handlerToPacksList}> <i className={style.left}></i> Back to Packs List
-                </Button></div>
+                <div>
+                    <Button
+                        onClick={handlerToPacksList}> <i className={style.left}></i> Back to Packs List
+                    </Button></div>
 
                 <div className={style.cardsListHeader}>
                     <h2>My Cards</h2>
-                    <Button onClick={handleAddNewCardModal} variant="contained"
-                            style={{height: '35px'}}>Add new card</Button>
+                    <Button onClick={handleAddNewCardModal}
+                            variant="contained"
+                            style={{height: '35px'}}>Add new card
+                    </Button>
                 </div>
                 <div className={style.toolsContainer}>
                     {/*<div><Searchinator2/></div>*/}
                 </div>
                 <div className={style.tableContainer}>
-                    <CardsListTable callbackGrade={gradeHandler} callbackDelete={handlerClickDelete} getPreviousCard={handlerClickEdit}/>
+                    <CardsListTable
+                        callbackGrade={gradeHandler}
+                        callbackDelete={handlerClickDelete}
+                        getPreviousCard={handlerClickEdit}/>
+                    <div className={styles.paginationBlock}>
+                        <Pagination
+                            defaultPage={1}
+                            count={Math.ceil(cardsTotalCount / pageCount)}
+                            page={page}
+                            onChange={handleChange}/>
 
-                    <Paginator
-                        totalCount={cardsTotalCount === null ? 0 : cardsTotalCount}
-                        page={page === null ? 1 : page}
-                        onClickHandler={paginationHandler}
-                        portionSize={pageCount === null ? 1 : pageCount}
-                    />
-                    <Select portionSize={pageCount === null ? 1 : pageCount} setCountPage={selectHandler}/>
+                        <Select
+                            portionSize={pageCount === null ? 1 : pageCount}
+                            setCountPage={selectHandler}/>
+                    </div>
+
 
                 </div>
             </div>
