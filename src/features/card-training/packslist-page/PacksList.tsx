@@ -4,7 +4,7 @@ import {CardsSlider} from "./packslist-components/cards-slider/CardsSlider";
 import {useAppDispatch, useAppSelector} from "../../../app/hooks";
 import {
     addNewPackTC,
-    deleteCardsPackTC, editCardsPackTC, FetchCardsPackListTC,
+    deleteCardsPackTC, editCardsPackTC, fetchCardsPackListTC,
 
 } from "./packslist-reducer/packsListReducer";
 import {PacksListTable} from "./packslist-components/packslist-table/PacksListTable";
@@ -43,7 +43,7 @@ export const PacksList =React.memo (() => {
     let user_id = useAppSelector(state => state.packsList.user_id)
     let sortPacks = useAppSelector(state => state.packsList.sortPacks)
     useEffect(() => {
-        isAuth&&dispatch(FetchCardsPackListTC())
+        isAuth&&dispatch(fetchCardsPackListTC())
     }, [dispatch, page, pageCount, min, max, packName, user_id, sortPacks])
 
     const handlerClickDelete = (id: string, title: string) => {

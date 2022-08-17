@@ -64,11 +64,7 @@ export const cardsListReducer = (state: InitCardsListStateType = initCardsListSt
             return state
     }
 }
-export const FetchCardsListAC = (payload: ResponseCardsListType) =>
-    ({
-        type: FETCH_CARDSLIST, payload
-    } as const)
-
+export const FetchCardsListAC = (payload: ResponseCardsListType) =>({type: FETCH_CARDSLIST, payload} as const)
 // export const DeleteCardAC = (payload: string) =>
 //     ({
 //         type: 'DELETE-CARD', payload
