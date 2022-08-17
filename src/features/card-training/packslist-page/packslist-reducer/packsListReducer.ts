@@ -105,7 +105,7 @@ export const setSortColumnAC = (data: { sortPacks: { value: number, name: string
 //         type: 'EDIT-CARDSPACK', payload
 //     } as const)
 
-// thunk actions
+// thunk creators
 export const fetchCardsPackListTC = (/*body:RequestBodyType*/): AppThunk => async (dispatch, getState) => {
     let state = getState().packsList
     let requestData: RequestBodyType = {
