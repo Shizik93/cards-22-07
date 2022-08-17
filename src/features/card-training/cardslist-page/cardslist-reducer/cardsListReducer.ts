@@ -1,12 +1,6 @@
 import {AppActionsType, AppThunk} from "../../../../app/store";
 import {setAppErrorAC, setAppStatusAC} from "../../../../app/app-reducer";
-import {
-    CardItemsType,
-    cardsListAPI,
-    ResponseAddNewCardType,
-    ResponseEditCardType,
-    ResponseCardsListType
-} from "../api-cardslist/api-cardsList";
+import {CardItemsType, cardsListAPI, ResponseCardsListType} from "../api-cardslist/api-cardsList";
 
 export const initCardsListState = {
     cards: [] as CardItemsType[],
@@ -27,12 +21,14 @@ export const initCardsListState = {
         pageCount: 3
     }
 }
+const FETCH_CARDSLIST = "cardsList/FETCH_CARDSLIST"
 const SET_PAGE_CARDS_LIST = "cardsList/SET_PAGE_CARDS_LIST"
 const SET_PAGE_COUNT_CARDS_LIST = "cardsList/SET_PAGE_COUNT_CARDS_LIST"
 const SET_SORT_CARD_VALUE_COLUMN = "cardsList/SET_SORT_VALUE_COLUMN"
+
 export const cardsListReducer = (state: InitCardsListStateType = initCardsListState, action: AppActionsType): InitCardsListStateType => {
     switch (action.type) {
-        case 'FETCH-CARDSLIST':
+        case FETCH_CARDSLIST:
             // const newCard = {answer: 'hgvhg',
             //     question: 'jkkkkkkkkkk',
             //     cardsPack_id: 'nbbbbbbbb',
@@ -52,39 +48,39 @@ export const cardsListReducer = (state: InitCardsListStateType = initCardsListSt
                 pageCount: action.payload.pageCount,
                 packUserId: action.payload.packUserId
             }
-        case 'DELETE-CARD':
-            return {...state, cards: state.cards.filter(tl => tl._id !== action.payload)}
-        case 'ADD-NEW-CARD':
-            return {...state, cards: [{...action.payload.newCard}, ...state.cards], token: action.payload.token, tokenDeathTime: action.payload.tokenDeathTime}
-        case 'EDIT-CARD':
-            return {...state, cards: state.cards.map(el=> el._id===action.payload.updatedCard._id?action.payload.updatedCard: el), token: action.payload.token, tokenDeathTime: action.payload.tokenDeathTime}
         case SET_PAGE_CARDS_LIST:
             return {...state,requestBodyCards:{...state.requestBodyCards,page:action.payload.page}}
         case SET_PAGE_COUNT_CARDS_LIST:
             return {...state,requestBodyCards:{...state.requestBodyCards,pageCount:action.payload.pageCount}}
         case SET_SORT_CARD_VALUE_COLUMN:
             return {...state,requestBodyCards: {...state.requestBodyCards,sortCards: action.payload.sortPacks.value + action.payload.sortPacks.name}}
+        // case 'DELETE-CARD':
+        //     return {...state, cards: state.cards.filter(tl => tl._id !== action.payload)}
+        // case 'ADD-NEW-CARD':
+        //     return {...state, cards: [{...action.payload.newCard}, ...state.cards], token: action.payload.token, tokenDeathTime: action.payload.tokenDeathTime}
+        // case 'EDIT-CARD':
+        //     return {...state, cards: state.cards.map(el=> el._id===action.payload.updatedCard._id?action.payload.updatedCard: el), token: action.payload.token, tokenDeathTime: action.payload.tokenDeathTime}
         default:
             return state
     }
 }
 export const FetchCardsListAC = (payload: ResponseCardsListType) =>
     ({
-        type: 'FETCH-CARDSLIST', payload
+        type: FETCH_CARDSLIST, payload
     } as const)
 
-export const DeleteCardAC = (payload: string) =>
-    ({
-        type: 'DELETE-CARD', payload
-    } as const)
-export const AddNewCardAC = (payload: ResponseAddNewCardType) =>
-    ({
-        type: 'ADD-NEW-CARD', payload
-    } as const)
-export const EditCardAC = (payload: ResponseEditCardType) =>
-    ({
-        type: 'EDIT-CARD', payload
-    } as const)
+// export const DeleteCardAC = (payload: string) =>
+//     ({
+//         type: 'DELETE-CARD', payload
+//     } as const)
+// export const AddNewCardAC = (payload: ResponseAddNewCardType) =>
+//     ({
+//         type: 'ADD-NEW-CARD', payload
+//     } as const)
+// export const EditCardAC = (payload: ResponseEditCardType) =>
+//     ({
+//         type: 'EDIT-CARD', payload
+//     } as const)
 export const setPageAC = (payload: {page: number})=>({type:SET_PAGE_CARDS_LIST, payload}as const)
 export const setPageCountAC = (payload: {pageCount: number})=>({type:SET_PAGE_COUNT_CARDS_LIST, payload}as const)
 export const setSortCardsColumnAC = (payload: {sortPacks: { value: number, name: string}})=>({type:SET_SORT_CARD_VALUE_COLUMN, payload}as const)
@@ -156,6 +152,7 @@ export const EditCardTC = (idCard: string, newQuestion: string, newAnswer: strin
         dispatch(setAppStatusAC('failed'))
     }
 }
+
 export const GradeCardTC = ( id: string, grade:number|null): AppThunk => async (dispatch) => {
     try {
         dispatch(setAppStatusAC('loading'))
@@ -169,6 +166,7 @@ export const GradeCardTC = ( id: string, grade:number|null): AppThunk => async (
         dispatch(setAppStatusAC('failed'))
     }
 }
+
 // export const updatePageCardTC = ({id}: { id: string }): AppThunk => async (dispatch,getState) => {
 //     const state = getState().cardsList.requestBodyCards
 //     const requestBody = {
@@ -195,12 +193,17 @@ export const GradeCardTC = ( id: string, grade:number|null): AppThunk => async (
 // }
 
 export type InitCardsListStateType = typeof initCardsListState
-export type CardsListActionsType = FetchCardsListActionsType | DeleteCardActionsType | AddNewCardActionsType
-    | EditCardActionsType
+
+export type CardsListActionsType =
+    | FetchCardsListActionsType
     | ReturnType<typeof setPageAC>
     | ReturnType<typeof setPageCountAC>
     | ReturnType<typeof setSortCardsColumnAC>
+    // | DeleteCardActionsType
+    // | AddNewCardActionsType
+    // | EditCardActionsType
+
 export type FetchCardsListActionsType = ReturnType<typeof FetchCardsListAC>
-export type DeleteCardActionsType = ReturnType<typeof DeleteCardAC>
-export type AddNewCardActionsType = ReturnType<typeof AddNewCardAC>
-export type EditCardActionsType = ReturnType<typeof EditCardAC>
+// export type DeleteCardActionsType = ReturnType<typeof DeleteCardAC>
+// export type AddNewCardActionsType = ReturnType<typeof AddNewCardAC>
+// export type EditCardActionsType = ReturnType<typeof EditCardAC>
