@@ -44,7 +44,7 @@ export const PacksList =React.memo (() => {
     let sortPacks = useAppSelector(state => state.packsList.sortPacks)
     useEffect(() => {
         isAuth&&dispatch(fetchCardsPackListTC())
-    }, [dispatch, page, pageCount, min, max, packName, user_id, sortPacks])
+    }, [dispatch, page, pageCount, min, max, packName, sortPacks])
 
     const handlerClickDelete = (id: string, title: string) => {
         setOpenDelete(true)
