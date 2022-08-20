@@ -21,9 +21,10 @@ type PropsType = {
     open: boolean
 }
 
-export const BasicModal: FC<PropsType> = ({children, open}: PropsType) => {
+export const BasicModal: FC<PropsType> = React.memo(({children, open}: PropsType) => {
+
     return (
-        <div>
+        <>
             <Modal
                 open={open}
                 aria-labelledby="modal-modal-title"
@@ -33,6 +34,6 @@ export const BasicModal: FC<PropsType> = ({children, open}: PropsType) => {
                     {children}
                 </Box>
             </Modal>
-        </div>
+        </>
     );
-}
+})

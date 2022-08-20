@@ -11,16 +11,18 @@ import {ErrorSnackbar} from "../common/components/ErrorSnackBar/ErrorSnackBar";
 
 
 export const App = () => {
+    const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const status = useAppSelector(state => state.app.status)
+    const isLogin = useAppSelector(state => state.login.isAuth)
 
     useEffect(() => {
         dispatch(authMeTC())
+        if(!isLogin) navigate(PATH.LOGINPAGE);
     }, [dispatch])
 
 
     return (
-
         <div className="App">
             {status === 'loading' && <Preloader/>}
             <ResponsiveAppBar/>
@@ -28,20 +30,8 @@ export const App = () => {
             <NavigateButtons/>
             <ErrorSnackbar/>
         </div>
-    );
+    )
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 const NavigateButtons=()=>{

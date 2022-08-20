@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import ClearIcon from '@mui/icons-material/Clear';
 import {Button, TextField} from "@mui/material";
 import style from './AddCardsPack.module.css'
+import Box from "@mui/material/Box";
 
 type PropsType = {
     open: boolean
@@ -13,7 +14,7 @@ type PropsType = {
     previousAnswer: string
 }
 
-export const EditCardModal = (props: PropsType) => {
+export const EditCardModal = React.memo((props: PropsType) => {
     const [question, setQuestion] = React.useState(props.previousQuestion);
     const [answer, setAnswer] = React.useState(props.previousAnswer);
     useEffect(() => {
@@ -39,24 +40,24 @@ export const EditCardModal = (props: PropsType) => {
 
     return (
         <BasicModal open={props.open}>
-            <div className={style.header}>
+            <header className={style.header}>
                 <Typography variant="h6" component="h3">Edit pack: <span
                     style={{fontWeight: 'bold'}}>{props.previousQuestion}</span></Typography>
                 <ClearIcon onClick={handlerCloseModal}/>
-            </div>
-            <Typography id="modal-modal-description" sx={{mt: 2}}>
+            </header>
+            <Box sx={{mt: 2}}>
                 <TextField value={question} onChange={handlerEditQuestion} id="standard-basic" label="question"
                            variant="standard"/>
-            </Typography>
-            <Typography id="modal-modal-description" sx={{mt: 2}}>
+            </Box>
+            <Box sx={{mt: 2}}>
                 <TextField value={answer} onChange={handlerEditAnswer} id="standard-basic" label="answer"
                            variant="standard"/>
-            </Typography>
+            </Box>
 
-            <div className={style.footer}>
+            <footer className={style.footer}>
                 <Button variant="contained" onClick={handlerCloseModal}>CANCEL</Button>
                 <Button variant="contained" onClick={handlerSubmit}>SAVE</Button>
-            </div>
+            </footer>
         </BasicModal>
     )
-}
+})

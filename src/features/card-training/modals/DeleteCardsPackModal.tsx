@@ -1,9 +1,11 @@
-import React from "react";
+import React, {useCallback} from "react";
 import {BasicModal} from "./BasicModal";
-import Typography from "@mui/material/Typography";
+
 import ClearIcon from '@mui/icons-material/Clear';
 import {Button} from "@mui/material";
+
 import style from './AddCardsPack.module.css'
+import Box from "@mui/material/Box";
 
 type PropsType = {
     open: boolean
@@ -12,27 +14,27 @@ type PropsType = {
     deleteCardsPack: () => void
 }
 
-export const DeleteCardsPackModal = (props: PropsType) => {
+export const DeleteCardsPackModal = React.memo((props: PropsType) => {
 
-    const handlerCloseModal = () => {
+    const handlerCloseModal = useCallback(() => {
         props.handleCloseDelete()
-    }
+    }, [props.handleCloseDelete])
     const handlerSubmit = () => {
         props.deleteCardsPack()
     }
 
     return (
         <BasicModal open={props.open}>
-            <div className={style.header}>
-                <Typography variant="h6" component="h3"> Do you realy want to remove pack <span
+            <header className={style.header}>
+                <Box component="h3"> Do you realy want to remove pack <span
                     style={{fontWeight: 'bold'}}>{props.deleteQuestion}? </span> All cards will be deleted.
-                </Typography>
+                </Box>
                 <ClearIcon onClick={handlerCloseModal}/>
-            </div>
-            <div className={style.footer}>
+            </header>
+            <footer className={style.footer}>
                 <Button variant="contained" onClick={handlerCloseModal}>CANCEL</Button>
                 <Button variant="contained" color='error' onClick={handlerSubmit}>Delete</Button>
-            </div>
+            </footer>
         </BasicModal>
     )
-}
+})

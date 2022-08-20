@@ -18,7 +18,7 @@ export const initCardsListState = {
     packUserId: '',
     token: '',
     tokenDeathTime: 0,
-    requestBodyCards:{
+    requestBodyCards: {
         cardAnswer: '',
         cardQuestion: '',
         cardsPack_id: '',
@@ -56,14 +56,24 @@ export const cardsListReducer = (state: InitCardsListStateType = initCardsListSt
         case 'DELETE-CARD':
             return {...state, cards: state.cards.filter(tl => tl._id !== action.payload)}
         case 'ADD-NEW-CARD':
-            return {...state, cards: [{...action.payload.newCard}, ...state.cards], token: action.payload.token, tokenDeathTime: action.payload.tokenDeathTime}
+            return {
+                ...state,
+                cards: [{...action.payload.newCard}, ...state.cards],
+                token: action.payload.token,
+                tokenDeathTime: action.payload.tokenDeathTime
+            }
         case 'EDIT-CARD':
-            return {...state, cards: state.cards.map(el=> el._id===action.payload.updatedCard._id?action.payload.updatedCard: el), token: action.payload.token, tokenDeathTime: action.payload.tokenDeathTime}
+            return {
+                ...state,
+                cards: state.cards.map(el => el._id === action.payload.updatedCard._id ? action.payload.updatedCard : el),
+                token: action.payload.token,
+                tokenDeathTime: action.payload.tokenDeathTime
+            }
             return {...state}
         case SET_PAGE_CARDS_LIST:
-            return {...state,requestBodyCards:{...state.requestBodyCards,page:action.payload.page}}
+            return {...state, requestBodyCards: {...state.requestBodyCards, page: action.payload.page}}
         case SET_PAGE_COUNT_CARDS_LIST:
-            return {...state,requestBodyCards:{...state.requestBodyCards,pageCount:action.payload.pageCount}}
+            return {...state, requestBodyCards: {...state.requestBodyCards, pageCount: action.payload.pageCount}}
         default:
             return state
     }
@@ -85,8 +95,8 @@ export const EditCardAC = (payload: ResponseEditCardType) =>
     ({
         type: 'EDIT-CARD', payload
     } as const)
-export const setPageAC = (payload: {page: number})=>({type:SET_PAGE_CARDS_LIST, payload}as const)
-export const setPageCountAC = (payload: {pageCount: number})=>({type:SET_PAGE_COUNT_CARDS_LIST, payload}as const)
+export const setPageAC = (payload: { page: number }) => ({type: SET_PAGE_CARDS_LIST, payload} as const)
+export const setPageCountAC = (payload: { pageCount: number }) => ({type: SET_PAGE_COUNT_CARDS_LIST, payload} as const)
 
 export const FetchCardsListTC = ({id}: { id: string }): AppThunk => async (dispatch, getState) => {
     const state = getState().cardsList.requestBodyCards
@@ -152,10 +162,10 @@ export const EditCardTC = (id: string, newQuestion: string, newAnswer: string): 
         dispatch(setAppStatusAC('failed'))
     }
 }
-export const GradeCardTC = ( id: string, grade:number|null): AppThunk => async (dispatch) => {
+export const GradeCardTC = (id: string, grade: number | null): AppThunk => async (dispatch) => {
     try {
         dispatch(setAppStatusAC('loading'))
-        const res = await cardsListAPI.gradeCard(id,grade)
+        const res = await cardsListAPI.gradeCard(id, grade)
         dispatch(FetchCardsListTC({id: res.data.updatedGrade.cardsPack_id}))
         dispatch(setAppStatusAC('succeded'))
     } catch (error: any) {

@@ -1,4 +1,7 @@
 import * as React from 'react';
+import style from "../../../../packslist-page/packslist-components/buttons/CardsPackListButton.module.css";
+import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
+import EditIcon from "@mui/icons-material/Edit";
 
 type ButtonsProps = {
     id: string
@@ -8,7 +11,7 @@ type ButtonsProps = {
     previousAnswer: string
 }
 
-export const CardsListButtons = (props: ButtonsProps) => {
+export const CardsListButtons = React.memo((props: ButtonsProps) => {
     const handlerDelete = () => {
         props.callbackDelete(props.id, props.previousQuestion)
     }
@@ -18,10 +21,11 @@ export const CardsListButtons = (props: ButtonsProps) => {
     if (props.id === '') {
         return null
     }
+
     return (
         <div>
-            <button onClick={handlerDelete}> del</button>
-            <button onClick={handlerEdit}> edit</button>
+            <DeleteTwoToneIcon onClick={handlerDelete} className={style.icon} titleAccess={'delete'}/>
+            <EditIcon onClick={handlerEdit} className={style.icon} titleAccess={'edit'}/>
         </div>
     )
-}
+})

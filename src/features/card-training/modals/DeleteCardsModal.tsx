@@ -1,9 +1,9 @@
 import React from "react";
 import {BasicModal} from "./BasicModal";
-import Typography from "@mui/material/Typography";
 import ClearIcon from '@mui/icons-material/Clear';
 import {Button} from "@mui/material";
 import style from './AddCardsPack.module.css'
+import Box from "@mui/material/Box";
 
 type PropsType = {
     open: boolean
@@ -12,7 +12,7 @@ type PropsType = {
     deleteCard: () => void
 }
 
-export const DeleteCardModal = (props: PropsType) => {
+export const DeleteCardModal = React.memo((props: PropsType) => {
     const handlerCloseModal = () => {
         props.handleCloseDelete()
     }
@@ -21,15 +21,15 @@ export const DeleteCardModal = (props: PropsType) => {
     }
     return (
         <BasicModal open={props.open}>
-            <div className={style.header}>
-                <Typography variant="h6" component="h3"> Do you realy want to remove card: <span
-                    style={{fontWeight: 'bold'}}>{props.deleteQuestion}</span> </Typography>
+            <header className={style.header}>
+                <Box component="h3"> Do you realy want to remove card: <span
+                    style={{fontWeight: 'bold'}}>{props.deleteQuestion}</span> </Box>
                 <ClearIcon onClick={handlerCloseModal}/>
-            </div>
-            <div className={style.footer}>
+            </header>
+            <footer className={style.footer}>
                 <Button variant="contained" onClick={handlerCloseModal}>CANCEL</Button>
                 <Button variant="contained" color='error' onClick={handlerSubmit}>Delete</Button>
-            </div>
+            </footer>
         </BasicModal>
     )
-}
+})

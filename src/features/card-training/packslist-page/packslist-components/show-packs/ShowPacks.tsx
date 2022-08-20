@@ -20,8 +20,8 @@ export const ShowPacks = () => {
 
     return (
         <>
-            <h4>Show packs cards</h4>
-            <ButtonGroup disableElevation variant='contained'>
+            <h4 style={{paddingLeft: '40px'}}>Show packs</h4>
+            <ButtonGroup disableElevation variant='contained' style={{paddingRight: '85px'}}>
                 <Button color={showMyCardsList ? 'primary' : "inherit"} style={{width: '90px'}}
                         onClick={() => setShowMyCardsList(true)}>My</Button>
                 <Button color={!showMyCardsList ? 'primary' : "inherit"} style={{width: '90px'}}

@@ -10,9 +10,9 @@ import {store} from "./app/store";
 ReactDOM.render(
 	<HashRouter>
 		<Provider store={store}>
-			<React.StrictMode>
+			{/*<React.StrictMode>*/}
 				<App/>
-			</React.StrictMode>
+			{/*</React.StrictMode>*/}
 		</Provider>
 	</HashRouter>,
 	document.getElementById('root')

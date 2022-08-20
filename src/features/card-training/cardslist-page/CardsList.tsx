@@ -1,4 +1,4 @@
-import React, {SyntheticEvent, useEffect} from "react";
+import React, {SyntheticEvent, useCallback, useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../../../app/hooks";
 import {PATH} from "../../../common/components/RoutesBlock/RoutesBlock";
 import {useNavigate, useParams} from "react-router-dom";
@@ -24,7 +24,7 @@ import {Searchinator2} from "../../packCardManager/search/Searchinator";
 import {Paginator} from "../../../common/components/Paginator/Paginator";
 import {Select} from "../../packCardManager/selector/Select";
 
-export const CardsList = () => {
+export const CardsList = React.memo(() => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const cardsTotalCount = useAppSelector(state => state.cardsList.cardsTotalCount)
@@ -33,7 +33,6 @@ export const CardsList = () => {
     const pageCountForEffect = useAppSelector(state => state.cardsList.requestBodyCards.pageCount)
     const pageCount = useAppSelector(state => state.cardsList.pageCount)
 
-    console.log(pageCount)
     const {id} = useParams<{ id: string }>()
 
     const [openAddCard, setOpenAddCard] = React.useState(false);
@@ -44,60 +43,63 @@ export const CardsList = () => {
     const [idCard, setIdCard] = React.useState('');
 
 
-    const handlerCloseAdd = () => setOpenAddCard(false);
-    const handlerCloseEdit = () => setOpenEditCard(false);
-    const handlerCloseDelete = () => setOpenDeleteCard(false);
+    const handlerCloseAdd = useCallback(() => setOpenAddCard(false), [openAddCard]);
+    const handlerCloseEdit =  useCallback(() => setOpenEditCard(false), [openEditCard]);
+    const handlerCloseDelete =  useCallback(() => setOpenDeleteCard(false), [openDeleteCard]);
 
     useEffect(() => {
         id && dispatch(FetchCardsListTC({id}))
     }, [pageForEffect, pageCountForEffect])
 
 
-    const handleAddNewCardModal = () => {
+    const handleAddNewCardModal = useCallback(() => {
         setOpenAddCard(true)
-    }
-    const handlerAddNewCard = (question: string, answer: string) => {
+    }, [openAddCard])
+    const handlerAddNewCard = useCallback((question: string, answer: string) => {
         id && dispatch(AddNewCardTC(id, question, answer))
         setOpenAddCard(false)
-    }
+    }, [id, openDeleteCard])
 
-    const handlerClickEdit = (id: string, previousQuestion: string, previousAnswer: string) => {
+    const handlerClickEdit = useCallback((id: string, previousQuestion: string, previousAnswer: string) => {
         setOpenEditCard(true)
         setIdCard(id)
         setpreviousQuestion(previousQuestion)
         setpreviousAnswer(previousAnswer)
-    }
-    const handlerEditCard = (newQuestion: string, newAnswer: string) => {
+    }, [idCard, previousQuestion, previousAnswer])
+
+    const handlerEditCard = useCallback((newQuestion: string, newAnswer: string) => {
         dispatch(EditCardTC(idCard, newQuestion, newAnswer))
         setOpenEditCard(false)
-           }
+    }, [openEditCard, previousQuestion, previousAnswer])
 
-    const handlerClickDelete = (id: string, deleteQuestion: string) => {
+    const handlerClickDelete = useCallback((id: string, deleteQuestion: string) => {
         setOpenDeleteCard(true)
         setIdCard(id)
         setpreviousQuestion(deleteQuestion)
-    }
-    const handlerDeleteCard = () => {
+    }, [idCard, previousQuestion])
+
+    const handlerDeleteCard = useCallback(() => {
         dispatch(DeleteCardTC(idCard))
         setOpenDeleteCard(false)
-    }
+    }, [idCard, openDeleteCard])
 
-    const handlerToPacksList = () => {
+    const handlerToPacksList = useCallback(() => {
         navigate(PATH.PACKSLISTPAGE)
-    }
+    }, [])
 
-    const gradeHandler = (cardId: string, e: SyntheticEvent, value: number | null) => {
-
-         if (e&&value!== null) {
-             dispatch(GradeCardTC(cardId,value))
+    const gradeHandler = useCallback((cardId: string, e: SyntheticEvent, value: number | null) => {
+        if (e && value !== null) {
+            dispatch(GradeCardTC(cardId, value))
         }
-    }
+    }, [])
+
     const paginationHandler = (page: number) => {
         dispatch(setPageAC({page}))
     }
     const selectHandler = (pageCount: number) => {
         dispatch(setPageCountAC({pageCount}))
     }
+
     return (
         <div className={'auth'}>
             <AddCardModal open={openAddCard} addNewCard={handlerAddNewCard}
@@ -105,7 +107,7 @@ export const CardsList = () => {
             <EditCardModal open={openEditCard} editCard={handlerEditCard} previousQuestion={previousQuestion}
                            previousAnswer={previousAnswer} handleCloseEdit={handlerCloseEdit}/>
             <DeleteCardModal open={openDeleteCard} deleteCard={handlerDeleteCard} deleteQuestion={previousQuestion}
-                           handleCloseDelete={handlerCloseDelete}/>
+                             handleCloseDelete={handlerCloseDelete}/>
             <div className={style.cardsListContainer}>
                 <div><Button onClick={handlerToPacksList}> <i className={style.left}></i> Back to Packs List
                 </Button></div>
@@ -119,7 +121,9 @@ export const CardsList = () => {
                     <div><Searchinator2/></div>
                 </div>
                 <div className={style.tableContainer}>
-                    <CardsListTable callbackGrade={gradeHandler} callbackDelete={handlerClickDelete} getPreviousCard={handlerClickEdit}/>
+                    <CardsListTable
+                        callbackGrade={gradeHandler} callbackDelete={handlerClickDelete}
+                                    getPreviousCard={handlerClickEdit}/>
 
                     <Paginator
                         totalCount={cardsTotalCount === null ? 0 : cardsTotalCount}
@@ -133,4 +137,4 @@ export const CardsList = () => {
             </div>
         </div>
     )
-}
+})

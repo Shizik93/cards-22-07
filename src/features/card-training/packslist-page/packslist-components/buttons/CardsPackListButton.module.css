@@ -1,0 +1,9 @@
+
+.icon {
+cursor: pointer;
+    opacity: 0.6;
+   }
+.icon:hover {
+    content: attr(titleAccess);
+    opacity: 1
+}
